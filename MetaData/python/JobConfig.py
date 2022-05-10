@@ -428,7 +428,7 @@ class JobConfig(object):
                 flist.append(str("%s%s" % (self.filePrepend,f)))
             # keep useParent and secondaryDataset as exclusive options for the moment
             if self.options.useParentDataset:
-                parent_files = safe_das_query("parent file=%s instance=prod/phys03" % f, cmd='dasgoclient ')['data']
+                parent_files = safe_das_query("parent file=%s instance=prod/phys03" % f, cmd='dasgoclient_amd64')['data']
                 for parent_f in parent_files:
                     parent_f_name = str(parent_f['parent'][0]['name'])
                     sflist.append('root://cms-xrd-global.cern.ch/'+parent_f_name if 'root://' not in parent_f_name else parent_f_name)
