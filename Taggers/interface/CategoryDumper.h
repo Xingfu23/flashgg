@@ -520,6 +520,8 @@ namespace flashgg {
         }
         if(!unbinnedSystematics_){
             if( nbins > 0 ) { 
+                rooVar.setMin( vmin );
+                rooVar.setMax( vmax );
                 rooVar.setBins( nbins );
             }
             if(nbins == -1){
