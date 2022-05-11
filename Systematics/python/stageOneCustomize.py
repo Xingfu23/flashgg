@@ -9,7 +9,8 @@ class StageOneCustomize():
         self.process = process
         self.customize = customize
         self.metaConditions = metaConditions
-        self.modifyForttH = True
+        self.modifyForttH = True 
+        '''
         self.tagList = [
             ["LOGICERROR",0], ["NOTAG",0], 
             ["RECO_0J_PTH_0_10_Tag0",0], ["RECO_0J_PTH_0_10_Tag1",0], ["RECO_0J_PTH_0_10_Tag2",0],
@@ -46,6 +47,9 @@ class StageOneCustomize():
             ["RECO_TTH_LEP_PTH_GT300_Tag0",0],
             ["RECO_THQ_LEP",0]
         ]
+        '''
+        self.tagList = [["RECO_VH_MET_Tag0",0], ["RECO_VH_MET_Tag1",0]]
+        
         if self.customize.processId == "Data": 
             self.tagList.pop(1) ## remove NoTag for data
         self.stageOneVariable = ["stage1p2bin[57,-8.5,48.5] := tagTruth().HTXSstage1p2orderedBin"]
@@ -55,8 +59,8 @@ class StageOneCustomize():
             cms.PSet(TagName = cms.InputTag('flashggZHLeptonicTag')),
             cms.PSet(TagName = cms.InputTag('flashggWHLeptonicTag')),
             cms.PSet(TagName = cms.InputTag('flashggTTHHadronicTag')),   
-            cms.PSet(TagName = cms.InputTag('flashggVHMetTag')),
-            cms.PSet(TagName = cms.InputTag('flashggStageOneCombinedTag'))
+            cms.PSet(TagName = cms.InputTag('flashggVHMetTag'))
+            #cms.PSet(TagName = cms.InputTag('flashggStageOneCombinedTag'))
         )
         self.customizeTagSequence()
 
