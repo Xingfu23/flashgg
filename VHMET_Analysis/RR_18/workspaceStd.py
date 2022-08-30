@@ -376,11 +376,16 @@ if is_signal:
     customizeSystematicsForSignal(process)
 elif customize.processId == "Data":
     print "Data, so turn off all shifts and systematics, with some exceptions"
-    variablesToUse = minimalNonSignalVariables
     customizeSystematicsForData(process)
+    from flashgg.Tagger.VHLeptonicTagsVariables_cfi import dipho_variables, jet_variables, met_variables
+    #variablesToUse = minimalNonSignalVariables
+    variablesToUse = minimalNonSignalVariables + dipho_variables + jet_variables + met_variables
+
 else:
     print "Background MC, so store mgg and central only"
-    variablesToUse = minimalNonSignalVariables
+    from flashgg.Tagger.VHLeptonicTagsVariables_cfi import dipho_variables, jet_variables, met_variables
+    #variablesToUse = minimalNonSignalVariables
+    variablesToUse = minimalNonSignalVariables + dipho_variables + jet_variables + met_variables
     customizeSystematicsForBackground(process)
 
 if customize.doubleHTagsOnly:
@@ -585,17 +590,17 @@ if customize.processId == "th_125": # for this sample the filter removes also H 
 
 # Split out prompt-fake or fake-fake
 process.finalFilter = cms.Sequence()
-if (customize.processId.count("qcd") or customize.processId.count("gjet")) and customize.processId.count("fake"):
-    process.load("flashgg/Systematics/PromptFakeFilter_cfi")
-    process.finalFilter += process.PromptFakeFilter
-    if (customize.processId.count("promptfake")):
-        process.PromptFakeFilter.doPromptFake = cms.bool(True)
-        process.PromptFakeFilter.doFakeFake =cms.bool(False)
-    elif (customize.processId.count("fakefake")):
-        process.PromptFakeFilter.doPromptFake =cms.bool(False)
-        process.PromptFakeFilter.doFakeFake =cms.bool(True)
-    else:
-        raise Exception,"Mis-configuration of python for prompt-fake filter"
+# if (customize.processId.count("qcd") or customize.processId.count("gjet")) and customize.processId.count("fake"):
+#     process.load("flashgg/Systematics/PromptFakeFilter_cfi")
+#     process.finalFilter += process.PromptFakeFilter
+#     if (customize.processId.count("promptfake")):
+#         process.PromptFakeFilter.doPromptFake = cms.bool(True)
+#         process.PromptFakeFilter.doFakeFake =cms.bool(False)
+#     elif (customize.processId.count("fakefake")):
+#         process.PromptFakeFilter.doPromptFake =cms.bool(False)
+#         process.PromptFakeFilter.doFakeFake =cms.bool(True)
+#     else:
+#         raise Exception,"Mis-configuration of python for prompt-fake filter"
 
 # Met Filters
 process.load('flashgg/Systematics/flashggMetFilters_cfi')

@@ -48,7 +48,8 @@ class StageOneCustomize():
             ["RECO_THQ_LEP",0]
         ]
         '''
-        self.tagList = [["RECO_VH_MET_Tag0",0], ["RECO_VH_MET_Tag1",0]]
+        #self.tagList = [["RECO_VH_MET_Tag0",0], ["RECO_VH_MET_Tag1",0]]
+        self.tagList = [["RECO_VH_MET_Tag0",0]]
         
         if self.customize.processId == "Data": 
             self.tagList.pop(1) ## remove NoTag for data
@@ -77,11 +78,16 @@ class StageOneCustomize():
             "btagReshapeNorm_THQ_LEP[1,-999999.,999999.] := weight(\"btagReshapeNorm_THQ_LEP\")",
             "centralObjectWeight[1,-999999.,999999.] := centralWeight"
         ]
+      
 
         ntup_variables = ws_variables #+ [
                                       #      "truthNNLOPS[1,-999999.,999999.]:=tagTruth().weight(\"NNLOPS\")",
                                       #      "leadJetPt[1,-999999.,999999.]:=VBFMVA().dijet_LeadJPt"
                                       #  ]
+        # import flashgg.Taggers.VHLeptonicTagsVariables_cfi as vl
+        # ws_variables += vl.dipho_variables
+        # ws_variables += vl.jet_variables
+        # ws_variables += vl.met_variables
     
         if self.customize.dumpWorkspace:
             return ws_variables
