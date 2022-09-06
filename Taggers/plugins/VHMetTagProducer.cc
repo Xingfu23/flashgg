@@ -336,7 +336,8 @@ namespace flashgg {
             float vhmetmva    = VHMetMva_->EvaluateMVA( "BDT" );
 
             // Categorization by ZHMVA
-            int catnum = chooseCategory( vhmetmva );
+            //int catnum = chooseCategory( vhmetmva );
+            int catnum = 0; // Force all event fall into VHMET_Tag0 without losing events.
             
             if ( catnum != -1 ) {
                 VHMetTag tag_obj( dipho, mvares );
