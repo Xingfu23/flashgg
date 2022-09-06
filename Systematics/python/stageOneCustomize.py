@@ -84,10 +84,14 @@ class StageOneCustomize():
                                       #      "truthNNLOPS[1,-999999.,999999.]:=tagTruth().weight(\"NNLOPS\")",
                                       #      "leadJetPt[1,-999999.,999999.]:=VBFMVA().dijet_LeadJPt"
                                       #  ]
-        # import flashgg.Taggers.VHLeptonicTagsVariables_cfi as vl
         # ws_variables += vl.dipho_variables
         # ws_variables += vl.jet_variables
         # ws_variables += vl.met_variables
+        
+        import flashgg.Taggers.VHLeptonicTagsVariables_cfi as vl
+        ntup_variables += vl.dipho_variables
+        ntup_variables += vl.jet_variables
+        ntup_variables += vl.met_variables
     
         if self.customize.dumpWorkspace:
             return ws_variables
