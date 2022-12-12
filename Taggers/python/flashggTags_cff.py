@@ -489,6 +489,7 @@ flashggVHMetTag = cms.EDProducer("FlashggVHMetTagProducer",
                                     jetPtThreshold              = cms.double(20.),
                                     jetEtaThreshold             = cms.double(2.4),
                                     deltaRJetPhoThreshold       = cms.double(0.4)
+                                    # test 
 )
 
 flashggZHLeptonicTag = cms.EDProducer("FlashggZHLeptonicTagProducer",
