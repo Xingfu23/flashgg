@@ -252,7 +252,9 @@ class JobsManager(object):
             
         if not os.path.exists(options.outputDir):
             os.mkdir(options.outputDir)
-        outputPfx = "%s/%s" % ( options.outputDir, outputPfx )
+        #outputPfx = "%s/%s" % ( options.outputDir, outputPfx )
+        os.system( 'mkdir -p %s' % options.stageTo)
+        outputPfx = "%s/%s" % ( options.stageTo, outputPfx )
         
 
         args.append("processIdMap=%s/config.json" % os.path.abspath(options.outputDir))
