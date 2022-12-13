@@ -10,7 +10,7 @@ class StageOneCustomize():
         self.customize = customize
         self.metaConditions = metaConditions
         self.modifyForttH = True
-        self.tagList = [["RECO_VH_MET_Tag0",0]]
+        self.tagList = [["RECO_VH_MET_Tag0",0], ["NOTAG",0]]
         '''
         self.tagList = [
             ["LOGICERROR",0], ["NOTAG",0], 
@@ -51,6 +51,7 @@ class StageOneCustomize():
         '''
         if self.customize.processId == "Data": 
             self.tagList.pop(1) ## remove NoTag for data
+            print(self.tagList)
         self.stageOneVariable = ["stage1p2bin[57,-8.5,48.5] := tagTruth().HTXSstage1p2orderedBin"]
         self.tagPriorityRanges = cms.VPSet(
 	          cms.PSet(TagName = cms.InputTag('flashggTHQLeptonicTag')),
