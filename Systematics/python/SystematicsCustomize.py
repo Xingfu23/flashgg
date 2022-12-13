@@ -345,7 +345,7 @@ def customizeForL1Prefiring(process, options, processId):
     print "Here we account for L1 pre-firing. We will only change the central diphoton weight if it is an appropriate sample (only MC, not data), and the applyToCentral flag is set to true"
     print "================================================"
     print (options["L1Prefiring"])
-    isECALRelevant = bool(options["L1Prefiring"]["isRelevant"])
+    isECALRelevant = bool(options["L1Prefiring"]["isECALRelevant"])
     getattr(process, "flashggPrefireDiPhotons").isECALRelevant = cms.bool(isECALRelevant)
 
     if isECALRelevant:
