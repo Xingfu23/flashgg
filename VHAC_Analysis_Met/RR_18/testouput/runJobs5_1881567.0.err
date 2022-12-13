@@ -1,0 +1,18 @@
+mkdir: cannot create directory '/afs/cern.ch/user/x/xisu/private/local/Analysis_workspace/VH_AC_tmp1/flashgg_d2/CMSSW_10_6_29/src/flashgg/VHAC_Analysis_Met/RR_18/testouput': File exists
+/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/py2-requests/2.21.0-pafccj2/lib/python2.7/site-packages/requests/__init__.py:91: RequestsDependencyWarning: urllib3 (1.25.2) or chardet (3.0.4) doesn't match a supported version!
+  RequestsDependencyWarning)
+----- Begin Fatal Exception 13-Dec-2022 14:49:09 CET-----------------------
+An exception of category 'ConfigFileReadError' occurred while
+   [0] Processing the python configuration file named /afs/cern.ch/user/x/xisu/private/local/Analysis_workspace/VH_AC_tmp1/flashgg_d2/CMSSW_10_6_29/src/flashgg/VHAC_Analysis_Met/RR_18/testouput/workspaceStd.py
+Exception Message:
+ unknown python problem occurred.
+ValueError: invalid literal for int() with base 0: ''
+
+At:
+  /cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_6_29/python/FWCore/ParameterSet/VarParsing.py(518): _convert
+  /cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_6_29/python/FWCore/ParameterSet/VarParsing.py(464): setDefault
+  /cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_6_29/python/FWCore/ParameterSet/VarParsing.py(214): parseArguments
+  /afs/cern.ch/user/x/xisu/private/local/Analysis_workspace/VH_AC_tmp1/flashgg_d2/CMSSW_10_6_29/python/flashgg/MetaData/JobConfig.py(507): parse
+  /afs/cern.ch/user/x/xisu/private/local/Analysis_workspace/VH_AC_tmp1/flashgg_d2/CMSSW_10_6_29/src/flashgg/VHAC_Analysis_Met/RR_18/testouput/workspaceStd.py(205): <module>
+
+----- End Fatal Exception -------------------------------------------------
