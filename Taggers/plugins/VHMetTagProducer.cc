@@ -13,6 +13,7 @@
 #include "flashgg/DataFormats/interface/Electron.h"
 #include "flashgg/DataFormats/interface/Muon.h"
 #include "flashgg/Taggers/interface/LeptonSelection.h"
+#include "flashgg/Taggers/interface/VHMET_BDT_Helper.h"
 
 #include "flashgg/DataFormats/interface/VHTagTruth.h"
 #include "DataFormats/Common/interface/RefToPtr.h"
@@ -87,6 +88,11 @@ namespace flashgg {
 
         vector<double> boundaries;
 
+        
+        // VHMet AC MVA
+        FileInPath VHMetAnomMVA_fa3zh_weightfile;
+        InputVariables MVAvarList;
+        VHMET_BDT_Helper *vhmetacTagger;
     };
 
     VHMetTagProducer::VHMetTagProducer( const ParameterSet &iConfig ) :
@@ -158,6 +164,9 @@ namespace flashgg {
         produces<vector<VHMetTag> >();
         produces<vector<VHTagTruth> >();
 
+        //VHMetACMVA:fa3
+        VHMetAnomMVA_fa3zh_weightfile = iConfig.getParameter<edm::FileInPath> ( "vhmetanom_fa3zh_bdt_xmlfile" );
+        vhmetacTagger = new VHMET_BDT_Helper("BDT", VHMetAnomMVA_fa3zh_weightfile.fullPath());
     }
 
     int VHMetTagProducer::chooseCategory( float mva )
@@ -335,6 +344,27 @@ namespace flashgg {
 
             float vhmetmva    = VHMetMva_->EvaluateMVA( "BDT" );
 
+            // Anom MVA input variables
+            MVAvarList.pho1_eta         = _pho1_eta; 
+            MVAvarList.pho2_eta         = _pho2_eta;
+            MVAvarList.pho1_phi         = dipho->leadingPhoton()->phi();
+            MVAvarList.pho2_phi         = dipho->subLeadingPhoton()->phi();
+            MVAvarList.pho1_ptoM        = _pho1_ptoM; 
+            MVAvarList.pho2_ptoM        = _pho2_ptoM;
+            MVAvarList.dipho_cosphi     = _dipho_cosphi;
+            MVAvarList.dipho_deltaeta   = fabs(_pho1_eta - _pho2_eta);
+            MVAvarList.met              = _met;
+            MVAvarList.met_sumEt        = _met_sumEt;
+            MVAvarList.dphi_dipho_met   = _dphi_dipho_met;
+            MVAvarList.pt_balance       = _pt_balance; 
+            MVAvarList.njet             = _njet;
+            MVAvarList.max_jet_pt       = _max_jet_pt;
+            MVAvarList.min_dphi_jet_met = _min_dphi_jet_met;
+
+            // init mva scores correspond to bkg
+            double raw_scroe_anom_fa3zh = -1.;
+            raw_scroe_anom_fa3zh = vhmetacTagger->evaluate("BDT", MVAvarList);
+
             // Categorization by ZHMVA
             //int catnum = chooseCategory( vhmetmva );
             int catnum = 0; // Force all event fall into VHMET_Tag0 without losing events.
@@ -349,6 +379,10 @@ namespace flashgg {
                 tag_obj.setMet( theMET );
                 tag_obj.setMinDeltaPhiJetMet(minDeltaPhiJetMet);
                 tag_obj.setMaxJetDeepCSV(max_jet_dCSV);
+
+                // Check anom variable 
+                std::cout << "anom_mva_score = " << raw_scroe_anom_fa3zh << std::endl;
+                vhmetacTagger->print_details_cout(MVAvarList);
 
                 if( ! evt.isRealData() ) {
                     tag_obj.setAssociatedZ( associatedZ );
