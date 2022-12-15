@@ -379,6 +379,7 @@ namespace flashgg {
                 tag_obj.setMet( theMET );
                 tag_obj.setMinDeltaPhiJetMet(minDeltaPhiJetMet);
                 tag_obj.setMaxJetDeepCSV(max_jet_dCSV);
+                tag_obj.setACMVAfa3d0ZH(raw_scroe_anom_fa3zh);
 
                 // Check anom variable 
                 std::cout << "anom_mva_score = " << raw_scroe_anom_fa3zh << std::endl;
