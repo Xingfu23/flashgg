@@ -77,14 +77,10 @@ class StageOneCustomize():
             "centralObjectWeight[1,-999999.,999999.] := centralWeight"
         ]
         
-        import flashgg.Taggers.VHLeptonicTagsVariables_cfi as vl
         ntup_variables = ws_variables #+ [
                                       #      "truthNNLOPS[1,-999999.,999999.]:=tagTruth().weight(\"NNLOPS\")",
                                       #      "leadJetPt[1,-999999.,999999.]:=VBFMVA().dijet_LeadJPt"
                                       #  ]
-        ntup_variables += vl.dipho_variables
-        ntup_variables += vl.jet_variables
-        ntup_variables += vl.met_variables
     
         if self.customize.dumpWorkspace:
             return ws_variables

@@ -5,6 +5,7 @@ import FWCore.Utilities.FileUtils as FileUtils
 import FWCore.ParameterSet.VarParsing as VarParsing
 from flashgg.Systematics.SystematicDumperDefaultVariables import minimalVariables,minimalHistograms,minimalNonSignalVariables,systematicVariables
 from flashgg.Systematics.SystematicDumperDefaultVariables import minimalVariablesHTXS,systematicVariablesHTXS
+from flashgg.Taggers.VHLeptonicTagsVariables_cfi import dipho_variables, jet_variables, met_variables
 import os
 import copy
 from flashgg.MetaData.MetaConditionsReader import *
@@ -314,9 +315,12 @@ applyL1Prefiring = customizeForL1Prefiring(process, customize.metaConditions, cu
 if is_signal:
     print "Signal MC, so adding systematics and dZ"
     if customize.doHTXS:
-        variablesToUse = minimalVariablesHTXS
+        variablesToUse = minimalVariablesHTXS 
     else:
-        variablesToUse = minimalVariables
+        if customize.dumpWorkspace:
+            variablesToUse = minimalVariables
+        else:
+            variablesToUse = minimalVariables + dipho_variables + jet_variables + met_variables
 
     if customize.doSystematics:
         for direction in ["Up","Down"]:
@@ -376,11 +380,17 @@ if is_signal:
     customizeSystematicsForSignal(process)
 elif customize.processId == "Data":
     print "Data, so turn off all shifts and systematics, with some exceptions"
-    variablesToUse = minimalNonSignalVariables
+    if customize.dumpWorkspace:
+        variablesToUse = minimalVariables
+    else:
+        variablesToUse = minimalVariables + dipho_variables + jet_variables + met_variables
     customizeSystematicsForData(process)
 else:
     print "Background MC, so store mgg and central only"
-    variablesToUse = minimalNonSignalVariables
+    if customize.dumpWorkspace:
+        variablesToUse = minimalVariables
+    else:
+        variablesToUse = minimalVariables + dipho_variables + jet_variables + met_variables
     customizeSystematicsForBackground(process)
 
 if customize.doubleHTagsOnly:
