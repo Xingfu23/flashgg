@@ -1,0 +1,322 @@
+mkdir: cannot create directory '/afs/cern.ch/user/x/xisu/private/local/Analysis_workspace/VH_AC_tmp1/flashgg_d2/CMSSW_10_6_29/src/flashgg/VHAC_Analysis_Met/UL_17/UL_17_wh125': File exists
+/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/py2-requests/2.21.0-pafccj2/lib/python2.7/site-packages/requests/__init__.py:91: RequestsDependencyWarning: urllib3 (1.25.2) or chardet (3.0.4) doesn't match a supported version!
+  RequestsDependencyWarning)
+20-Dec-2022 10:04:47 CET  Initiating request to open file root://cms-xrd-global.cern.ch//store/user/alesauva/flashgg/UL2017_4/10_6_4/WHiggs0L1ToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8/UL2017_4-10_6_4-v0-RunIISummer19UL17MiniAOD-106X_mc2017_realistic_v6-v2/200720_155007/0000/myMicroAODOutputFile_25.root
+%MSG-w XrdAdaptor:  file_open 20-Dec-2022 10:04:50 CET pre-events
+Data is served from GRIF-IRFU instead of original site CERN-CMSGLOBAL-02
+%MSG
+20-Dec-2022 10:04:51 CET  Successfully opened file root://cms-xrd-global.cern.ch//store/user/alesauva/flashgg/UL2017_4/10_6_4/WHiggs0L1ToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8/UL2017_4-10_6_4-v0-RunIISummer19UL17MiniAOD-106X_mc2017_realistic_v6-v2/200720_155007/0000/myMicroAODOutputFile_25.root
+2022-12-20 10:19:33.070166: I tensorflow/core/platform/cpu_feature_guard.cc:140] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
+Begin processing the 1st record. Run 1, Event 409302, LumiSection 4094 on stream 0 at 20-Dec-2022 10:20:34.263 CET
+[2022-12-20 10:21:16.443440 +0100][Error  ][AsyncSock         ] [xrootd.ba.infn.it:1094 #0.0] Socket error while handshaking: [ERROR] Socket timeout
+[2022-12-20 10:21:16.443758 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] elapsed = 45, pConnectionWindow = 31 seconds.
+[2022-12-20 10:22:01.684144 +0100][Error  ][AsyncSock         ] [xrootd.ba.infn.it:1094 #0.0] Socket error while handshaking: [ERROR] Socket timeout
+[2022-12-20 10:22:01.684309 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] elapsed = 45, pConnectionWindow = 31 seconds.
+[2022-12-20 10:22:01.684388 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] Unable to recover: [ERROR] Socket timeout.
+[2022-12-20 10:22:01.684411 +0100][Error  ][XRootD            ] [xrootd.ba.infn.it:1094] Impossible to send message kXR_open (file: /store/user/alesauva/flashgg/UL2017_4/10_6_4/WHiggs0L1ToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8/UL2017_4-10_6_4-v0-RunIISummer19UL17MiniAOD-106X_mc2017_realistic_v6-v2/200720_155007/0000/myMicroAODOutputFile_25.root?tried=stor91.datagrid.cea.fr, mode: 0660, flags: kXR_open_read kXR_async kXR_retstat ). Trying to recover.
+Begin processing the 1001st record. Run 1, Event 126803, LumiSection 1269 on stream 0 at 20-Dec-2022 10:26:19.982 CET
+[2022-12-20 10:28:17.721671 +0100][Error  ][AsyncSock         ] [xrootd.ba.infn.it:1094 #0.0] Socket error while handshaking: [ERROR] Socket timeout
+[2022-12-20 10:28:17.722800 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] elapsed = 45, pConnectionWindow = 31 seconds.
+Begin processing the 2001st record. Run 1, Event 127805, LumiSection 1279 on stream 0 at 20-Dec-2022 10:28:54.339 CET
+[2022-12-20 10:29:02.962210 +0100][Error  ][AsyncSock         ] [xrootd.ba.infn.it:1094 #0.0] Socket error while handshaking: [ERROR] Socket timeout
+[2022-12-20 10:29:02.962350 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] elapsed = 45, pConnectionWindow = 31 seconds.
+[2022-12-20 10:29:02.962362 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] Unable to recover: [ERROR] Socket timeout.
+[2022-12-20 10:29:02.962373 +0100][Error  ][XRootD            ] [xrootd.ba.infn.it:1094] Impossible to send message kXR_open (file: /store/user/alesauva/flashgg/UL2017_4/10_6_4/WHiggs0L1ToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8/UL2017_4-10_6_4-v0-RunIISummer19UL17MiniAOD-106X_mc2017_realistic_v6-v2/200720_155007/0000/myMicroAODOutputFile_25.root?tried=stor91.datagrid.cea.fr, mode: 0660, flags: kXR_open_read kXR_async kXR_retstat ). Trying to recover.
+Begin processing the 3001st record. Run 1, Event 504101, LumiSection 5042 on stream 0 at 20-Dec-2022 10:31:44.434 CET
+Begin processing the 4001st record. Run 1, Event 505103, LumiSection 5052 on stream 0 at 20-Dec-2022 10:34:37.834 CET
+[2022-12-20 10:37:18.483341 +0100][Error  ][AsyncSock         ] [xrootd.ba.infn.it:1094 #0.0] Socket error while handshaking: [ERROR] Socket timeout
+[2022-12-20 10:37:18.483503 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] elapsed = 45, pConnectionWindow = 31 seconds.
+Begin processing the 5001st record. Run 1, Event 208011, LumiSection 2081 on stream 0 at 20-Dec-2022 10:37:29.382 CET
+[2022-12-20 10:38:03.709144 +0100][Error  ][AsyncSock         ] [xrootd.ba.infn.it:1094 #0.0] Socket error while handshaking: [ERROR] Socket timeout
+[2022-12-20 10:38:03.709313 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] elapsed = 45, pConnectionWindow = 31 seconds.
+[2022-12-20 10:38:03.709326 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] Unable to recover: [ERROR] Socket timeout.
+[2022-12-20 10:38:03.709336 +0100][Error  ][XRootD            ] [xrootd.ba.infn.it:1094] Impossible to send message kXR_open (file: /store/user/alesauva/flashgg/UL2017_4/10_6_4/WHiggs0L1ToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8/UL2017_4-10_6_4-v0-RunIISummer19UL17MiniAOD-106X_mc2017_realistic_v6-v2/200720_155007/0000/myMicroAODOutputFile_25.root?tried=stor91.datagrid.cea.fr, mode: 0660, flags: kXR_open_read kXR_async kXR_retstat ). Trying to recover.
+Begin processing the 6001st record. Run 1, Event 209005, LumiSection 2091 on stream 0 at 20-Dec-2022 10:40:22.539 CET
+[2022-12-20 10:42:42.747809 +0100][Error  ][AsyncSock         ] [xrootd.ba.infn.it:1094 #0.0] Socket error while handshaking: [ERROR] Socket timeout
+[2022-12-20 10:42:42.747938 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] elapsed = 45, pConnectionWindow = 31 seconds.
+Begin processing the 7001st record. Run 1, Event 204715, LumiSection 2048 on stream 0 at 20-Dec-2022 10:43:16.204 CET
+[2022-12-20 10:43:27.966762 +0100][Error  ][AsyncSock         ] [xrootd.ba.infn.it:1094 #0.0] Socket error while handshaking: [ERROR] Socket timeout
+[2022-12-20 10:43:27.966927 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] elapsed = 45, pConnectionWindow = 31 seconds.
+[2022-12-20 10:43:27.966945 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] Unable to recover: [ERROR] Socket timeout.
+[2022-12-20 10:43:27.966957 +0100][Error  ][XRootD            ] [xrootd.ba.infn.it:1094] Impossible to send message kXR_open (file: /store/user/alesauva/flashgg/UL2017_4/10_6_4/WHiggs0L1ToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8/UL2017_4-10_6_4-v0-RunIISummer19UL17MiniAOD-106X_mc2017_realistic_v6-v2/200720_155007/0000/myMicroAODOutputFile_25.root?tried=stor91.datagrid.cea.fr, mode: 0660, flags: kXR_open_read kXR_async kXR_retstat ). Trying to recover.
+Begin processing the 8001st record. Run 1, Event 205708, LumiSection 2058 on stream 0 at 20-Dec-2022 10:46:06.262 CET
+[2022-12-20 10:47:55.926284 +0100][Error  ][AsyncSock         ] [xrootd.ba.infn.it:1094 #0.0] Socket error while handshaking: [ERROR] Socket timeout
+[2022-12-20 10:47:55.926406 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] elapsed = 45, pConnectionWindow = 31 seconds.
+[2022-12-20 10:48:40.148133 +0100][Error  ][AsyncSock         ] [xrootd.ba.infn.it:1094 #0.0] Socket error while handshaking: [ERROR] Socket timeout
+[2022-12-20 10:48:40.148301 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] elapsed = 45, pConnectionWindow = 31 seconds.
+[2022-12-20 10:48:40.148314 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] Unable to recover: [ERROR] Socket timeout.
+[2022-12-20 10:48:40.148324 +0100][Error  ][XRootD            ] [xrootd.ba.infn.it:1094] Impossible to send message kXR_open (file: /store/user/alesauva/flashgg/UL2017_4/10_6_4/WHiggs0L1ToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8/UL2017_4-10_6_4-v0-RunIISummer19UL17MiniAOD-106X_mc2017_realistic_v6-v2/200720_155007/0000/myMicroAODOutputFile_25.root?tried=stor91.datagrid.cea.fr, mode: 0660, flags: kXR_open_read kXR_async kXR_retstat ). Trying to recover.
+Begin processing the 9001st record. Run 1, Event 206704, LumiSection 2068 on stream 0 at 20-Dec-2022 10:48:43.708 CET
+Begin processing the 10001st record. Run 1, Event 211902, LumiSection 2120 on stream 0 at 20-Dec-2022 10:51:19.033 CET
+[2022-12-20 10:52:52.727126 +0100][Error  ][AsyncSock         ] [xrootd.ba.infn.it:1094 #0.0] Socket error while handshaking: [ERROR] Socket timeout
+[2022-12-20 10:52:52.727295 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] elapsed = 45, pConnectionWindow = 31 seconds.
+[2022-12-20 10:53:37.918177 +0100][Error  ][AsyncSock         ] [xrootd.ba.infn.it:1094 #0.0] Socket error while handshaking: [ERROR] Socket timeout
+[2022-12-20 10:53:37.918282 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] elapsed = 45, pConnectionWindow = 31 seconds.
+[2022-12-20 10:53:37.918290 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] Unable to recover: [ERROR] Socket timeout.
+[2022-12-20 10:53:37.918299 +0100][Error  ][XRootD            ] [xrootd.ba.infn.it:1094] Impossible to send message kXR_open (file: /store/user/alesauva/flashgg/UL2017_4/10_6_4/WHiggs0L1ToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8/UL2017_4-10_6_4-v0-RunIISummer19UL17MiniAOD-106X_mc2017_realistic_v6-v2/200720_155007/0000/myMicroAODOutputFile_25.root?tried=stor91.datagrid.cea.fr, mode: 0660, flags: kXR_open_read kXR_async kXR_retstat ). Trying to recover.
+Begin processing the 11001st record. Run 1, Event 212909, LumiSection 2130 on stream 0 at 20-Dec-2022 10:53:53.055 CET
+Begin processing the 12001st record. Run 1, Event 213903, LumiSection 2140 on stream 0 at 20-Dec-2022 10:56:23.890 CET
+[2022-12-20 10:57:27.317367 +0100][Error  ][AsyncSock         ] [xrootd.ba.infn.it:1094 #0.0] Socket error while handshaking: [ERROR] Socket timeout
+[2022-12-20 10:57:27.317461 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] elapsed = 45, pConnectionWindow = 31 seconds.
+[2022-12-20 10:58:12.523252 +0100][Error  ][AsyncSock         ] [xrootd.ba.infn.it:1094 #0.0] Socket error while handshaking: [ERROR] Socket timeout
+[2022-12-20 10:58:12.523431 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] elapsed = 45, pConnectionWindow = 31 seconds.
+[2022-12-20 10:58:12.523443 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] Unable to recover: [ERROR] Socket timeout.
+[2022-12-20 10:58:12.523453 +0100][Error  ][XRootD            ] [xrootd.ba.infn.it:1094] Impossible to send message kXR_open (file: /store/user/alesauva/flashgg/UL2017_4/10_6_4/WHiggs0L1ToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8/UL2017_4-10_6_4-v0-RunIISummer19UL17MiniAOD-106X_mc2017_realistic_v6-v2/200720_155007/0000/myMicroAODOutputFile_25.root?tried=stor91.datagrid.cea.fr, mode: 0660, flags: kXR_open_read kXR_async kXR_retstat ). Trying to recover.
+Begin processing the 13001st record. Run 1, Event 231704, LumiSection 2318 on stream 0 at 20-Dec-2022 10:58:38.337 CET
+Begin processing the 14001st record. Run 1, Event 232704, LumiSection 2328 on stream 0 at 20-Dec-2022 11:00:49.501 CET
+Begin processing the 15001st record. Run 1, Event 233702, LumiSection 2338 on stream 0 at 20-Dec-2022 11:02:57.585 CET
+Begin processing the 16001st record. Run 1, Event 334013, LumiSection 3341 on stream 0 at 20-Dec-2022 11:05:08.925 CET
+[2022-12-20 11:05:37.537637 +0100][Error  ][AsyncSock         ] [xrootd.ba.infn.it:1094 #0.0] Socket error while handshaking: [ERROR] Socket timeout
+[2022-12-20 11:05:37.537774 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] elapsed = 45, pConnectionWindow = 31 seconds.
+[2022-12-20 11:06:22.709136 +0100][Error  ][AsyncSock         ] [xrootd.ba.infn.it:1094 #0.0] Socket error while handshaking: [ERROR] Socket timeout
+[2022-12-20 11:06:22.709281 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] elapsed = 45, pConnectionWindow = 31 seconds.
+[2022-12-20 11:06:22.709292 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] Unable to recover: [ERROR] Socket timeout.
+[2022-12-20 11:06:22.709302 +0100][Error  ][XRootD            ] [xrootd.ba.infn.it:1094] Impossible to send message kXR_open (file: /store/user/alesauva/flashgg/UL2017_4/10_6_4/WHiggs0L1ToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8/UL2017_4-10_6_4-v0-RunIISummer19UL17MiniAOD-106X_mc2017_realistic_v6-v2/200720_155007/0000/myMicroAODOutputFile_25.root?tried=stor91.datagrid.cea.fr, mode: 0660, flags: kXR_open_read kXR_async kXR_retstat ). Trying to recover.
+Begin processing the 17001st record. Run 1, Event 335007, LumiSection 3351 on stream 0 at 20-Dec-2022 11:07:02.393 CET
+Begin processing the 18001st record. Run 1, Event 629203, LumiSection 6293 on stream 0 at 20-Dec-2022 11:08:53.769 CET
+Begin processing the 19001st record. Run 1, Event 478003, LumiSection 4781 on stream 0 at 20-Dec-2022 11:10:51.936 CET
+[2022-12-20 11:11:00.620161 +0100][Error  ][AsyncSock         ] [xrootd.ba.infn.it:1094 #0.0] Socket error while handshaking: [ERROR] Socket timeout
+[2022-12-20 11:11:00.620323 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] elapsed = 45, pConnectionWindow = 31 seconds.
+[2022-12-20 11:11:45.858281 +0100][Error  ][AsyncSock         ] [xrootd.ba.infn.it:1094 #0.0] Socket error while handshaking: [ERROR] Socket timeout
+[2022-12-20 11:11:45.858444 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] elapsed = 45, pConnectionWindow = 31 seconds.
+[2022-12-20 11:11:45.858456 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] Unable to recover: [ERROR] Socket timeout.
+[2022-12-20 11:11:45.858465 +0100][Error  ][XRootD            ] [xrootd.ba.infn.it:1094] Impossible to send message kXR_open (file: /store/user/alesauva/flashgg/UL2017_4/10_6_4/WHiggs0L1ToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8/UL2017_4-10_6_4-v0-RunIISummer19UL17MiniAOD-106X_mc2017_realistic_v6-v2/200720_155007/0000/myMicroAODOutputFile_25.root?tried=stor91.datagrid.cea.fr, mode: 0660, flags: kXR_open_read kXR_async kXR_retstat ). Trying to recover.
+Begin processing the 20001st record. Run 1, Event 510912, LumiSection 5110 on stream 0 at 20-Dec-2022 11:13:00.171 CET
+Begin processing the 21001st record. Run 1, Event 450006, LumiSection 4501 on stream 0 at 20-Dec-2022 11:15:16.385 CET
+Begin processing the 22001st record. Run 1, Event 461003, LumiSection 4611 on stream 0 at 20-Dec-2022 11:17:43.372 CET
+[2022-12-20 11:19:33.231783 +0100][Error  ][AsyncSock         ] [xrootd.ba.infn.it:1094 #0.0] Socket error while handshaking: [ERROR] Socket timeout
+[2022-12-20 11:19:33.231891 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] elapsed = 45, pConnectionWindow = 31 seconds.
+[2022-12-20 11:20:18.478140 +0100][Error  ][AsyncSock         ] [xrootd.ba.infn.it:1094 #0.0] Socket error while handshaking: [ERROR] Socket timeout
+[2022-12-20 11:20:18.478303 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] elapsed = 45, pConnectionWindow = 31 seconds.
+[2022-12-20 11:20:18.478322 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] Unable to recover: [ERROR] Socket timeout.
+[2022-12-20 11:20:18.478334 +0100][Error  ][XRootD            ] [xrootd.ba.infn.it:1094] Impossible to send message kXR_open (file: /store/user/alesauva/flashgg/UL2017_4/10_6_4/WHiggs0L1ToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8/UL2017_4-10_6_4-v0-RunIISummer19UL17MiniAOD-106X_mc2017_realistic_v6-v2/200720_155007/0000/myMicroAODOutputFile_25.root?tried=stor91.datagrid.cea.fr, mode: 0660, flags: kXR_open_read kXR_async kXR_retstat ). Trying to recover.
+Begin processing the 23001st record. Run 1, Event 706901, LumiSection 7070 on stream 0 at 20-Dec-2022 11:20:20.503 CET
+Begin processing the 24001st record. Run 1, Event 707902, LumiSection 7080 on stream 0 at 20-Dec-2022 11:23:03.175 CET
+[2022-12-20 11:24:36.585145 +0100][Error  ][AsyncSock         ] [xrootd.ba.infn.it:1094 #0.0] Socket error while handshaking: [ERROR] Socket timeout
+[2022-12-20 11:24:36.585316 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] elapsed = 45, pConnectionWindow = 31 seconds.
+[2022-12-20 11:25:21.834143 +0100][Error  ][AsyncSock         ] [xrootd.ba.infn.it:1094 #0.0] Socket error while handshaking: [ERROR] Socket timeout
+[2022-12-20 11:25:21.834316 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] elapsed = 45, pConnectionWindow = 31 seconds.
+[2022-12-20 11:25:21.834330 +0100][Error  ][PostMaster        ] [xrootd.ba.infn.it:1094 #0] Unable to recover: [ERROR] Socket timeout.
+[2022-12-20 11:25:21.834340 +0100][Error  ][XRootD            ] [xrootd.ba.infn.it:1094] Impossible to send message kXR_open (file: /store/user/alesauva/flashgg/UL2017_4/10_6_4/WHiggs0L1ToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8/UL2017_4-10_6_4-v0-RunIISummer19UL17MiniAOD-106X_mc2017_realistic_v6-v2/200720_155007/0000/myMicroAODOutputFile_25.root?tried=stor91.datagrid.cea.fr, mode: 0660, flags: kXR_open_read kXR_async kXR_retstat ). Trying to recover.
+20-Dec-2022 11:25:57 CET  Closed file root://cms-xrd-global.cern.ch//store/user/alesauva/flashgg/UL2017_4/10_6_4/WHiggs0L1ToGG_M125_TuneCP5_13TeV-JHUGenV7011-pythia8/UL2017_4-10_6_4-v0-RunIISummer19UL17MiniAOD-106X_mc2017_realistic_v6-v2/200720_155007/0000/myMicroAODOutputFile_25.root
+
+TrigReport ---------- Event  Summary ------------
+TrigReport Events total = 25000 passed = 24642 failed = 358
+
+TrigReport ---------- Path   Summary ------------
+TrigReport  Trig Bit#   Executed     Passed     Failed      Error Name
+TrigReport     1    0      25000      24642        358          0 p
+
+TrigReport -------End-Path   Summary ------------
+TrigReport  Trig Bit#   Executed     Passed     Failed      Error Name
+
+TrigReport ---------- Modules in Path: p ------------
+TrigReport  Trig Bit#    Visited     Passed     Failed      Error Name
+TrigReport     1    0      25000      24642        358          0 flashggMetFilters
+TrigReport     1    1      24642      24642          0          0 VHFilter
+TrigReport     1    2      24642      24642          0          0 flashggDifferentialPhoIdInputsCorrection
+TrigReport     1    3      24642      24642          0          0 flashggDiPhotonSystematics
+TrigReport     1    4      24642      24642          0          0 flashggMetSystematics
+TrigReport     1    5      24642      24642          0          0 flashggMuonSystematics
+TrigReport     1    6      24642      24642          0          0 flashggElectronSystematics
+TrigReport     1    7      24642      24642          0          0 flashggUnpackedJets
+TrigReport     1    8      24642      24642          0          0 flashggJetSystematics0
+TrigReport     1    9      24642      24642          0          0 flashggJetSystematics1
+TrigReport     1   10      24642      24642          0          0 flashggJetSystematics2
+TrigReport     1   11      24642      24642          0          0 flashggJetSystematics3
+TrigReport     1   12      24642      24642          0          0 flashggJetSystematics4
+TrigReport     1   13      24642      24642          0          0 flashggJetSystematics5
+TrigReport     1   14      24642      24642          0          0 flashggJetSystematics6
+TrigReport     1   15      24642      24642          0          0 flashggJetSystematics7
+TrigReport     1   16      24642      24642          0          0 flashggJetSystematics8
+TrigReport     1   17      24642      24642          0          0 flashggJetSystematics9
+TrigReport     1   18      24642      24642          0          0 flashggJetSystematics10
+TrigReport     1   19      24642      24642          0          0 flashggJetSystematics11
+TrigReport     1   20      24642      24642          0          0 flashggPrefireDiPhotons
+TrigReport     1   21      24642      24642          0          0 flashggPreselectedDiPhotons
+TrigReport     1   22      24642      24642          0          0 flashggDiPhotonMVA
+TrigReport     1   23      24642      24642          0          0 flashggVBFMVA
+TrigReport     1   24      24642      24642          0          0 flashggVHhadMVA
+TrigReport     1   25      24642      24642          0          0 flashggGluGluHMVA
+TrigReport     1   26      24642      24642          0          0 flashggStageOneCombinedTag
+TrigReport     1   27      24642      24642          0          0 flashggTHQLeptonicTag
+TrigReport     1   28      24642      24642          0          0 flashggVHMetTag
+TrigReport     1   29      24642      24642          0          0 flashggWHLeptonicTag
+TrigReport     1   30      24642      24642          0          0 flashggZHLeptonicTag
+TrigReport     1   31      24642      24642          0          0 flashggTTHLeptonicTag
+TrigReport     1   32      24642      24642          0          0 flashggTTHHadronicTag
+TrigReport     1   33      24642      24642          0          0 flashggTagSorter
+TrigReport     1   34      24642      24642          0          0 flashggSystTagMerger
+TrigReport     1   35      24642      24642          0          0 tagsDumper
+
+TrigReport ---------- Module Summary ------------
+TrigReport    Visited   Executed     Passed     Failed      Error Name
+TrigReport      25000      25000      25000          0          0 TriggerResults
+TrigReport      24642      24642      24642          0          0 VHFilter
+TrigReport      24642      24642      24642          0          0 ak4PFCHSL1FastL2L3Corrector
+TrigReport      24642      24642      24642          0          0 ak4PFCHSL1FastjetCorrector
+TrigReport      24642      24642      24642          0          0 ak4PFCHSL2RelativeCorrector
+TrigReport      24642      24642      24642          0          0 ak4PFCHSL3AbsoluteCorrector
+TrigReport      24642      24642      24642          0          0 flashggDiPhotonMVA
+TrigReport      24642      24642      24642          0          0 flashggDiPhotonSystematics
+TrigReport      24642      24642      24642          0          0 flashggDifferentialPhoIdInputsCorrection
+TrigReport      24642      24642      24642          0          0 flashggElectronSystematics
+TrigReport      24642      24642      24642          0          0 flashggGluGluHMVA
+TrigReport      24642      24642      24642          0          0 flashggJetSystematics0
+TrigReport      24642      24642      24642          0          0 flashggJetSystematics1
+TrigReport      24642      24642      24642          0          0 flashggJetSystematics10
+TrigReport      24642      24642      24642          0          0 flashggJetSystematics11
+TrigReport      24642      24642      24642          0          0 flashggJetSystematics2
+TrigReport      24642      24642      24642          0          0 flashggJetSystematics3
+TrigReport      24642      24642      24642          0          0 flashggJetSystematics4
+TrigReport      24642      24642      24642          0          0 flashggJetSystematics5
+TrigReport      24642      24642      24642          0          0 flashggJetSystematics6
+TrigReport      24642      24642      24642          0          0 flashggJetSystematics7
+TrigReport      24642      24642      24642          0          0 flashggJetSystematics8
+TrigReport      24642      24642      24642          0          0 flashggJetSystematics9
+TrigReport      25000      25000      24642        358          0 flashggMetFilters
+TrigReport      24642      24642      24642          0          0 flashggMetSystematics
+TrigReport      24642      24642      24642          0          0 flashggMuonSystematics
+TrigReport      24642      24642      24642          0          0 flashggPrefireDiPhotons
+TrigReport      24642      24642      24642          0          0 flashggPreselectedDiPhotons
+TrigReport      24642      24642      24642          0          0 flashggStageOneCombinedTag
+TrigReport      24642      24642      24642          0          0 flashggSystTagMerger
+TrigReport      24642      24642      24642          0          0 flashggTHQLeptonicTag
+TrigReport      24642      24642      24642          0          0 flashggTTHHadronicTag
+TrigReport      24642      24642      24642          0          0 flashggTTHLeptonicTag
+TrigReport      24642      24642      24642          0          0 flashggTagSorter
+TrigReport      24642      24642      24642          0          0 flashggUnpackedJets
+TrigReport      24642      24642      24642          0          0 flashggVBFMVA
+TrigReport      24642      24642      24642          0          0 flashggVHMetTag
+TrigReport      24642      24642      24642          0          0 flashggVHhadMVA
+TrigReport      24642      24642      24642          0          0 flashggWHLeptonicTag
+TrigReport      24642      24642      24642          0          0 flashggZHLeptonicTag
+TrigReport      25000      25000      25000          0          0 p
+TrigReport      24642      24642      24642          0          0 tagsDumper
+
+TimeReport ---------- Event  Summary ---[sec]----
+TimeReport       event loop CPU/event = 0.155558
+TimeReport      event loop Real/event = 0.157047
+TimeReport     sum Streams Real/event = 0.152655
+TimeReport efficiency CPU/Real/thread = 0.990519
+
+TimeReport ---------- Path   Summary ---[Real sec]----
+TimeReport  per event     per exec  Name
+TimeReport   0.152163     0.152163  p
+TimeReport  per event     per exec  Name
+
+TimeReport -------End-Path   Summary ---[Real sec]----
+TimeReport  per event     per exec  Name
+TimeReport  per event     per exec  Name
+
+TimeReport ---------- Modules in Path: p ---[Real sec]----
+TimeReport  per event    per visit  Name
+TimeReport   0.000020     0.000020  flashggMetFilters
+TimeReport   0.000006     0.000006  VHFilter
+TimeReport   0.081884     0.083074  flashggDifferentialPhoIdInputsCorrection
+TimeReport   0.052517     0.053280  flashggDiPhotonSystematics
+TimeReport   0.000182     0.000184  flashggMetSystematics
+TimeReport   0.000048     0.000049  flashggMuonSystematics
+TimeReport   0.000040     0.000041  flashggElectronSystematics
+TimeReport   0.000238     0.000242  flashggUnpackedJets
+TimeReport   0.003985     0.004043  flashggJetSystematics0
+TimeReport   0.000749     0.000760  flashggJetSystematics1
+TimeReport   0.000671     0.000681  flashggJetSystematics2
+TimeReport   0.000651     0.000661  flashggJetSystematics3
+TimeReport   0.000637     0.000646  flashggJetSystematics4
+TimeReport   0.000630     0.000639  flashggJetSystematics5
+TimeReport   0.000625     0.000635  flashggJetSystematics6
+TimeReport   0.000624     0.000633  flashggJetSystematics7
+TimeReport   0.000621     0.000630  flashggJetSystematics8
+TimeReport   0.000615     0.000624  flashggJetSystematics9
+TimeReport   0.000615     0.000624  flashggJetSystematics10
+TimeReport   0.000613     0.000622  flashggJetSystematics11
+TimeReport   0.000336     0.000341  flashggPrefireDiPhotons
+TimeReport   0.000137     0.000139  flashggPreselectedDiPhotons
+TimeReport   0.000040     0.000041  flashggDiPhotonMVA
+TimeReport   0.000035     0.000035  flashggVBFMVA
+TimeReport   0.000019     0.000019  flashggVHhadMVA
+TimeReport   0.000061     0.000061  flashggGluGluHMVA
+TimeReport   0.000034     0.000035  flashggStageOneCombinedTag
+TimeReport   0.000398     0.000403  flashggTHQLeptonicTag
+TimeReport   0.000370     0.000376  flashggVHMetTag
+TimeReport   0.000042     0.000043  flashggWHLeptonicTag
+TimeReport   0.000020     0.000021  flashggZHLeptonicTag
+TimeReport   0.000186     0.000189  flashggTTHLeptonicTag
+TimeReport   0.001467     0.001489  flashggTTHHadronicTag
+TimeReport   0.000087     0.000089  flashggTagSorter
+TimeReport   0.000004     0.000004  flashggSystTagMerger
+TimeReport   0.000320     0.000325  tagsDumper
+TimeReport  per event    per visit  Name
+
+TimeReport ---------- Module Summary ---[Real sec]----
+TimeReport  per event     per exec    per visit  Name
+TimeReport   0.000003     0.000003     0.000003  TriggerResults
+TimeReport   0.000006     0.000006     0.000006  VHFilter
+TimeReport   0.000003     0.000003     0.000003  ak4PFCHSL1FastL2L3Corrector
+TimeReport   0.000003     0.000003     0.000003  ak4PFCHSL1FastjetCorrector
+TimeReport   0.000002     0.000002     0.000002  ak4PFCHSL2RelativeCorrector
+TimeReport   0.000012     0.000012     0.000012  ak4PFCHSL3AbsoluteCorrector
+TimeReport   0.000040     0.000041     0.000041  flashggDiPhotonMVA
+TimeReport   0.052517     0.053280     0.053280  flashggDiPhotonSystematics
+TimeReport   0.081884     0.083074     0.083074  flashggDifferentialPhoIdInputsCorrection
+TimeReport   0.000040     0.000041     0.000041  flashggElectronSystematics
+TimeReport   0.000061     0.000061     0.000061  flashggGluGluHMVA
+TimeReport   0.003985     0.004043     0.004043  flashggJetSystematics0
+TimeReport   0.000749     0.000760     0.000760  flashggJetSystematics1
+TimeReport   0.000615     0.000624     0.000624  flashggJetSystematics10
+TimeReport   0.000613     0.000622     0.000622  flashggJetSystematics11
+TimeReport   0.000671     0.000681     0.000681  flashggJetSystematics2
+TimeReport   0.000651     0.000661     0.000661  flashggJetSystematics3
+TimeReport   0.000637     0.000646     0.000646  flashggJetSystematics4
+TimeReport   0.000630     0.000639     0.000639  flashggJetSystematics5
+TimeReport   0.000625     0.000635     0.000635  flashggJetSystematics6
+TimeReport   0.000624     0.000633     0.000633  flashggJetSystematics7
+TimeReport   0.000621     0.000630     0.000630  flashggJetSystematics8
+TimeReport   0.000615     0.000624     0.000624  flashggJetSystematics9
+TimeReport   0.000020     0.000020     0.000020  flashggMetFilters
+TimeReport   0.000182     0.000184     0.000184  flashggMetSystematics
+TimeReport   0.000048     0.000049     0.000049  flashggMuonSystematics
+TimeReport   0.000336     0.000341     0.000341  flashggPrefireDiPhotons
+TimeReport   0.000137     0.000139     0.000139  flashggPreselectedDiPhotons
+TimeReport   0.000034     0.000035     0.000035  flashggStageOneCombinedTag
+TimeReport   0.000004     0.000004     0.000004  flashggSystTagMerger
+TimeReport   0.000398     0.000403     0.000403  flashggTHQLeptonicTag
+TimeReport   0.001467     0.001489     0.001489  flashggTTHHadronicTag
+TimeReport   0.000186     0.000189     0.000189  flashggTTHLeptonicTag
+TimeReport   0.000087     0.000089     0.000089  flashggTagSorter
+TimeReport   0.000238     0.000242     0.000242  flashggUnpackedJets
+TimeReport   0.000035     0.000035     0.000035  flashggVBFMVA
+TimeReport   0.000370     0.000376     0.000376  flashggVHMetTag
+TimeReport   0.000019     0.000019     0.000019  flashggVHhadMVA
+TimeReport   0.000042     0.000043     0.000043  flashggWHLeptonicTag
+TimeReport   0.000020     0.000021     0.000021  flashggZHLeptonicTag
+TimeReport   0.000003     0.000003     0.000003  p
+TimeReport   0.000320     0.000325     0.000325  tagsDumper
+TimeReport  per event     per exec    per visit  Name
+
+T---Report end!
+
+
+=============================================
+
+MessageLogger Summary
+
+ type     category        sev    module        subroutine        count    total
+ ---- -------------------- -- ---------------- ----------------  -----    -----
+    1 XrdAdaptor           -w file_open                              1        1
+    2 fileAction           -s file_close                             1        1
+    3 fileAction           -s file_open                              2        2
+
+ type    category    Examples: run/evt        run/evt          run/evt
+ ---- -------------------- ---------------- ---------------- ----------------
+    1 XrdAdaptor           pre-events                        
+    2 fileAction           PostGlobalEndRun                  
+    3 fileAction           pre-events       pre-events       
+
+Severity    # Occurrences   Total Occurrences
+--------    -------------   -----------------
+Warning                 1                   1
+System                  3                   3
+
+dropped waiting message count 0
