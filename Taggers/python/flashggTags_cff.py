@@ -489,7 +489,8 @@ flashggVHMetTag = cms.EDProducer("FlashggVHMetTagProducer",
                                     jetPtThreshold              = cms.double(20.),
                                     jetEtaThreshold             = cms.double(2.4),
                                     deltaRJetPhoThreshold       = cms.double(0.4),
-                                    vhmetanom_fa3zh_bdt_xmlfile = cms.FileInPath('flashgg/Taggers/data/VH_Anomalous/VHMet/VHMET_ZHiggs0MToGG_M125_withjet.xml'),
+                                    # vhmetanom_fa3zh_bdt_xmlfile = cms.FileInPath('flashgg/Taggers/data/VH_Anomalous/VHMet/VHMET_ZHiggs0MToGG_M125_withjet.xml'),
+                                    vhmetanom_fa3zh_bdt_xmlfile = cms.FileInPath('flashgg/Taggers/data/VH_Anomalous/VHMet/v2/VHMET_ZHiggs0MToGG_M125_model_v2.xml'),
 )
 
 flashggZHLeptonicTag = cms.EDProducer("FlashggZHLeptonicTagProducer",

@@ -351,15 +351,24 @@ namespace flashgg {
             MVAvarList.pho2_phi         = dipho->subLeadingPhoton()->phi();
             MVAvarList.pho1_ptoM        = _pho1_ptoM; 
             MVAvarList.pho2_ptoM        = _pho2_ptoM;
+            MVAvarList.pho1_R9          = dipho->leadingPhoton()->full5x5_r9();
+            MVAvarList.pho2_R9          = dipho->subLeadingPhoton()->full5x5_r9();
+            MVAvarList.pho1_sieie       = dipho->leadingPhoton()->sigmaIetaIeta();
+            MVAvarList.pho2_sieie       = dipho->subLeadingPhoton()->sigmaIetaIeta();
             MVAvarList.dipho_cosphi     = _dipho_cosphi;
             MVAvarList.dipho_deltaeta   = fabs(_pho1_eta - _pho2_eta);
             MVAvarList.met              = _met;
+            MVAvarList.met_phi          = theMET->getCorPhi();
             MVAvarList.met_sumEt        = _met_sumEt;
-            MVAvarList.dphi_dipho_met   = _dphi_dipho_met;
+            // MVAvarList.dphi_dipho_met   = _dphi_dipho_met;
+            MVAvarList.dphi_pho1_met    = fabs( deltaPhi(theMET->getCorPhi(), dipho->leadingPhoton()->phi()) );
+            MVAvarList.dphi_pho2_met    = fabs( deltaPhi(theMET->getCorPhi(), dipho->subLeadingPhoton()->phi()) );
             MVAvarList.pt_balance       = _pt_balance; 
             MVAvarList.njet             = _njet;
             MVAvarList.max_jet_pt       = _max_jet_pt;
             MVAvarList.min_dphi_jet_met = _min_dphi_jet_met;
+
+            //MVAvarList.pho1_r9        = dipho->leadingPhoton()->full5x5_r9()
 
             // init mva scores correspond to bkg
             double raw_scroe_anom_fa3zh = -1.;
