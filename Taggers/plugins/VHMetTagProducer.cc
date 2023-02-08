@@ -391,8 +391,8 @@ namespace flashgg {
                 tag_obj.setACMVAfa3d0ZH(raw_scroe_anom_fa3zh);
 
                 // Check anom variable 
-                std::cout << "anom_mva_score = " << raw_scroe_anom_fa3zh << std::endl;
-                vhmetacTagger->print_details_cout(MVAvarList);
+                //std::cout << "anom_mva_score = " << raw_scroe_anom_fa3zh << std::endl;
+                //vhmetacTagger->print_details_cout(MVAvarList);
 
                 if( ! evt.isRealData() ) {
                     tag_obj.setAssociatedZ( associatedZ );
