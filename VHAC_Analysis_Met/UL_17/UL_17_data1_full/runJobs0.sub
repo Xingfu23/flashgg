@@ -1,0 +1,17 @@
++JobFlavour   = "testmatch"
+
++OnExitHold   = ExitStatus != 0 
+
+periodic_release =  (NumJobStarts < 4) && ((CurrentTime - EnteredCurrentStatus) > 60) 
+
+getenv        = True 
+input         = /afs/cern.ch/user/x/xisu/.dasmaps/das_maps_dbs_prod.js 
+executable    = /afs/cern.ch/user/x/xisu/private/local/Analysis_workspace/VH_AC_tmp1/flashgg_d2/CMSSW_10_6_29/src/flashgg/VHAC_Analysis_Met/UL_17/UL_17_data1_full/runJobs0.sh
+arguments     = $(ProcId)
+output        = /afs/cern.ch/user/x/xisu/private/local/Analysis_workspace/VH_AC_tmp1/flashgg_d2/CMSSW_10_6_29/src/flashgg/VHAC_Analysis_Met/UL_17/UL_17_data1_full/runJobs0_$(ClusterId).$(ProcId).out
+error         = /afs/cern.ch/user/x/xisu/private/local/Analysis_workspace/VH_AC_tmp1/flashgg_d2/CMSSW_10_6_29/src/flashgg/VHAC_Analysis_Met/UL_17/UL_17_data1_full/runJobs0_$(ClusterId).$(ProcId).err
+log           = /afs/cern.ch/user/x/xisu/private/local/Analysis_workspace/VH_AC_tmp1/flashgg_d2/CMSSW_10_6_29/src/flashgg/VHAC_Analysis_Met/UL_17/UL_17_data1_full/runJobs0_$(ClusterId).$(ProcId)_htc.log
+
+RequestCpus   = 1
+max_retries   = 2
+queue 50 
