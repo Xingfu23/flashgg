@@ -59,7 +59,7 @@ class StageOneCustomize():
             cms.PSet(TagName = cms.InputTag('flashggWHLeptonicTag')),
             cms.PSet(TagName = cms.InputTag('flashggTTHHadronicTag')),   
             cms.PSet(TagName = cms.InputTag('flashggVHMetTag')),
-            #cms.PSet(TagName = cms.InputTag('flashggStageOneCombinedTag'))
+            # cms.PSet(TagName = cms.InputTag('flashggStageOneCombinedTag'))
         )
         self.customizeTagSequence()
 
