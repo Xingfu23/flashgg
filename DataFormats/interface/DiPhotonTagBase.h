@@ -46,7 +46,9 @@ namespace flashgg {
                              RECO_TTH_HAD_PTH_120_200_Tag0, RECO_TTH_HAD_PTH_120_200_Tag1, RECO_TTH_HAD_PTH_120_200_Tag2, RECO_TTH_HAD_PTH_120_200_Tag3,
                              RECO_TTH_HAD_PTH_200_300_Tag0, RECO_TTH_HAD_PTH_200_300_Tag1, RECO_TTH_HAD_PTH_200_300_Tag2, 
                              RECO_TTH_HAD_PTH_GT300_Tag0, RECO_TTH_HAD_PTH_GT300_Tag1,
-                             RECO_THQ_LEP };
+                             RECO_THQ_LEP, 
+                             RECO_VH_MET_Tag3, RECO_VH_MET_Tag4 // these are the new VH MET AC tags
+                            };
 
         DiPhotonTagBase();
         virtual ~DiPhotonTagBase(); 

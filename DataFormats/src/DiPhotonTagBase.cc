@@ -209,6 +209,10 @@ string DiPhotonTagBase::stage1KinematicLabel() const {
         return string("RECO_VH_MET_Tag1");
     case stage1recoTag::RECO_VH_MET_Tag2:
         return string("RECO_VH_MET_Tag2");
+    case stage1recoTag::RECO_VH_MET_Tag3:
+        return string("RECO_VH_MET_Tag3"); // VH MET AC Cat
+    case stage1recoTag::RECO_VH_MET_Tag4:
+        return string("RECO_VH_MET_Tag4"); // VH MET AC Cat
     case stage1recoTag::RECO_TTH_LEP_PTH_0_60_Tag0:
         return string("RECO_TTH_LEP_PTH_0_60_Tag0");
     case stage1recoTag::RECO_TTH_LEP_PTH_0_60_Tag1:

@@ -38,7 +38,8 @@ namespace flashgg {
         VHMetTagProducer( const ParameterSet & );
     private:
         void produce( Event &, const EventSetup & ) override;
-        int  chooseCategory( float );
+        //int  chooseCategory( float );
+        int chooseCategory( float, float );
 
         EDGetTokenT<View<DiPhotonCandidate> > diPhotonToken_;
         EDGetTokenT<View<DiPhotonMVAResult> > mvaResultToken_;
@@ -93,6 +94,9 @@ namespace flashgg {
         FileInPath VHMetAnomMVA_fa3zh_weightfile;
         InputVariables MVAvarList;
         VHMET_BDT_Helper *vhmetacTagger;
+
+        vector<double> ac_boundaries_fa3_bin0;
+        vector<double> ac_boundaries_fa3_bin1;
     };
 
     VHMetTagProducer::VHMetTagProducer( const ParameterSet &iConfig ) :
@@ -167,16 +171,46 @@ namespace flashgg {
         //VHMetACMVA:fa3
         VHMetAnomMVA_fa3zh_weightfile = iConfig.getParameter<edm::FileInPath> ( "vhmetanom_fa3zh_bdt_xmlfile" );
         vhmetacTagger = new VHMET_BDT_Helper("BDT", VHMetAnomMVA_fa3zh_weightfile.fullPath());
+
+        ac_boundaries_fa3_bin0 = iConfig.getParameter<vector<double > >("AC_boundaries_fa3_bin0");
+        ac_boundaries_fa3_bin1 = iConfig.getParameter<vector<double > >("AC_boundaries_fa3_bin1");
+        assert( is_sorted( ac_boundaries_fa3_bin0.begin(), ac_boundaries_fa3_bin0.end() ) ); // we are counting on ascending order - update this to give an error message or exception
+        assert( is_sorted( ac_boundaries_fa3_bin1.begin(), ac_boundaries_fa3_bin1.end() ) ); // we are counting on ascending order - update this to give an error message or exception
     }
 
-    int VHMetTagProducer::chooseCategory( float mva )
+    int VHMetTagProducer::chooseCategory( float mva, float ac_mva )
     {
-        // should return 0 if mva above all the numbers, 1 if below the first, ..., boundaries.size()-N if below the Nth, ...
+        //! Note that its only valid for stxs got 2 bins and ac_1 got 2 bins and ac_2 got 3 bins
+        //! If the categories decision changes, this function should be updated
+        
         int n;
-        for( n = 0 ; n < ( int )boundaries.size() ; n++ ) {
-            if( ( double )mva > boundaries[boundaries.size() - n - 1] ) { return n; }
+
+        if (mva > boundaries[1]) {
+            if (ac_mva > ac_boundaries_fa3_bin0[0]) {
+                n = 0;
+            } else {
+                n = 1;
+            }
+        } else if (mva > boundaries[0] && mva <= boundaries[1]) {
+            if (ac_mva > ac_boundaries_fa3_bin1[1]) {
+                n = 2;
+            } else if (ac_mva > ac_boundaries_fa3_bin0[0] && ac_mva <= ac_boundaries_fa3_bin1[1]) {
+                n = 3;
+            } else {
+                n = 4;
+            }
+        } else {
+            n = -1; // Does not pass, object will not be produced
         }
-        return -1; // Does not pass, object will not be produced
+
+        return n;
+        // should return 0 if mva above all the numbers, 1 if below the first, ..., boundaries.size()-N if below the Nth, ...
+        // int n;
+        // for( n = 0 ; n < ( int )boundaries.size() ; n++ ) {
+        //     if( ( double )mva > boundaries[boundaries.size() - n - 1] ) { return n; }
+        // }
+
+        //return -1; // Does not pass, object will not be produced
     }
  
     void VHMetTagProducer::produce( Event &evt, const EventSetup & )
@@ -376,7 +410,15 @@ namespace flashgg {
 
             // Categorization by ZHMVA
             //int catnum = chooseCategory( vhmetmva );
-            int catnum = 0; // Force all event fall into VHMET_Tag0 without losing events.
+
+            int catnum = chooseCategory(vhmetmva, raw_scroe_anom_fa3zh);
+            //int catnum = 0; // Force all event fall into VHMET_Tag0 without losing events.
+
+            // Check catnum
+            // std::cout << "stxsmetmva_score: " << vhmetmva << std::endl;
+            // std::cout << "anom_mva_score: " << raw_scroe_anom_fa3zh << std::endl;
+            // std::cout << "catnum: " << catnum << std::endl;
+        
             
             if ( catnum != -1 ) {
                 VHMetTag tag_obj( dipho, mvares );
@@ -403,13 +445,32 @@ namespace flashgg {
                     tag_obj.setVpt( Vpt );
                 }
 
-                if( catnum == 0 ) { 
-                    tag_obj.setStage1recoTag( DiPhotonTagBase::stage1recoTag::RECO_VH_MET_Tag0 );
-                } else if ( catnum == 1 ) {
-                    tag_obj.setStage1recoTag( DiPhotonTagBase::stage1recoTag::RECO_VH_MET_Tag1 );
-                } else if ( catnum == 2 ) {
-                    tag_obj.setStage1recoTag( DiPhotonTagBase::stage1recoTag::RECO_VH_MET_Tag2 );
+                // if( catnum == 0 ) { 
+                //     tag_obj.setStage1recoTag( DiPhotonTagBase::stage1recoTag::RECO_VH_MET_Tag0 );
+                // } else if ( catnum == 1 ) {
+                //     tag_obj.setStage1recoTag( DiPhotonTagBase::stage1recoTag::RECO_VH_MET_Tag1 );
+                // } else if ( catnum == 2 ) {
+                //     tag_obj.setStage1recoTag( DiPhotonTagBase::stage1recoTag::RECO_VH_MET_Tag2 );
+                // }
+
+                switch (catnum) {
+                    case 0:
+                        tag_obj.setStage1recoTag(DiPhotonTagBase::stage1recoTag::RECO_VH_MET_Tag0);
+                        break;
+                    case 1:
+                        tag_obj.setStage1recoTag(DiPhotonTagBase::stage1recoTag::RECO_VH_MET_Tag1);
+                        break;
+                    case 2:
+                        tag_obj.setStage1recoTag(DiPhotonTagBase::stage1recoTag::RECO_VH_MET_Tag2);
+                        break;
+                    case 3:
+                        tag_obj.setStage1recoTag(DiPhotonTagBase::stage1recoTag::RECO_VH_MET_Tag3);
+                        break;
+                    case 4:
+                        tag_obj.setStage1recoTag(DiPhotonTagBase::stage1recoTag::RECO_VH_MET_Tag4);
+                        break;
                 }
+
 
                 vhettags->push_back( tag_obj );
 
