@@ -10,7 +10,8 @@ class StageOneCustomize():
         self.customize = customize
         self.metaConditions = metaConditions
         self.modifyForttH = True
-        self.tagList = [["RECO_VH_MET_Tag0",0]]
+        self.tagList = [["RECO_VH_MET_Tag0",0], ["RECO_VH_MET_Tag1",0], ["RECO_VH_MET_Tag2",0], ["RECO_VH_MET_Tag3",0], ["RECO_VH_MET_Tag4",0]] # for AC VH MET Analysis
+        #self.tagList = [["RECO_VH_MET_Tag0",0]]
         '''
         self.tagList = [
             ["LOGICERROR",0], ["NOTAG",0], 
