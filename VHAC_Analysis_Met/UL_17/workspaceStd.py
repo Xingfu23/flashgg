@@ -5,7 +5,7 @@ import FWCore.Utilities.FileUtils as FileUtils
 import FWCore.ParameterSet.VarParsing as VarParsing
 from flashgg.Systematics.SystematicDumperDefaultVariables import minimalVariables,minimalHistograms,minimalNonSignalVariables,systematicVariables
 from flashgg.Systematics.SystematicDumperDefaultVariables import minimalVariablesHTXS,systematicVariablesHTXS
-from flashgg.Taggers.VHLeptonicTagsVariables_cfi import dipho_variables, jet_variables, met_variables
+from flashgg.Taggers.VHLeptonicTagsVariables_cfi import dipho_variables, jet_variables, met_variables, gen_variables, ele_variables, mu_variables
 import os
 import copy
 from flashgg.MetaData.MetaConditionsReader import *
@@ -21,6 +21,7 @@ process.load("Configuration.StandardSequences.MagneticField_cff")
 process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_condDBv2_cff")
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 process.MessageLogger.cerr.FwkReport.reportEvery = cms.untracked.int32( 1000 )
+SkipEvent = cms.untracked.vstring('ProductNotFound')
 
 
 systlabels = [""]
@@ -320,7 +321,7 @@ if is_signal:
         if customize.dumpWorkspace:
             variablesToUse = minimalVariables
         else:
-            variablesToUse = minimalVariables + dipho_variables + jet_variables + met_variables
+            variablesToUse = minimalVariables + dipho_variables + jet_variables + met_variables + gen_variables + ele_variables + mu_variables
 
     if customize.doSystematics:
         for direction in ["Up","Down"]:
@@ -383,14 +384,14 @@ elif customize.processId == "Data":
     if customize.dumpWorkspace:
         variablesToUse = minimalNonSignalVariables
     else:
-        variablesToUse = minimalNonSignalVariables + dipho_variables + jet_variables + met_variables
+        variablesToUse = minimalNonSignalVariables + dipho_variables + jet_variables + met_variables + gen_variables
     customizeSystematicsForData(process)
 else:
     print "Background MC, so store mgg and central only"
     if customize.dumpWorkspace:
         variablesToUse = minimalNonSignalVariables
     else:
-        variablesToUse = minimalNonSignalVariables + dipho_variables + jet_variables + met_variables
+        variablesToUse = minimalNonSignalVariables + dipho_variables + jet_variables + met_variables + gen_variables
     customizeSystematicsForBackground(process)
 
 if customize.doubleHTagsOnly:
