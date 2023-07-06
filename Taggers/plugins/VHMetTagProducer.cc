@@ -91,9 +91,14 @@ namespace flashgg {
 
         
         // VHMet AC MVA
-        FileInPath VHMetAnomMVA_fa3zh_weightfile;
+        FileInPath VHMetAnomMVA_fa3_weightfile;
+        // FileInPath VHMetAnomMVA_fa2_weightfile;
+        // FileInPath VHMetAnomMVA_faL1_weightfile;
+        VHMET_BDT_Helper *vhmetacTagger_fa3;
+        // VHMET_BDT_Helper *vhmetacTagger_fa2;
+        // VHMET_BDT_Helper *vhmetacTagger_faL1;
+
         InputVariables MVAvarList;
-        VHMET_BDT_Helper *vhmetacTagger;
 
         vector<double> ac_boundaries_fa3_bin0;
         vector<double> ac_boundaries_fa3_bin1;
@@ -168,9 +173,17 @@ namespace flashgg {
         produces<vector<VHMetTag> >();
         produces<vector<VHTagTruth> >();
 
-        //VHMetACMVA:fa3
-        VHMetAnomMVA_fa3zh_weightfile = iConfig.getParameter<edm::FileInPath> ( "vhmetanom_fa3zh_bdt_xmlfile" );
-        vhmetacTagger = new VHMET_BDT_Helper("BDT", VHMetAnomMVA_fa3zh_weightfile.fullPath());
+        // VHMetACMVA:fa3
+        VHMetAnomMVA_fa3_weightfile = iConfig.getParameter<edm::FileInPath> ( "vhmetanom_fa3_bdt_xmlfile" );
+        vhmetacTagger_fa3 = new VHMET_BDT_Helper("BDT", VHMetAnomMVA_fa3_weightfile.fullPath());
+
+        // VHMetACMVA:fa2
+        // VHMetAnomMVA_fa2_weightfile = iConfig.getParameter<edm::FileInPath> ( "vhmetanom_fa2_bdt_xmlfile" );
+        // vhmetacTagger_fa2 = new VHMET_BDT_Helper("BDT", VHMetAnomMVA_fa2_weightfile.fullPath());
+
+        // VHMetACMVA:faL1
+        // VHMetAnomMVA_faL1_weightfile = iConfig.getParameter<edm::FileInPath> ( "vhmetanom_faL1_bdt_xmlfile" );
+        // vhmetacTagger_faL1 = new VHMET_BDT_Helper("BDT", VHMetAnomMVA_faL1_weightfile.fullPath());
 
         ac_boundaries_fa3_bin0 = iConfig.getParameter<vector<double > >("AC_boundaries_fa3_bin0");
         ac_boundaries_fa3_bin1 = iConfig.getParameter<vector<double > >("AC_boundaries_fa3_bin1");
@@ -402,21 +415,23 @@ namespace flashgg {
             MVAvarList.max_jet_pt       = _max_jet_pt;
             MVAvarList.min_dphi_jet_met = _min_dphi_jet_met;
 
-            //MVAvarList.pho1_r9        = dipho->leadingPhoton()->full5x5_r9()
-
             // init mva scores correspond to bkg
-            double raw_scroe_anom_fa3zh = -1.;
-            raw_scroe_anom_fa3zh = vhmetacTagger->evaluate("BDT", MVAvarList);
+            double raw_score_anom_fa3zh = -1.;
+            raw_score_anom_fa3zh = vhmetacTagger_fa3->evaluate("BDT", MVAvarList);
+            // double raw_score_anom_fa2zh = -1.;
+            // raw_score_anom_fa2zh = vhmetacTagger_fa2->evaluate("BDT", MVAvarList);
+            // double raw_score_anom_faL1zh = -1.;
+            // raw_score_anom_faL1zh = vhmetacTagger_faL1->evaluate("BDT", MVAvarList);
 
             // Categorization by ZHMVA
             //int catnum = chooseCategory( vhmetmva );
 
-            int catnum = chooseCategory(vhmetmva, raw_scroe_anom_fa3zh);
-            //int catnum = 0; // Force all event fall into VHMET_Tag0 without losing events.
+            int catnum = chooseCategory(vhmetmva, raw_score_anom_fa3zh);
+            // int catnum = 0; // Force all event fall into VHMET_Tag0 without losing events.
 
             // Check catnum
             // std::cout << "stxsmetmva_score: " << vhmetmva << std::endl;
-            // std::cout << "anom_mva_score: " << raw_scroe_anom_fa3zh << std::endl;
+            // std::cout << "anom_mva_score: " << raw_score_anom_fa3zh << std::endl;
             // std::cout << "catnum: " << catnum << std::endl;
         
             
@@ -430,10 +445,10 @@ namespace flashgg {
                 tag_obj.setMet( theMET );
                 tag_obj.setMinDeltaPhiJetMet(minDeltaPhiJetMet);
                 tag_obj.setMaxJetDeepCSV(max_jet_dCSV);
-                tag_obj.setACMVAfa3d0ZH(raw_scroe_anom_fa3zh);
+                tag_obj.setACMVAfa3d0ZH(raw_score_anom_fa3zh);
 
                 // Check anom variable 
-                //std::cout << "anom_mva_score = " << raw_scroe_anom_fa3zh << std::endl;
+                //std::cout << "anom_mva_score = " << raw_score_anom_fa3zh << std::endl;
                 //vhmetacTagger->print_details_cout(MVAvarList);
 
                 if( ! evt.isRealData() ) {
