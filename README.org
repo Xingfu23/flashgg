@@ -1,5 +1,24 @@
 * flashgg
 
+** Special Instuctions of AC users
+   Install the following in the CMSSW src area as this is required by VBF 
+   #+BEGIN_EXAMPLE
+      # Look at /afs/cern.ch/work/e/emanuele/hc/vbfhgg/flashgg/CMSSW_10_6_29/src/checkout_10X.csh 
+      #MELA Analytics
+      git clone git@github.com:emanueledimarco/MelaAnalytics.git
+      (cd MelaAnalytics; git checkout -b MELA-weights)
+
+      #Common LHE tools
+      git clone https://github.com/usarica/CommonLHETools.git
+      (cd CommonLHETools; git checkout -b from-v135 v1.3.5)
+
+      #MELA
+      git clone https://github.com/JHUGen/JHUGenMELA.git JHUGenMELA
+      (cd JHUGenMELA; git checkout -b from-v235 v2.3.5)
+   #+END_EXAMPLE
+
+   
+
 ** Introduction
    The basic instructions to setup and run flashgg are described here and in corresponding READMEs 
    in subdirectories of the repository.

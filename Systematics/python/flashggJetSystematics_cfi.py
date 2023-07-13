@@ -1,6 +1,7 @@
 import os
 import FWCore.ParameterSet.Config as cms
 import flashgg.Systematics.settings as settings
+from flashgg.MetaData.JobConfig import customize #Loading customize to get access to the options to disable JEC/JER
 
 #https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideBTagMCTools#Hadron_parton_based_jet_flavour
 #B Tag MC efficiencies
@@ -275,12 +276,13 @@ class jetSystematicsCustomize:
       self.process.jetCorrectorChain = cms.Sequence(self.process.ak4PFCHSL1FastL2L3CorrectorChain)
       self.process.jetSystematicsSequence = cms.Sequence(self.process.jetCorrectorChain)
       systematicsInputList = cms.VInputTag()
-      for jetInputTag in replaceTagList:
-         module,tag = self.createJetSystematicsForTag(jetInputTag)
-         self.process.jetSystematicsSequence += module
-         systematicsInputList.append(tag)
-         self.createJECESource()
-         self.createJERESource()
+      if not customize.disableJEC: #  (Part of fastDebug) If true, we skip the for loop for JetInputTag
+         for jetInputTag in replaceTagList:
+            module,tag = self.createJetSystematicsForTag(jetInputTag)
+            self.process.jetSystematicsSequence += module
+            systematicsInputList.append(tag)
+            self.createJECESource()
+            self.createJERESource()
       return systematicsInputList
 
    def createJECESource(self):

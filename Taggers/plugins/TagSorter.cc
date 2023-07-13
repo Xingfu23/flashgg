@@ -70,7 +70,11 @@ namespace flashgg {
         bool isGluonFusion_;
         FileInPath NNLOPSWeightFile_;
         std::vector<std::unique_ptr<TGraph> > NNLOPSWeights_;
+        edm::EDGetTokenT<std::vector<std::string>> melaWeightsLabels_;
+        edm::EDGetTokenT<std::vector<float>> melaWeightsValues_;
+        
         bool applyNNLOPSweight_;
+        bool storeMELAweights_;
 
         bool debug_;
         bool storeOtherTagInfo_;
@@ -112,6 +116,10 @@ namespace flashgg {
         if( isGluonFusion_ && applyNNLOPSweight_ ) {
             std::cout << "[WARNING]: configuration is set to reweigh from madgraph to NNLOPS, please check this is a ggH sample" << std::endl;
         }
+
+        melaWeightsLabels_ = consumes<std::vector<std::string> >(iConfig.getParameter<InputTag>("melaWeightsLabels"));
+        melaWeightsValues_ = consumes<std::vector<float> >(iConfig.getParameter<InputTag>("melaWeightsValues"));
+        storeMELAweights_ = iConfig.getParameter<bool>("storeMELAweights");
 
         debug_ = iConfig.getUntrackedParameter<bool>( "Debug", false );
         storeOtherTagInfo_ = iConfig.getParameter<bool>( "StoreOtherTagInfo" );
@@ -292,6 +300,15 @@ namespace flashgg {
                                 }
                             }
                         }
+                        if( storeMELAweights_ ) {
+                            Handle<std::vector<std::string> > melaLabels;
+                            Handle<std::vector<float> > melaValues;
+                            evt.getByToken( melaWeightsLabels_, melaLabels); 
+                            evt.getByToken( melaWeightsValues_, melaValues);
+                            for (unsigned int iw=0; iw<melaLabels->size(); ++iw) {
+                                truth.setMelaWeight(melaLabels->at(iw), melaValues->at(iw));
+                            }
+                        }
                         SelectedTagTruth->push_back( truth );
                         SelectedTag->back().setTagTruth( edm::refToPtr( edm::Ref<edm::OwnVector<TagTruthBase> >( rTagTruth, 0 ) ) ); // Normally this 0 would be the index number
                     }
@@ -381,6 +398,10 @@ namespace flashgg {
                     std::cout << "* HTXS njets, pTH, pTV: " << SelectedTagTruth->back().HTXSnjets() << ", "
                               << SelectedTagTruth->back().HTXSpTH() << ", "
                               << SelectedTagTruth->back().HTXSpTV() << std::endl;
+                    if( storeMELAweights_ ) {
+                        std::cout << "* MELA weights: 0M, 0PH: " << SelectedTagTruth->back().weight("h0m") << ", "
+                                  << SelectedTagTruth->back().weight("h0ph") << std::endl;
+                    }
                 }
                 std::cout << "******************************" << std::endl;
             }
@@ -428,6 +449,15 @@ namespace flashgg {
                     }
                 }
             }
+            if( storeMELAweights_ ) {
+                Handle<std::vector<std::string> > melaLabels;
+                Handle<std::vector<float> > melaValues;
+                evt.getByToken( melaWeightsLabels_, melaLabels); 
+                evt.getByToken( melaWeightsValues_, melaValues);
+                for (unsigned int iw=0; iw<melaLabels->size(); ++iw) {
+                    truth_obj.setMelaWeight(melaLabels->at(iw), melaValues->at(iw));
+                }
+            }
             SelectedTagTruth->push_back(truth_obj);
             SelectedTag->back().setTagTruth( edm::refToPtr( edm::Ref<edm::OwnVector<TagTruthBase> >( rTagTruth, 0 ) ) );
             if( SelectedTagTruth->size() != 0 && debug_ ) {
@@ -469,6 +499,8 @@ namespace flashgg {
             return string("VHLoose");
         case DiPhotonTagBase::tag_t::kVHHadronic:
             return string("VHHadronic");
+        case DiPhotonTagBase::tag_t::kVHHadronicAC:
+            return string("VHHadronicAC");
         case DiPhotonTagBase::tag_t::kVHEt:
             return string("VHEt");
         case DiPhotonTagBase::tag_t::kZHLeptonic:

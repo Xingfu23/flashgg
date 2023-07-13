@@ -32,6 +32,8 @@
 #include "flashgg/DataFormats/interface/VHhadMVAResult.h"
 #include "flashgg/DataFormats/interface/GluGluHMVAResult.h"
 #include "flashgg/DataFormats/interface/VHHadronicTag.h"
+#include "flashgg/DataFormats/interface/VHhadACDNNResult.h"
+#include "flashgg/DataFormats/interface/VHHadronicACTag.h"
 #include "flashgg/DataFormats/interface/VHLooseTag.h"
 #include "flashgg/DataFormats/interface/VHTightTag.h"
 #include "flashgg/DataFormats/interface/WHLeptonicTag.h"
@@ -193,6 +195,10 @@ namespace  {
         std::vector<flashgg::VHhadMVAResult> vec_vhHad_res;
         edm::Wrapper<std::vector<flashgg::VHhadMVAResult> > wrp_vec_vhHad_res;
 
+        flashgg::VHhadACDNNResult vhHadAC_dnnres;
+        std::vector<flashgg::VHhadACDNNResult> vec_vhHadAC_dnnres;
+        edm::Wrapper<std::vector<flashgg::VHhadACDNNResult> > wrp_vec_vhHadAC_dnnres;
+
         flashgg::GluGluHMVAResult ggh_res;                                                            
         std::vector<flashgg::GluGluHMVAResult> vec_ggh_res;                                           
         edm::Wrapper<std::vector<flashgg::GluGluHMVAResult> > wrp_vec_ggh_res; 
@@ -295,6 +301,10 @@ namespace  {
         flashgg::VHHadronicTag vhhad;
         std::vector<flashgg::VHHadronicTag> vec_vhhad;
         edm::Wrapper<std::vector<flashgg::VHHadronicTag> > wrp_vec_vhhad;
+
+        flashgg::VHHadronicACTag vhhadac;
+        std::vector<flashgg::VHHadronicACTag> vec_vhhadac;
+        edm::Wrapper<std::vector<flashgg::VHHadronicACTag> > wrp_vec_vhhadac;
 
         flashgg::VHMetTag vhmet;
         std::vector<flashgg::VHMetTag> vec_vhmet;

@@ -78,7 +78,8 @@ flashggTTHHadronicTag = cms.EDProducer("FlashggTTHHadronicTagProducer",
                                        subleadPhoPtThreshold = cms.double(20),
                                        subleadPhoUseVariableThreshold =  cms.bool(True),
                                        MVAThreshold = cms.double(-1.0),
-                                       PhoMVAThreshold = cms.double(-0.7),
+#                                       PhoMVAThreshold = cms.double(-0.7), ### EDM loose g+jets
+                                       PhoMVAThreshold = cms.double(-1.0), ### EDM loose g+jets
                                        inputTagJets= UnpackedJetCollectionVInputTag, 
                                        jetPtThreshold = cms.double(25.),
                                        jetEtaThreshold = cms.double(2.4),
@@ -137,7 +138,9 @@ flashggVBFTag = cms.EDProducer("FlashggVBFTagProducer",
                                GenParticleTag=cms.InputTag( "flashggPrunedGenParticles" ),
                                HTXSTags = HTXSInputTags,
                                GenJetTag = cms.InputTag("slimmedGenJets"),
-                               #Boundaries=cms.vdouble(0.21,0.6,0.81)
+                               Boundaries_pbsm=cms.vdouble(0.97),
+                               Boundaries_pbkg=cms.vdouble(0.05),
+                               Boundaries_d0m=cms.vdouble(0.6),
                                #  for the moment we have two categories VBF-0 and VBF-1: to be changed when the diphoton MVA is ready 
                                #Boundaries=cms.vdouble(0.5819, 0.9449)
                                #Boundaries=cms.vdouble(0.62, 0.94),
@@ -149,13 +152,13 @@ flashggVBFTag = cms.EDProducer("FlashggVBFTagProducer",
 #                               Boundaries=cms.vdouble(0.215,  0.532,  0.865),
 #                               Boundaries=cms.vdouble(0.66633615,  0.89334188,  0.95919197),
 #                               Boundaries=cms.vdouble(0.55889473,  0.9087378 ,  0.97044208),
-                               Boundaries = cms.vdouble( 0.553, 0.902, 0.957 ),
+                               #Boundaries = cms.vdouble( 0.553, 0.902, 0.957 ),
                                SetArbitraryNonGoldMC = cms.bool(False),
                                DropNonGoldData = cms.bool(False),
                                RequireVBFPreselection = cms.bool(True),
                                VBFPreselLeadPtMin = cms.double(40.),
                                VBFPreselSubleadPtMin = cms.double(30.),
-                               VBFPreselPhoIDMVAMin = cms.double(-0.2),
+                               VBFPreselPhoIDMVAMin = cms.double(0.5),
                                GetQCDWeights = cms.bool(False)
                                )
 
@@ -479,16 +482,22 @@ flashggVHMetTag = cms.EDProducer("FlashggVHMetTagProducer",
                                     MVAResultTag                = cms.InputTag('flashggDiPhotonMVA'),
                                     GenParticleTag              = cms.InputTag('flashggPrunedGenParticles' ),
                                     VHMetMVAweightfile          = cms.FileInPath("flashgg/Taggers/data/TMVA_VHMetTag_BDT_ULv1.weights.xml"),
-                                    Boundaries                  = cms.vdouble(0.64612, 0.766, 0.85024),
-                                    leadPhoOverMassThreshold    = cms.double(0.333333),
-                                    subleadPhoOverMassThreshold = cms.double(0.2),
-                                    phoIdMVAThreshold           = cms.double(-0.7),
+                                    #Boundaries                  = cms.vdouble(0.64612, 0.766, 0.85024),
+                                    Boundaries                  = cms.vdouble(0.4616, 0.6800),
+                                    AC_boundaries_fa3_bin0      = cms.vdouble(0.8400),          
+                                    AC_boundaries_fa3_bin1      = cms.vdouble(0.2610, 0.9400),          
+                                    leadPhoOverMassThreshold    = cms.double(0.),
+                                    subleadPhoOverMassThreshold = cms.double(0.),
+                                    phoIdMVAThreshold           = cms.double(-1.),
                                     diphoMVAThreshold           = cms.double(-1.),
-                                    metPtThreshold              = cms.double(50),
-                                    dPhiDiphotonMetThreshold    = cms.double(2.0),
+                                    metPtThreshold              = cms.double(0.),
+                                    dPhiDiphotonMetThreshold    = cms.double(0.),
                                     jetPtThreshold              = cms.double(20.),
                                     jetEtaThreshold             = cms.double(2.4),
-                                    deltaRJetPhoThreshold       = cms.double(0.4)
+                                    deltaRJetPhoThreshold       = cms.double(0.4),
+                                    vhmetanom_fa3_bdt_xmlfile = cms.FileInPath('flashgg/Taggers/data/VH_Anomalous/VHMet/v2/VHMET_ZHiggs0MToGG_M125_model_v2.xml'), #TODO This model need to be updated to VH version
+                                    # vhmetanom_fa2_bdt_xmlfile  = cms.FileInPath('flashgg/Taggers/data/VH_Anomalous/VHMet/v2/'), #TODO Need to add model for fa2
+                                    # vhmetanom_faL1_bdt_xmlfile = cms.FileInPath('flashgg/Taggers/data/VH_Anomalous/VHMet/v2/'), #TODO Need to add model for faL1
 )
 
 flashggZHLeptonicTag = cms.EDProducer("FlashggZHLeptonicTagProducer",
@@ -522,7 +531,21 @@ flashggZHLeptonicTag = cms.EDProducer("FlashggZHLeptonicTagProducer",
                                     jetPtThreshold              = cms.double(20),
                                     jetEtaThreshold             = cms.double(2.4),
                                     deltaRJetPhoThreshold       = cms.double(0.4),
-                                    deltaRJetLepThreshold       = cms.double(0.4)
+                                    deltaRJetLepThreshold       = cms.double(0.4),
+
+                                    ZHiggs0MToGG_weights        = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/2023_02_23_BDTv3/ZHiggs0MToGG_EraALL_model.xml"),  
+                                    ZHiggs0PHToGG_weights       = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/2023_02_23_BDTv3/ZHiggs0PHToGG_EraALL_model.xml"),   
+                                    ZHiggs0L1ToGG_weights       = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/2023_02_23_BDTv3/ZHiggs0L1ToGG_EraALL_model.xml"),
+
+                                    acBoundaries                = cms.vdouble(
+                                                                    #Tag 0
+                                                                    1.0,0.229, #STXSBDT
+                                                                    1.0,-0.68, #ACBDT
+                                                                    #Tag 1
+                                                                    0.229,-0.135, #STXSBDT
+                                                                    1.0,-0.16, #ACBDT
+                                                                ),
+
 )
 
 flashggWHLeptonicTag = cms.EDProducer("FlashggWHLeptonicTagProducer",
@@ -558,7 +581,26 @@ flashggWHLeptonicTag = cms.EDProducer("FlashggWHLeptonicTagProducer",
                                     jetEtaThreshold             = cms.double(2.4),
                                     deltaRJetPhoThreshold       = cms.double(0.4),
                                     deltaRJetLepThreshold       = cms.double(0.4),
-                                    METThreshold                = cms.double(0.)
+                                    METThreshold                = cms.double(0.),
+
+                                    WHiggs0MToGG_weights        = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/2023_02_23_BDTv3/WHiggs0MToGG_EraALL_model.xml"),   
+                                    WHiggs0PHToGG_weights       = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/2023_02_23_BDTv3/WHiggs0PHToGG_EraALL_model.xml"),    
+                                    WHiggs0L1ToGG_weights       = cms.FileInPath("flashgg/Taggers/data/VH_Anomalous/2023_02_23_BDTv3/WHiggs0L1ToGG_EraALL_model.xml"),
+
+                                    acBoundaries               = cms.vdouble(
+                                        #Tag 0
+                                        1.0,0.385, #STXSBDT
+                                        1.0,0.79, #ACBDT
+                                        #Tag 1
+                                        1.0,0.38541667, #STXSBDT
+                                        0.79,-0.68, #ACBDT
+                                        #Tag 2                                                                               
+                                        0.385,0.125, #STXSBDT
+                                        1.0,0.89, #ACBDT
+                                        #Tag 3
+                                        0.385,0.125, #STXSBDT
+                                        0.89,-0.68, #ACBDT
+                                        ),
                                     )
 
 flashggVHLeptonicLooseTag = cms.EDProducer("FlashggVHLeptonicLooseTagProducer",
@@ -630,6 +672,31 @@ flashggVHHadronicTag = cms.EDProducer("FlashggVHHadronicTagProducer",
                                       dijetMassHighThreshold = cms.double(120.),
                                       cosThetaStarThreshold = cms.double(0.5),
                                       phoIdMVAThreshold = cms.double(-0.9)
+)
+
+flashggVHHadronicACTag = cms.EDProducer("FlashggVHHadronicACTagProducer",
+                                        DiPhotonTag = cms.InputTag('flashggPreselectedDiPhotons'),
+                                        SystLabel=cms.string(""),
+                                        MVAResultTag=cms.InputTag('flashggDiPhotonMVA'),
+                                        VHhadACDNNResult=cms.InputTag('flashggVHhadACDNN'),
+                                        #JetTag = cms.InputTag('flashggSelectedJets'),
+                                        inputTagJets= UnpackedJetCollectionVInputTag,
+                                        GenParticleTag=cms.InputTag( "flashggPrunedGenParticles" ),
+                                        leadPhoOverMassThreshold = cms.double(1./3),
+                                        subleadPhoOverMassThreshold = cms.double(0.25),
+                                        diphoMVAThreshold = cms.double(0.6),
+                                        jetsNumberThreshold = cms.double(2.),
+                                        jetPtThreshold = cms.double(30.),
+                                        jetEtaThreshold= cms.double(2.6),
+                                        dRJetToPhoLThreshold = cms.double(0.4),
+                                        dRJetToPhoSThreshold = cms.double(0.4),
+                                        dijetMassLowThreshold = cms.double(0.),
+                                        dijetMassHighThreshold = cms.double(250.),
+                                        cosThetaStarThreshold = cms.double(-1.),
+                                        maxPhoIdMVAThreshold = cms.double(0.0),
+                                        minPhoIdMVAThreshold = cms.double(0.0),
+                                        Categories_dnnbkg = cms.vdouble(0.082085, 0.252840, 0.535261, 0.065729, 1.0),
+                                        Categories_dnnbsm = cms.vdouble(0.5625, 0.45, 0.2875, 0.889, 0.747)
 )
 
 # Tag is for jet studies only, not in default sequence

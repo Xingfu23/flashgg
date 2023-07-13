@@ -36,8 +36,8 @@ class EleSF_JSONReader :
                         )
                     )
 
-                    if pt_to == 500.0:
-                        #extend the extremes to prevent any crashes
+                    if pt_to == 200.0:
+                        #extend the extremes to prevent any crashes (for electron ID)
                         self.binInfo.bins.append(
                             cms.PSet(
                                 lowBounds = cms.vdouble( eta_from , pt_to ) ,
@@ -47,6 +47,16 @@ class EleSF_JSONReader :
                             )
                         )
 
+                    if pt_to == 500.0:
+                        #extend the extremes to prevent any crashes (for electron reco)
+                        self.binInfo.bins.append(
+                            cms.PSet(
+                                lowBounds = cms.vdouble( eta_from , pt_to ) ,
+                                upBounds = cms.vdouble( eta_to , 9999 ) ,
+                                values = cms.vdouble( sf_value ) ,
+                                uncertainties = cms.vdouble( sf_error )
+                            )
+                        )
         
         
 

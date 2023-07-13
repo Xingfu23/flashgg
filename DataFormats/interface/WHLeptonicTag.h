@@ -44,6 +44,18 @@ namespace flashgg {
         void setVhasHadrons( const bool &val ) { VhasHadrons_ = val; }
         void setVpt( const float &val ) { Vpt_ = val; }
 
+        //STXS & AC MVA Get Functions...
+        const float VHmva() const { return VH_mva;};
+        const float WHiggs0MToGG_mva()          const { return WHiggs0MToGG_MVA;};
+        const float WHiggs0PHToGG_mva()         const { return WHiggs0PHToGG_MVA;};
+        const float WHiggs0L1ToGG_mva()         const { return WHiggs0L1ToGG_MVA;};
+        
+        //STXS & AC MVA Set Functions...
+        void set_VHmva(const float &val) {VH_mva=val;};
+        void set_WHiggs0MToGG_MVA(const float &val)           { WHiggs0MToGG_MVA = val;};
+        void set_WHiggs0PHToGG_MVA(const float &val)          { WHiggs0PHToGG_MVA = val;};
+        void set_WHiggs0L1ToGG_MVA(const float &val)          { WHiggs0L1ToGG_MVA = val;};
+
         DiPhotonTagBase::tag_t tagEnum() const override {return DiPhotonTagBase::kWHLeptonic; }
 
     private:
@@ -58,7 +70,11 @@ namespace flashgg {
         bool VhasLeptons_;
         bool VhasHadrons_;
         float Vpt_;
-
+        //Private Variables for get/set functions with initial values of -999
+        float VH_mva = -999;
+        float WHiggs0MToGG_MVA = -999;
+        float WHiggs0PHToGG_MVA = -999;
+        float WHiggs0L1ToGG_MVA = -999;
     };
 }
 

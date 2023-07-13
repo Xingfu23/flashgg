@@ -1,0 +1,10 @@
+{
+    "cmdLine"  : "metaConditions=$CMSSW_BASE/src/flashgg/MetaData/data/MetaConditions/Era2016_legacyPostVFP_v1.json campaign=Era2016_legacyPostVFP_v1_Summer19UL useAAA=True lumiMask=/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions16/13TeV/Legacy_2016/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt",
+    "processes": {
+        "Data"    : [
+            "/DoubleEG/alesauva-UL2016-10_6_8-v0-Run2016F-21Feb2020_UL2016-v1-d350a5cef0d6f987372efaa7b77235db/USER",
+            "/DoubleEG/alesauva-UL2016-10_6_8-v0-Run2016G-21Feb2020_UL2016-v1-04d0374436ba01245451e8d19d7a2828/USER",
+            "/DoubleEG/alesauva-UL2016-10_6_8-v0-Run2016H-21Feb2020_UL2016-v1-d350a5cef0d6f987372efaa7b77235db/USER"
+        ]
+    }
+}

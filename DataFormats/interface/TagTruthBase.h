@@ -38,6 +38,10 @@ namespace flashgg {
         void setHTXSInfo( int stage0bin, int stage1bin, int stage1p1bin, int stage1p1binFine, int stage1p2bin, int stage1p2binFine, int njets, float pTH, float pTV );
         void setGluonFusionWeights( int , float , int );
         void copyBaseInfo( const TagTruthBase &b );
+        void setMelaWeight( string key, float val );
+        float melaWeight( string key ) const;
+        bool hasMelaWeight( string key ) const;
+        vector<string> getMelaLabels() const { return _melaLabels; }
         virtual TagTruthBase *clone() const;
 
         // Ordering is needed for technical reasons (OwnVector) but will never be used
@@ -60,6 +64,8 @@ namespace flashgg {
         int njets_;
         float pTH_;
         float pTV_;
+        vector<string> _melaLabels;
+        vector<float> _melaWeights;
     };
 }
 

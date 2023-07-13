@@ -1,0 +1,12 @@
+{
+    "cmdLine"  : "metaConditions=$CMSSW_BASE/src/flashgg/MetaData/data/MetaConditions/Era2017_legacy_v1.json campaign=Era2017_legacy_v1_Summer20UL useAAA=True lumiMask=/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions17/13TeV/Legacy_2017/Cert_294927-306462_13TeV_UL2017_Collisions17_GoldenJSON.txt",
+    "processes": {
+        "Data"   : [
+            "/DoubleEG/phys_higgs-Era2017_legacy_v1_Summer20UL-legacyRunII-v0-Run2017B-UL2017_MiniAODv2-v1-5d1968cd298df07a37bbf2f11ba30be1/USER",
+            "/DoubleEG/phys_higgs-Era2017_legacy_v1_Summer20UL-legacyRunII-v0-Run2017C-UL2017_MiniAODv2-v2-5d1968cd298df07a37bbf2f11ba30be1/USER",
+            "/DoubleEG/phys_higgs-Era2017_legacy_v1_Summer20UL-legacyRunII-v0-Run2017D-UL2017_MiniAODv2-v1-5d1968cd298df07a37bbf2f11ba30be1/USER",
+            "/DoubleEG/phys_higgs-Era2017_legacy_v1_Summer20UL-legacyRunII-v0-Run2017E-UL2017_MiniAODv2-v1-5d1968cd298df07a37bbf2f11ba30be1/USER",
+            "/DoubleEG/phys_higgs-Era2017_legacy_v1_Summer20UL-legacyRunII-v0-Run2017F-UL2017_MiniAODv2-v2-5d1968cd298df07a37bbf2f11ba30be1/USER"
+        ]
+    }
+}

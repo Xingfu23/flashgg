@@ -403,9 +403,6 @@ namespace flashgg {
         const char * weight_central = "centralObjectWeight";
         RooRealVar * sumW = new RooRealVar("sumW","sumW",0);
         RooRealVar * numW = new RooRealVar("numW","numW",0);
-        //        std::cout << " Calling CategoryDumper<F, O>::compressPdfWeightDatasets " << std::endl;
-        //        std::cout << " sumW=" << dataset_pdfWeights_->sumEntries() << " numW=" << dataset_pdfWeights_->numEntries() << std::endl;
-        //        rooVars_pdfWeights_.Print("v");
         rooVars_pdfWeights_.add(*sumW);
         rooVars_pdfWeights_.add(*numW);
         if (dataset_pdfWeights_){
@@ -498,7 +495,11 @@ namespace flashgg {
     template<class F, class O>
     void CategoryDumper<F, O>::bookRooDataset( RooWorkspace &ws, const char *weightVar, const std::map<std::string, std::string> &replacements )
 {
-    if( ! binnedOnly_ ) {
+    // the following to remove strange memory issues
+    rooVars_.removeAll();
+    rooVars_pdfWeights_.removeAll();
+
+    if( ! binnedOnly_ && ws.var( weightVar )!=NULL ) {
         rooVars_.add( *ws.var( weightVar ) );
     }
 
@@ -512,7 +513,6 @@ namespace flashgg {
         auto &vmax = std::get<4>( var );
         auto &binning = std::get<5>( var );
         RooRealVar &rooVar = dynamic_cast<RooRealVar &>( *ws.factory( Form( "%s[0.]", name.c_str() ) ) );
-        //        std::cout << " after factory for " << name << std::endl;
         rooVar.setConstant( false );
         if(binnedOnly_ && (nbins==0)){
             //            throw cms::Exception( "Dumper Binning" ) << "One or more variable which is to be dumped in a RooDataHist has not been allocated any binning options. Please specify these in your dumper configuration using the format variable[nBins,min,max] := variable definition ";
@@ -613,14 +613,15 @@ bool CategoryDumper<F, O>::isBinnedOnly( )
     n_cand_ = n_cand;
     weight_ = weight;
     genweight_ = genweight;
+    
     if( dataset_ && (!binnedOnly_) ) {
-        dynamic_cast<RooRealVar &>( rooVars_["weight"] ).setVal( weight_ );
+        if ( rooVars_.find("weight") ) dynamic_cast<RooRealVar &>( rooVars_["weight"] ).setVal( weight_ );
     }
     if (dumpPdfWeights_){
         if( tree_ ) {
             std::copy(pdfWeights.begin(),pdfWeights.end(),variables_pdfWeights_.begin());
         }
-        if( dataset_pdfWeights_ ) {
+        if( dataset_pdfWeights_ && rooVars_pdfWeights_.find("weight") ) {
             dynamic_cast<RooRealVar &>( rooVars_pdfWeights_["weight"] ).setVal( weight_ );
             if ((nPdfWeights_+ nAlphaSWeights_ + nScaleWeights_) != (int) (pdfWeights.size())){ 
                 throw cms::Exception( "Configuration" ) << " Specified number of pdfWeights (" << nPdfWeights_ <<") plus alphaSWeights ("<<nAlphaSWeights_
@@ -628,20 +629,20 @@ bool CategoryDumper<F, O>::isBinnedOnly( )
                                                         << pdfWeights.size() << ")." ;
             }
             for ( int i =0; i< nPdfWeights_; i++) {
-                dynamic_cast<RooRealVar &>( rooVars_pdfWeights_[Form("pdfWeight_%d",i)] ).setVal( pdfWeights[i] );
+                if (rooVars_pdfWeights_.find(Form("pdfWeight_%d",i))) dynamic_cast<RooRealVar &>( rooVars_pdfWeights_[Form("pdfWeight_%d",i)] ).setVal( pdfWeights[i] );
             }
             for ( int i =0; i<nAlphaSWeights_  ; i++) {
-                dynamic_cast<RooRealVar &>( rooVars_pdfWeights_[Form("alphaSWeight_%d",i)] ).setVal( pdfWeights[i+nPdfWeights_] ); // alpha S weights currently stored at the end of pdfweight vector 
+                if (rooVars_pdfWeights_.find(Form("alphaSWeight_%d",i))) dynamic_cast<RooRealVar &>( rooVars_pdfWeights_[Form("alphaSWeight_%d",i)] ).setVal( pdfWeights[i+nPdfWeights_] ); // alpha S weights currently stored at the end of pdfweight vector 
             }
             for ( int i =0; i< nScaleWeights_; i++) {
-                dynamic_cast<RooRealVar &>( rooVars_pdfWeights_[Form("scaleWeight_%d",i)] ).setVal( pdfWeights[i+nPdfWeights_+nAlphaSWeights_] ); // and scale weights stored after that!
-                dynamic_cast<RooRealVar &>( rooVars_[Form("scaleWeight_%d",i)] ).setVal( pdfWeights[i+nPdfWeights_+nAlphaSWeights_] ); // and scale weights stored after that!
+                if (rooVars_pdfWeights_.find(Form("scaleWeight_%d",i))) dynamic_cast<RooRealVar &>( rooVars_pdfWeights_[Form("scaleWeight_%d",i)] ).setVal( pdfWeights[i+nPdfWeights_+nAlphaSWeights_] ); // and scale weights stored after that!
+                if (rooVars_.find(Form("scaleWeight_%d",i))) dynamic_cast<RooRealVar &>( rooVars_[Form("scaleWeight_%d",i)] ).setVal( pdfWeights[i+nPdfWeights_+nAlphaSWeights_] ); // and scale weights stored after that!
             }
             if ( splitPdfByStage0Bin_ && htxsBin > -1 ) {
-                dynamic_cast<RooRealVar &>( rooVars_pdfWeights_["stage0bin"]).setVal( htxsBin );
+                if (rooVars_pdfWeights_.find("stage0bin")) dynamic_cast<RooRealVar &>( rooVars_pdfWeights_["stage0bin"]).setVal( htxsBin );
             }
             if ( splitPdfByStage1Bin_ && htxsBin > -1 ) {
-                dynamic_cast<RooRealVar &>( rooVars_pdfWeights_["stage1p2bin"]).setVal( htxsBin );
+                if (rooVars_pdfWeights_.find("stage1p2bin")) dynamic_cast<RooRealVar &>( rooVars_pdfWeights_["stage1p2bin"]).setVal( htxsBin );
             }
         }
     }
@@ -652,7 +653,7 @@ bool CategoryDumper<F, O>::isBinnedOnly( )
         auto &val = std::get<0>( var );
         val = ( *std::get<1>( var ) )( obj );
         if( dataset_ ) {
-            dynamic_cast<RooRealVar &>( rooVars_[name] ).setVal( val );
+            if ( rooVars_.find(name) !=0 ) dynamic_cast<RooRealVar &>( rooVars_[name] ).setVal( val );
             if (dumpPdfWeights_) {
                 if( rooVars_pdfWeights_.find(name) != 0 ) {
                     if ( val == 0. ) { std::cout << " WARNING we have a weight 0 that we're pushing back into rooVars_pdfWeights_[ " << name << " ] " << std::endl; }

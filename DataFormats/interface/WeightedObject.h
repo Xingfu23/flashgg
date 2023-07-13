@@ -25,7 +25,7 @@ namespace flashgg {
         vector<string>::const_iterator weightListBegin() const { return _labels.begin(); }
         vector<string>::const_iterator weightListEnd() const { return _labels.end(); }
 
-    private:
+    protected:
         vector<string> _labels;
         vector<float> _weights;
         static constexpr const char *central_key = "Central";

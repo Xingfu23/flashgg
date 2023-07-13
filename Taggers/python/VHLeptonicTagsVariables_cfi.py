@@ -104,3 +104,27 @@ gen_variables=[
     "VhasHad := VhasHadrons()",
     "Vpt     := Vpt()"
 ]
+
+
+stxs_vars = [
+                'vh_mva :=  VHmva()'
+]
+
+whAnomVars = [
+    'WHiggs0MToGG_MVA := WHiggs0MToGG_mva()',
+    'WHiggs0PHToGG_MVA := WHiggs0PHToGG_mva()',
+    'WHiggs0L1ToGG_MVA := WHiggs0L1ToGG_mva()',
+]
+zhAnomVars = [
+    'ZHiggs0MToGG_MVA := ZHiggs0MToGG_mva()',
+    'ZHiggs0PHToGG_MVA := ZHiggs0PHToGG_mva()',
+    'ZHiggs0L1ToGG_MVA := ZHiggs0L1ToGG_mva()',
+]
+
+VHMET_vars = [
+    'vhmet_mva    :=VHMetMVA()',
+    'ACMVAfa3d0ZH :=ACMVAfa3d0ZH()'
+]
+
+wh_anom_dumper_vars=  stxs_vars + whAnomVars
+zh_anom_dumper_vars=  stxs_vars + zhAnomVars

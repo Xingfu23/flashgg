@@ -46,7 +46,7 @@ namespace flashgg {
         WHLeptonicTagProducer( const ParameterSet & );
     private:
         void produce( Event &, const EventSetup & ) override;
-        int  chooseCategory( float, float );
+        int  chooseCategoryAC( float, float );
         int  computeStage1Kinematics( const WHLeptonicTag );
 
         EDGetTokenT<View<DiPhotonCandidate> > diPhotonToken_;
@@ -116,6 +116,85 @@ namespace flashgg {
         vector<double> boundaries_GT150;
         vector<double> boundaries_75_150;
         vector<double> boundaries_0_75;
+        vector<double> acBoundaries; //AC BDT Boundaries...
+
+
+
+        //Adding MVA variables for AC BDT for WHLeptonic
+        //TMVA
+        unique_ptr<TMVA::Reader> WHiggs0MToGG_MVA_;
+        unique_ptr<TMVA::Reader> WHiggs0PHToGG_MVA_;
+        unique_ptr<TMVA::Reader> WHiggs0L1ToGG_MVA_;
+        //Feature Variables
+        //Photon
+        float _Anom_MVA_pho1_eta;
+        float _Anom_MVA_pho1_phi;
+        float _Anom_MVA_pho1_full5x5_r9;
+        float _Anom_MVA_pho1_idmva;
+        float _Anom_MVA_pho2_eta;
+        float _Anom_MVA_pho2_phi;
+        float _Anom_MVA_pho2_full5x5_r9;
+        float _Anom_MVA_pho2_idmva;
+        float _Anom_MVA_pho1_ptOverMgg;
+        float _Anom_MVA_pho2_ptOverMgg;
+
+        //Muon
+        float _Anom_MVA_mu1_pt;
+        float _Anom_MVA_mu1_phi;
+        float _Anom_MVA_mu1_eta;
+        float _Anom_MVA_mu1_energy;
+        float _Anom_MVA_mu2_pt;
+        float _Anom_MVA_mu2_phi;
+        float _Anom_MVA_mu2_eta;
+        float _Anom_MVA_mu2_energy;
+
+        //Ele
+        float _Anom_MVA_ele1_pt;
+        float _Anom_MVA_ele1_phi;
+        float _Anom_MVA_ele1_eta;
+        float _Anom_MVA_ele1_energy;
+
+        float _Anom_MVA_ele2_pt;
+        float _Anom_MVA_ele2_phi;
+        float _Anom_MVA_ele2_eta;
+        float _Anom_MVA_ele2_energy;
+
+        //Jet
+        float _Anom_MVA_jet1_pt;
+        float _Anom_MVA_jet1_phi;
+        float _Anom_MVA_jet1_eta;
+        float _Anom_MVA_jet1_energy;
+        float _Anom_MVA_jet2_pt;
+        float _Anom_MVA_jet2_phi;
+        float _Anom_MVA_jet2_eta;
+        float _Anom_MVA_jet2_energy;
+
+        //Angular Vars
+        float _Anom_MVA_cosPhiGG;
+        float _Anom_MVA_cosPhiG1_Mu1;
+        float _Anom_MVA_cosPhiG1_Ele1;
+        float _Anom_MVA_cosPhiG2_Mu1;
+        float _Anom_MVA_cosPhiG2_Ele1;
+
+
+        float _Anom_MVA_dR_Pho1Ele1_wh;
+        float _Anom_MVA_dR_Pho2Ele1_wh;
+        float _Anom_MVA_dR_Pho1Mu1_wh;
+        float _Anom_MVA_dR_Pho2Mu1_wh;
+
+        float _Anom_MVA_dR_Pho1Jet1_wh;
+        float _Anom_MVA_dR_Pho2Jet1_wh;
+        float _Anom_MVA_dR_Pho1Jet2_wh;
+        float _Anom_MVA_dR_Pho2Jet2_wh;
+
+        float _Anom_MVA_dR_Mu1Jet1_wh;
+        float _Anom_MVA_dR_Mu1Jet2_wh;
+        float _Anom_MVA_dR_Ele1Jet1_wh;
+        float _Anom_MVA_dR_Ele1Jet2_wh;
+
+        FileInPath WHiggs0MToGG_weights_;
+        FileInPath WHiggs0PHToGG_weights_;
+        FileInPath WHiggs0L1ToGG_weights_;
 
     };
 
@@ -165,6 +244,247 @@ namespace flashgg {
             auto token = consumes<View<flashgg::Jet> >(inputTagJets_[i]);
             tokenJets_.push_back(token);
         }
+        
+        // $$$$$$$$$$$$$$$$$$$$ AC BDT Initialize $$$$$$$$$$$$$$$$$$$$
+
+        //Load Weights files...
+        WHiggs0MToGG_weights_          = iConfig.getParameter<edm::FileInPath>( "WHiggs0MToGG_weights" );     
+        WHiggs0PHToGG_weights_         = iConfig.getParameter<edm::FileInPath>( "WHiggs0PHToGG_weights" );       
+        WHiggs0L1ToGG_weights_         = iConfig.getParameter<edm::FileInPath>( "WHiggs0L1ToGG_weights" );       
+
+
+        //Initialize Variables all to -999
+        _Anom_MVA_pho1_eta = -999;
+        _Anom_MVA_pho1_phi = -999;
+        _Anom_MVA_pho1_full5x5_r9 = -999;
+        _Anom_MVA_pho1_idmva = -999;
+        _Anom_MVA_pho1_ptOverMgg = -999;
+
+        _Anom_MVA_pho2_eta = -999;
+        _Anom_MVA_pho2_phi = -999;
+        _Anom_MVA_pho2_full5x5_r9 = -999;
+        _Anom_MVA_pho2_idmva = -999;
+        _Anom_MVA_pho2_ptOverMgg = -999;
+
+        _Anom_MVA_mu1_pt = -999;
+        _Anom_MVA_mu1_phi = -999;
+        _Anom_MVA_mu1_eta = -999;
+        _Anom_MVA_mu1_energy = -999;
+        _Anom_MVA_mu2_pt = -999;
+        _Anom_MVA_mu2_phi = -999;
+        _Anom_MVA_mu2_eta = -999;
+        _Anom_MVA_mu2_energy = -999;
+
+
+        _Anom_MVA_ele1_pt = -999;
+        _Anom_MVA_ele1_phi = -999;
+        _Anom_MVA_ele1_eta = -999;
+        _Anom_MVA_ele1_energy = -999;
+        _Anom_MVA_ele2_pt = -999;
+        _Anom_MVA_ele2_phi = -999;
+        _Anom_MVA_ele2_eta = -999;
+        _Anom_MVA_ele2_energy = -999;
+
+        _Anom_MVA_jet1_pt = -999;
+        _Anom_MVA_jet1_phi = -999;
+        _Anom_MVA_jet1_eta = -999;
+        _Anom_MVA_jet1_energy = -999;
+        _Anom_MVA_jet2_pt = -999;
+        _Anom_MVA_jet2_phi = -999;
+        _Anom_MVA_jet2_eta = -999;
+        _Anom_MVA_jet2_energy = -999;
+
+        _Anom_MVA_cosPhiGG = -999;
+        _Anom_MVA_cosPhiG1_Mu1 = -999;
+        _Anom_MVA_cosPhiG1_Ele1 = -999;
+        _Anom_MVA_cosPhiG2_Mu1 = -999;
+        _Anom_MVA_cosPhiG2_Ele1 = -999;
+
+        _Anom_MVA_dR_Pho1Ele1_wh = -999;
+        _Anom_MVA_dR_Pho2Ele1_wh = -999;
+        _Anom_MVA_dR_Pho1Mu1_wh = -999;
+        _Anom_MVA_dR_Pho2Mu1_wh = -999;
+        
+        _Anom_MVA_dR_Pho1Jet1_wh = -999;
+        _Anom_MVA_dR_Pho2Jet1_wh = -999;
+        _Anom_MVA_dR_Pho1Jet2_wh = -999;
+        _Anom_MVA_dR_Pho2Jet2_wh = -999;
+
+        _Anom_MVA_dR_Mu1Jet1_wh = -999;
+        _Anom_MVA_dR_Mu1Jet2_wh = -999;
+        _Anom_MVA_dR_Ele1Jet1_wh = -999;
+        _Anom_MVA_dR_Ele1Jet2_wh = -999;
+
+
+        // Adding variables to TMVA 
+        WHiggs0MToGG_MVA_.reset( new TMVA::Reader( "!Color:!Silent" ) );
+        WHiggs0MToGG_MVA_->AddVariable( "pho1_eta"             ,&_Anom_MVA_pho1_eta              );
+        WHiggs0MToGG_MVA_->AddVariable( "pho1_phi"             ,&_Anom_MVA_pho1_phi              );
+        WHiggs0MToGG_MVA_->AddVariable( "pho1_full5x5_r9"      ,&_Anom_MVA_pho1_full5x5_r9       );
+        WHiggs0MToGG_MVA_->AddVariable( "pho1_idmva"           ,&_Anom_MVA_pho1_idmva            );
+        WHiggs0MToGG_MVA_->AddVariable( "pho2_eta"             ,&_Anom_MVA_pho2_eta              );
+        WHiggs0MToGG_MVA_->AddVariable( "pho2_phi"             ,&_Anom_MVA_pho2_phi              );
+        WHiggs0MToGG_MVA_->AddVariable( "pho2_full5x5_r9"      ,&_Anom_MVA_pho2_full5x5_r9       );
+        WHiggs0MToGG_MVA_->AddVariable( "pho2_idmva"           ,&_Anom_MVA_pho2_idmva            );
+        WHiggs0MToGG_MVA_->AddVariable( "pho1_ptOverMgg"       ,&_Anom_MVA_pho1_ptOverMgg        );
+        WHiggs0MToGG_MVA_->AddVariable( "pho2_ptOverMgg"       ,&_Anom_MVA_pho2_ptOverMgg        );
+
+        WHiggs0MToGG_MVA_->AddVariable( "mu1_pt"               ,&_Anom_MVA_mu1_pt                );  
+        WHiggs0MToGG_MVA_->AddVariable( "mu1_phi"              ,&_Anom_MVA_mu1_phi               );   
+        WHiggs0MToGG_MVA_->AddVariable( "mu1_eta"              ,&_Anom_MVA_mu1_eta               );   
+        WHiggs0MToGG_MVA_->AddVariable( "mu1_energy"           ,&_Anom_MVA_mu1_energy            );      
+        // WHiggs0MToGG_MVA_->AddVariable( "mu2_pt"               ,&_Anom_MVA_mu2_pt                );  
+        // WHiggs0MToGG_MVA_->AddVariable( "mu2_phi"              ,&_Anom_MVA_mu2_phi               );   
+        // WHiggs0MToGG_MVA_->AddVariable( "mu2_eta"              ,&_Anom_MVA_mu2_eta               );   
+        // WHiggs0MToGG_MVA_->AddVariable( "mu2_energy"           ,&_Anom_MVA_mu2_energy            );      
+        WHiggs0MToGG_MVA_->AddVariable( "ele1_pt"              ,&_Anom_MVA_ele1_pt               );   
+        WHiggs0MToGG_MVA_->AddVariable( "ele1_phi"             ,&_Anom_MVA_ele1_phi              );    
+        WHiggs0MToGG_MVA_->AddVariable( "ele1_eta"             ,&_Anom_MVA_ele1_eta              );    
+        WHiggs0MToGG_MVA_->AddVariable( "ele1_energy"          ,&_Anom_MVA_ele1_energy           );       
+        // WHiggs0MToGG_MVA_->AddVariable( "ele2_pt"              ,&_Anom_MVA_ele2_pt               );   
+        // WHiggs0MToGG_MVA_->AddVariable( "ele2_phi"             ,&_Anom_MVA_ele2_phi              );    
+        // WHiggs0MToGG_MVA_->AddVariable( "ele2_eta"             ,&_Anom_MVA_ele2_eta              );    
+        // WHiggs0MToGG_MVA_->AddVariable( "ele2_energy"          ,&_Anom_MVA_ele2_energy           );       
+        WHiggs0MToGG_MVA_->AddVariable( "jet1_pt"              ,&_Anom_MVA_jet1_pt               );   
+        WHiggs0MToGG_MVA_->AddVariable( "jet1_phi"             ,&_Anom_MVA_jet1_phi              );    
+        WHiggs0MToGG_MVA_->AddVariable( "jet1_eta"             ,&_Anom_MVA_jet1_eta              );    
+        WHiggs0MToGG_MVA_->AddVariable( "jet1_energy"          ,&_Anom_MVA_jet1_energy           );       
+        WHiggs0MToGG_MVA_->AddVariable( "jet2_pt"              ,&_Anom_MVA_jet2_pt               );   
+        WHiggs0MToGG_MVA_->AddVariable( "jet2_phi"             ,&_Anom_MVA_jet2_phi              );    
+        // WHiggs0MToGG_MVA_->AddVariable( "jet2_eta"             ,&_Anom_MVA_jet2_eta              );    
+        // WHiggs0MToGG_MVA_->AddVariable( "jet2_energy"          ,&_Anom_MVA_jet2_energy           );       
+        WHiggs0MToGG_MVA_->AddVariable( "cosPhiGG"             ,&_Anom_MVA_cosPhiGG             );    
+        WHiggs0MToGG_MVA_->AddVariable( "cosPhiG1_Mu1"         ,&_Anom_MVA_cosPhiG1_Mu1          );        
+        WHiggs0MToGG_MVA_->AddVariable( "cosPhiG1_Ele1"        ,&_Anom_MVA_cosPhiG1_Ele1         );         
+        WHiggs0MToGG_MVA_->AddVariable( "cosPhiG2_Mu1"         ,&_Anom_MVA_cosPhiG2_Mu1          );        
+        WHiggs0MToGG_MVA_->AddVariable( "cosPhiG2_Ele1"        ,&_Anom_MVA_cosPhiG2_Ele1         );  
+        WHiggs0MToGG_MVA_->AddVariable( "dR_Pho1Ele1_wh"       ,&_Anom_MVA_dR_Pho1Ele1_wh        );          
+        WHiggs0MToGG_MVA_->AddVariable( "dR_Pho2Ele1_wh"       ,&_Anom_MVA_dR_Pho2Ele1_wh        );          
+        WHiggs0MToGG_MVA_->AddVariable( "dR_Pho1Mu1_wh"        ,&_Anom_MVA_dR_Pho1Mu1_wh         );         
+        WHiggs0MToGG_MVA_->AddVariable( "dR_Pho2Mu1_wh"        ,&_Anom_MVA_dR_Pho2Mu1_wh         );  
+        WHiggs0MToGG_MVA_->AddVariable( "dR_Pho1Jet1_wh"       ,&_Anom_MVA_dR_Pho1Jet1_wh        );          
+        WHiggs0MToGG_MVA_->AddVariable( "dR_Pho2Jet1_wh"       ,&_Anom_MVA_dR_Pho2Jet1_wh        );          
+        WHiggs0MToGG_MVA_->AddVariable( "dR_Pho1Jet2_wh"       ,&_Anom_MVA_dR_Pho1Jet2_wh        );          
+        // WHiggs0MToGG_MVA_->AddVariable( "dR_Pho2Jet2_wh"       ,&_Anom_MVA_dR_Pho2Jet2_wh        );  
+        WHiggs0MToGG_MVA_->AddVariable( "dR_Mu1Jet1_wh"        ,&_Anom_MVA_dR_Mu1Jet1_wh         );         
+        WHiggs0MToGG_MVA_->AddVariable( "dR_Mu1Jet2_wh"        ,&_Anom_MVA_dR_Mu1Jet2_wh         );         
+        WHiggs0MToGG_MVA_->AddVariable( "dR_Ele1Jet1_wh"       ,&_Anom_MVA_dR_Ele1Jet1_wh        );          
+        // WHiggs0MToGG_MVA_->AddVariable( "dR_Ele1Jet2_wh"       ,&_Anom_MVA_dR_Ele1Jet2_wh        );          
+        WHiggs0MToGG_MVA_->BookMVA( "BDT", WHiggs0MToGG_weights_.fullPath() );
+
+
+        WHiggs0PHToGG_MVA_.reset( new TMVA::Reader( "!Color:!Silent" ) );
+        WHiggs0PHToGG_MVA_->AddVariable( "pho1_eta"             ,&_Anom_MVA_pho1_eta              );
+        WHiggs0PHToGG_MVA_->AddVariable( "pho1_phi"             ,&_Anom_MVA_pho1_phi              );
+        WHiggs0PHToGG_MVA_->AddVariable( "pho1_full5x5_r9"      ,&_Anom_MVA_pho1_full5x5_r9       );
+        WHiggs0PHToGG_MVA_->AddVariable( "pho1_idmva"           ,&_Anom_MVA_pho1_idmva            );
+        WHiggs0PHToGG_MVA_->AddVariable( "pho2_eta"             ,&_Anom_MVA_pho2_eta              );
+        WHiggs0PHToGG_MVA_->AddVariable( "pho2_phi"             ,&_Anom_MVA_pho2_phi              );
+        WHiggs0PHToGG_MVA_->AddVariable( "pho2_full5x5_r9"      ,&_Anom_MVA_pho2_full5x5_r9       );
+        WHiggs0PHToGG_MVA_->AddVariable( "pho2_idmva"           ,&_Anom_MVA_pho2_idmva            );
+        WHiggs0PHToGG_MVA_->AddVariable( "pho1_ptOverMgg"       ,&_Anom_MVA_pho1_ptOverMgg        );
+        WHiggs0PHToGG_MVA_->AddVariable( "pho2_ptOverMgg"       ,&_Anom_MVA_pho2_ptOverMgg        );
+
+        WHiggs0PHToGG_MVA_->AddVariable( "mu1_pt"               ,&_Anom_MVA_mu1_pt                );  
+        WHiggs0PHToGG_MVA_->AddVariable( "mu1_phi"              ,&_Anom_MVA_mu1_phi               );   
+        WHiggs0PHToGG_MVA_->AddVariable( "mu1_eta"              ,&_Anom_MVA_mu1_eta               );   
+        WHiggs0PHToGG_MVA_->AddVariable( "mu1_energy"           ,&_Anom_MVA_mu1_energy            );      
+        // WHiggs0PHToGG_MVA_->AddVariable( "mu2_pt"               ,&_Anom_MVA_mu2_pt                );  
+        // WHiggs0PHToGG_MVA_->AddVariable( "mu2_phi"              ,&_Anom_MVA_mu2_phi               );   
+        // WHiggs0PHToGG_MVA_->AddVariable( "mu2_eta"              ,&_Anom_MVA_mu2_eta               );   
+        // WHiggs0PHToGG_MVA_->AddVariable( "mu2_energy"           ,&_Anom_MVA_mu2_energy            );      
+        WHiggs0PHToGG_MVA_->AddVariable( "ele1_pt"              ,&_Anom_MVA_ele1_pt               );   
+        WHiggs0PHToGG_MVA_->AddVariable( "ele1_phi"             ,&_Anom_MVA_ele1_phi              );    
+        WHiggs0PHToGG_MVA_->AddVariable( "ele1_eta"             ,&_Anom_MVA_ele1_eta              );    
+        WHiggs0PHToGG_MVA_->AddVariable( "ele1_energy"          ,&_Anom_MVA_ele1_energy           );       
+        // WHiggs0PHToGG_MVA_->AddVariable( "ele2_pt"              ,&_Anom_MVA_ele2_pt               );   
+        // WHiggs0PHToGG_MVA_->AddVariable( "ele2_phi"             ,&_Anom_MVA_ele2_phi              );    
+        // WHiggs0PHToGG_MVA_->AddVariable( "ele2_eta"             ,&_Anom_MVA_ele2_eta              );    
+        // WHiggs0PHToGG_MVA_->AddVariable( "ele2_energy"          ,&_Anom_MVA_ele2_energy           );       
+        WHiggs0PHToGG_MVA_->AddVariable( "jet1_pt"              ,&_Anom_MVA_jet1_pt               );   
+        WHiggs0PHToGG_MVA_->AddVariable( "jet1_phi"             ,&_Anom_MVA_jet1_phi              );    
+        WHiggs0PHToGG_MVA_->AddVariable( "jet1_eta"             ,&_Anom_MVA_jet1_eta              );    
+        WHiggs0PHToGG_MVA_->AddVariable( "jet1_energy"          ,&_Anom_MVA_jet1_energy           );       
+        WHiggs0PHToGG_MVA_->AddVariable( "jet2_pt"              ,&_Anom_MVA_jet2_pt               );   
+        WHiggs0PHToGG_MVA_->AddVariable( "jet2_phi"             ,&_Anom_MVA_jet2_phi              );    
+        // WHiggs0PHToGG_MVA_->AddVariable( "jet2_eta"             ,&_Anom_MVA_jet2_eta              );    
+        // WHiggs0PHToGG_MVA_->AddVariable( "jet2_energy"          ,&_Anom_MVA_jet2_energy           );       
+        WHiggs0PHToGG_MVA_->AddVariable( "cosPhiGG"             ,&_Anom_MVA_cosPhiGG             );    
+        WHiggs0PHToGG_MVA_->AddVariable( "cosPhiG1_Mu1"         ,&_Anom_MVA_cosPhiG1_Mu1          );        
+        WHiggs0PHToGG_MVA_->AddVariable( "cosPhiG1_Ele1"        ,&_Anom_MVA_cosPhiG1_Ele1         );         
+        WHiggs0PHToGG_MVA_->AddVariable( "cosPhiG2_Mu1"         ,&_Anom_MVA_cosPhiG2_Mu1          );        
+        WHiggs0PHToGG_MVA_->AddVariable( "cosPhiG2_Ele1"        ,&_Anom_MVA_cosPhiG2_Ele1         );  
+        WHiggs0PHToGG_MVA_->AddVariable( "dR_Pho1Ele1_wh"       ,&_Anom_MVA_dR_Pho1Ele1_wh        );          
+        WHiggs0PHToGG_MVA_->AddVariable( "dR_Pho2Ele1_wh"       ,&_Anom_MVA_dR_Pho2Ele1_wh        );          
+        WHiggs0PHToGG_MVA_->AddVariable( "dR_Pho1Mu1_wh"        ,&_Anom_MVA_dR_Pho1Mu1_wh         );         
+        WHiggs0PHToGG_MVA_->AddVariable( "dR_Pho2Mu1_wh"        ,&_Anom_MVA_dR_Pho2Mu1_wh         );  
+        WHiggs0PHToGG_MVA_->AddVariable( "dR_Pho1Jet1_wh"       ,&_Anom_MVA_dR_Pho1Jet1_wh        );          
+        WHiggs0PHToGG_MVA_->AddVariable( "dR_Pho2Jet1_wh"       ,&_Anom_MVA_dR_Pho2Jet1_wh        );          
+        WHiggs0PHToGG_MVA_->AddVariable( "dR_Pho1Jet2_wh"       ,&_Anom_MVA_dR_Pho1Jet2_wh        );          
+        // WHiggs0PHToGG_MVA_->AddVariable( "dR_Pho2Jet2_wh"       ,&_Anom_MVA_dR_Pho2Jet2_wh        );  
+        WHiggs0PHToGG_MVA_->AddVariable( "dR_Mu1Jet1_wh"        ,&_Anom_MVA_dR_Mu1Jet1_wh         );         
+        WHiggs0PHToGG_MVA_->AddVariable( "dR_Mu1Jet2_wh"        ,&_Anom_MVA_dR_Mu1Jet2_wh         );         
+        WHiggs0PHToGG_MVA_->AddVariable( "dR_Ele1Jet1_wh"       ,&_Anom_MVA_dR_Ele1Jet1_wh        );          
+        // WHiggs0PHToGG_MVA_->AddVariable( "dR_Ele1Jet2_wh"       ,&_Anom_MVA_dR_Ele1Jet2_wh        );          
+        WHiggs0PHToGG_MVA_->BookMVA( "BDT", WHiggs0PHToGG_weights_.fullPath() );
+
+
+        WHiggs0L1ToGG_MVA_.reset( new TMVA::Reader( "!Color:!Silent" ) );
+        WHiggs0L1ToGG_MVA_->AddVariable( "pho1_eta"             ,&_Anom_MVA_pho1_eta              );
+        WHiggs0L1ToGG_MVA_->AddVariable( "pho1_phi"             ,&_Anom_MVA_pho1_phi              );
+        WHiggs0L1ToGG_MVA_->AddVariable( "pho1_full5x5_r9"      ,&_Anom_MVA_pho1_full5x5_r9       );
+        WHiggs0L1ToGG_MVA_->AddVariable( "pho1_idmva"           ,&_Anom_MVA_pho1_idmva            );
+        WHiggs0L1ToGG_MVA_->AddVariable( "pho2_eta"             ,&_Anom_MVA_pho2_eta              );
+        WHiggs0L1ToGG_MVA_->AddVariable( "pho2_phi"             ,&_Anom_MVA_pho2_phi              );
+        WHiggs0L1ToGG_MVA_->AddVariable( "pho2_full5x5_r9"      ,&_Anom_MVA_pho2_full5x5_r9       );
+        WHiggs0L1ToGG_MVA_->AddVariable( "pho2_idmva"           ,&_Anom_MVA_pho2_idmva            );
+        WHiggs0L1ToGG_MVA_->AddVariable( "pho1_ptOverMgg"       ,&_Anom_MVA_pho1_ptOverMgg        );
+        WHiggs0L1ToGG_MVA_->AddVariable( "pho2_ptOverMgg"       ,&_Anom_MVA_pho2_ptOverMgg        );
+
+        WHiggs0L1ToGG_MVA_->AddVariable( "mu1_pt"               ,&_Anom_MVA_mu1_pt                );  
+        WHiggs0L1ToGG_MVA_->AddVariable( "mu1_phi"              ,&_Anom_MVA_mu1_phi               );   
+        WHiggs0L1ToGG_MVA_->AddVariable( "mu1_eta"              ,&_Anom_MVA_mu1_eta               );   
+        WHiggs0L1ToGG_MVA_->AddVariable( "mu1_energy"           ,&_Anom_MVA_mu1_energy            );      
+        // WHiggs0L1ToGG_MVA_->AddVariable( "mu2_pt"               ,&_Anom_MVA_mu2_pt                );  
+        // WHiggs0L1ToGG_MVA_->AddVariable( "mu2_phi"              ,&_Anom_MVA_mu2_phi               );   
+        // WHiggs0L1ToGG_MVA_->AddVariable( "mu2_eta"              ,&_Anom_MVA_mu2_eta               );   
+        // WHiggs0L1ToGG_MVA_->AddVariable( "mu2_energy"           ,&_Anom_MVA_mu2_energy            );      
+        WHiggs0L1ToGG_MVA_->AddVariable( "ele1_pt"              ,&_Anom_MVA_ele1_pt               );   
+        WHiggs0L1ToGG_MVA_->AddVariable( "ele1_phi"             ,&_Anom_MVA_ele1_phi              );    
+        WHiggs0L1ToGG_MVA_->AddVariable( "ele1_eta"             ,&_Anom_MVA_ele1_eta              );    
+        WHiggs0L1ToGG_MVA_->AddVariable( "ele1_energy"          ,&_Anom_MVA_ele1_energy           );       
+        // WHiggs0L1ToGG_MVA_->AddVariable( "ele2_pt"              ,&_Anom_MVA_ele2_pt               );   
+        // WHiggs0L1ToGG_MVA_->AddVariable( "ele2_phi"             ,&_Anom_MVA_ele2_phi              );    
+        // WHiggs0L1ToGG_MVA_->AddVariable( "ele2_eta"             ,&_Anom_MVA_ele2_eta              );    
+        // WHiggs0L1ToGG_MVA_->AddVariable( "ele2_energy"          ,&_Anom_MVA_ele2_energy           );       
+        WHiggs0L1ToGG_MVA_->AddVariable( "jet1_pt"              ,&_Anom_MVA_jet1_pt               );   
+        WHiggs0L1ToGG_MVA_->AddVariable( "jet1_phi"             ,&_Anom_MVA_jet1_phi              );    
+        WHiggs0L1ToGG_MVA_->AddVariable( "jet1_eta"             ,&_Anom_MVA_jet1_eta              );    
+        WHiggs0L1ToGG_MVA_->AddVariable( "jet1_energy"          ,&_Anom_MVA_jet1_energy           );       
+        WHiggs0L1ToGG_MVA_->AddVariable( "jet2_pt"              ,&_Anom_MVA_jet2_pt               );   
+        WHiggs0L1ToGG_MVA_->AddVariable( "jet2_phi"             ,&_Anom_MVA_jet2_phi              );    
+        // WHiggs0L1ToGG_MVA_->AddVariable( "jet2_eta"             ,&_Anom_MVA_jet2_eta              );    
+        // WHiggs0L1ToGG_MVA_->AddVariable( "jet2_energy"          ,&_Anom_MVA_jet2_energy           );       
+        WHiggs0L1ToGG_MVA_->AddVariable( "cosPhiGG"             ,&_Anom_MVA_cosPhiGG             );    
+        WHiggs0L1ToGG_MVA_->AddVariable( "cosPhiG1_Mu1"         ,&_Anom_MVA_cosPhiG1_Mu1          );        
+        WHiggs0L1ToGG_MVA_->AddVariable( "cosPhiG1_Ele1"        ,&_Anom_MVA_cosPhiG1_Ele1         );         
+        WHiggs0L1ToGG_MVA_->AddVariable( "cosPhiG2_Mu1"         ,&_Anom_MVA_cosPhiG2_Mu1          );        
+        WHiggs0L1ToGG_MVA_->AddVariable( "cosPhiG2_Ele1"        ,&_Anom_MVA_cosPhiG2_Ele1         );  
+        WHiggs0L1ToGG_MVA_->AddVariable( "dR_Pho1Ele1_wh"       ,&_Anom_MVA_dR_Pho1Ele1_wh        );          
+        WHiggs0L1ToGG_MVA_->AddVariable( "dR_Pho2Ele1_wh"       ,&_Anom_MVA_dR_Pho2Ele1_wh        );          
+        WHiggs0L1ToGG_MVA_->AddVariable( "dR_Pho1Mu1_wh"        ,&_Anom_MVA_dR_Pho1Mu1_wh         );         
+        WHiggs0L1ToGG_MVA_->AddVariable( "dR_Pho2Mu1_wh"        ,&_Anom_MVA_dR_Pho2Mu1_wh         );  
+        WHiggs0L1ToGG_MVA_->AddVariable( "dR_Pho1Jet1_wh"       ,&_Anom_MVA_dR_Pho1Jet1_wh        );          
+        WHiggs0L1ToGG_MVA_->AddVariable( "dR_Pho2Jet1_wh"       ,&_Anom_MVA_dR_Pho2Jet1_wh        );          
+        WHiggs0L1ToGG_MVA_->AddVariable( "dR_Pho1Jet2_wh"       ,&_Anom_MVA_dR_Pho1Jet2_wh        );          
+        // WHiggs0L1ToGG_MVA_->AddVariable( "dR_Pho2Jet2_wh"       ,&_Anom_MVA_dR_Pho2Jet2_wh        );  
+        WHiggs0L1ToGG_MVA_->AddVariable( "dR_Mu1Jet1_wh"        ,&_Anom_MVA_dR_Mu1Jet1_wh         );         
+        WHiggs0L1ToGG_MVA_->AddVariable( "dR_Mu1Jet2_wh"        ,&_Anom_MVA_dR_Mu1Jet2_wh         );         
+        WHiggs0L1ToGG_MVA_->AddVariable( "dR_Ele1Jet1_wh"       ,&_Anom_MVA_dR_Ele1Jet1_wh        );          
+        // WHiggs0L1ToGG_MVA_->AddVariable( "dR_Ele1Jet2_wh"       ,&_Anom_MVA_dR_Ele1Jet2_wh        );          
+        WHiggs0L1ToGG_MVA_->BookMVA( "BDT", WHiggs0L1ToGG_weights_.fullPath() );
+
+        // $$$$$$$$$$$$$$$$$$$$      AC BDT END       $$$$$$$$$$$$$$$$$$$$
 
         //WHMVA
         WHMVAweightfile_ = iConfig.getParameter<edm::FileInPath>( "WHMVAweightfile" );
@@ -229,35 +549,21 @@ namespace flashgg {
 
         produces<vector<WHLeptonicTag> >();
         //produces<vector<VHTagTruth> >();
+        acBoundaries  = iConfig.getParameter< vector<double> >( "acBoundaries" );
+
     }
 
-    int WHLeptonicTagProducer::chooseCategory( float mva, float ptV )
+    int WHLeptonicTagProducer::chooseCategoryAC( float stxs_mva, float ac_mva )
     {
-        // should return 0 if mva above all the numbers, 1 if below the first, ..., boundaries.size()-N if below the Nth, ...
-        int n_GT150  = boundaries_GT150.size();
-        int n_75_150 = boundaries_75_150.size();
-        int n_0_75   = boundaries_0_75.size();
-
-        if (ptV > 150.) {
-            for( int n = 0 ; n < n_GT150 ; n++ ) {
-                if( ( double )mva > boundaries_GT150[n_GT150 - n - 1] ) { 
-                    return n;
-                }
-            }
-        } else if (ptV > 75. && ptV < 150.) {
-            for( int n = 0 ; n < n_75_150; n++ ) {
-                if( ( double )mva > boundaries_75_150[n_75_150 - n - 1] ) { 
-                    return n + n_GT150; 
-                }
-            }
-        } else if (ptV > 0.) {
-            for( int n = 0 ; n < n_0_75; n++ ) {
-                if( ( double )mva > boundaries_0_75[n_0_75 - n - 1] ) { 
-                    return n + n_75_150 + n_GT150; 
-                }
+        //tag_number {each tag should have 4 boundaries}
+        for (uint tag_num=0;tag_num < acBoundaries.size(); tag_num+=4){
+            if ((stxs_mva <= acBoundaries[tag_num + 0]) && (stxs_mva > acBoundaries[tag_num + 1]) && (ac_mva <= acBoundaries[tag_num + 2]) && (ac_mva > acBoundaries[tag_num + 3])){
+                // std::cout<<"WH "<<tag_num/4<<" "<<stxs_mva<<" "<<ac_mva<<std::endl;
+                return tag_num/4;
             }
         }
 
+        // std::cout<<"WH "<<"-1"<<" "<<stxs_mva<<" "<<ac_mva<<std::endl;
         return -1; // Does not pass, object will not be produced
     }
 
@@ -285,7 +591,7 @@ namespace flashgg {
 
         edm::Handle<double>  rho;
         evt.getByToken(rhoTag_,rho);
-        double rho_    = *rho;
+        // double rho_    = *rho;
 
         Handle<View<flashgg::DiPhotonMVAResult> > mvaResults;
         evt.getByToken( mvaResultToken_, mvaResults );
@@ -344,7 +650,7 @@ namespace flashgg {
             }
         }
 
-        unsigned int idx = 0;
+        // unsigned int idx = 0;
 
         for( unsigned int diphoIndex = 0; diphoIndex < diPhotons->size(); diphoIndex++ ) {
 
@@ -468,10 +774,93 @@ namespace flashgg {
             _min_dphi_jet_lnu = minDeltaPhiJetLNu; 
 
             float whmva    = WHMva_->EvaluateMVA( "BDT" );
-            float ptV = dipho->pt();
+            // float ptV = dipho->pt();
+
+
+            // Getting the variables for AC-BDT
+            _Anom_MVA_pho1_eta             = dipho->leadingPhoton()->eta();
+            _Anom_MVA_pho1_phi             = dipho->leadingPhoton()->phi();
+            _Anom_MVA_pho1_idmva           = dipho->leadPhotonId();
+            _Anom_MVA_pho1_full5x5_r9      = dipho->leadingPhoton()->full5x5_r9();
+            _Anom_MVA_pho1_ptOverMgg       = dipho->leadingPhoton()->pt() / dipho->mass();
+            
+            _Anom_MVA_pho2_eta             = dipho->subLeadingPhoton()->eta();
+            _Anom_MVA_pho2_phi             = dipho->subLeadingPhoton()->phi();
+            _Anom_MVA_pho2_idmva           = dipho->subLeadPhotonId();
+            _Anom_MVA_pho2_full5x5_r9      = dipho->subLeadingPhoton()->full5x5_r9();
+            _Anom_MVA_pho2_ptOverMgg       = dipho->subLeadingPhoton()->pt() / dipho->mass();
+            
+
+            _Anom_MVA_mu1_pt               = goodMuons.size()>0 ? goodMuons[0]->pt()     : -100;
+            _Anom_MVA_mu1_eta              = goodMuons.size()>0 ? goodMuons[0]->eta()    : -100;
+            _Anom_MVA_mu1_phi              = goodMuons.size()>0 ? goodMuons[0]->phi()    : -100;
+            _Anom_MVA_mu1_energy           = goodMuons.size()>0 ? goodMuons[0]->energy() : -100;
+
+            _Anom_MVA_mu2_pt               = goodMuons.size()>1 ? goodMuons[1]->pt()     : -100;
+            _Anom_MVA_mu2_eta              = goodMuons.size()>1 ? goodMuons[1]->eta()    : -100;
+            _Anom_MVA_mu2_phi              = goodMuons.size()>1 ? goodMuons[1]->phi()    : -100;
+            _Anom_MVA_mu2_energy           = goodMuons.size()>1 ? goodMuons[1]->energy() : -100;
+
+
+            _Anom_MVA_ele1_pt              = goodElectrons.size()>0 ? goodElectrons[0]->pt()     : -100;             
+            _Anom_MVA_ele1_eta             = goodElectrons.size()>0 ? goodElectrons[0]->eta()    : -100;
+            _Anom_MVA_ele1_phi             = goodElectrons.size()>0 ? goodElectrons[0]->phi()    : -100;
+            _Anom_MVA_ele1_energy          = goodElectrons.size()>0 ? goodElectrons[0]->energy() : -100;
+
+            _Anom_MVA_ele2_pt              = goodElectrons.size()>1 ? goodElectrons[1]->pt()     : -100;             
+            _Anom_MVA_ele2_eta             = goodElectrons.size()>1 ? goodElectrons[1]->eta()    : -100;
+            _Anom_MVA_ele2_phi             = goodElectrons.size()>1 ? goodElectrons[1]->phi()    : -100;
+            _Anom_MVA_ele2_energy          = goodElectrons.size()>1 ? goodElectrons[1]->energy() : -100;
+            
+            _Anom_MVA_jet1_pt              = tagJets.size()>0 ? tagJets[0]->pt()     : -100;
+            _Anom_MVA_jet1_phi             = tagJets.size()>0 ? tagJets[0]->phi()    : -100;
+            _Anom_MVA_jet1_eta             = tagJets.size()>0 ? tagJets[0]->eta()    : -100;
+            _Anom_MVA_jet1_energy          = tagJets.size()>0 ? tagJets[0]->energy() : -100;
+
+            _Anom_MVA_jet2_pt              = tagJets.size()>1 ? tagJets[1]->pt()     : -100;
+            _Anom_MVA_jet2_phi             = tagJets.size()>1 ? tagJets[1]->phi()    : -100;
+            _Anom_MVA_jet2_eta             = tagJets.size()>1 ? tagJets[1]->eta()    : -100;
+            _Anom_MVA_jet2_energy          = tagJets.size()>1 ? tagJets[1]->energy() : -100;
+
+            _Anom_MVA_cosPhiGG             = TMath::Cos( deltaPhi(dipho->leadingPhoton()->phi(), dipho->subLeadingPhoton()->phi()) );
+            _Anom_MVA_cosPhiG1_Mu1         = goodMuons.size() > 0     ? TMath::Cos( deltaPhi(dipho->leadingPhoton()->phi(), goodMuons[0]->phi()) )      : -100;
+            _Anom_MVA_cosPhiG1_Ele1        = goodElectrons.size() > 0 ? TMath::Cos( deltaPhi(dipho->leadingPhoton()->phi(), goodElectrons[0]->phi()) )  : -100;
+            _Anom_MVA_cosPhiG2_Mu1         = goodMuons.size() > 0     ? TMath::Cos( deltaPhi(dipho->subLeadingPhoton()->phi(), goodMuons[0]->phi()) )      : -100;
+            _Anom_MVA_cosPhiG2_Ele1        = goodElectrons.size() > 0 ? TMath::Cos( deltaPhi(dipho->subLeadingPhoton()->phi(), goodElectrons[0]->phi()) )  : -100;
+
+
+            _Anom_MVA_dR_Pho1Ele1_wh       = goodElectrons.size() > 0 ? deltaR(goodElectrons[0]->eta(), goodElectrons[0]->phi(), dipho->leadingPhoton()->eta(), dipho->leadingPhoton()->phi()) : -100;
+            _Anom_MVA_dR_Pho2Ele1_wh       = goodElectrons.size() > 0 ? deltaR(goodElectrons[0]->eta(), goodElectrons[0]->phi(), dipho->subLeadingPhoton()->eta(), dipho->subLeadingPhoton()->phi()) : -100;
+            _Anom_MVA_dR_Pho1Mu1_wh        = goodMuons.size() > 0 ? deltaR(goodMuons[0]->eta(), goodMuons[0]->phi(), dipho->leadingPhoton()->eta(), dipho->leadingPhoton()->phi()) : -100;
+            _Anom_MVA_dR_Pho2Mu1_wh        = goodMuons.size() > 0 ? deltaR(goodMuons[0]->eta(), goodMuons[0]->phi(), dipho->subLeadingPhoton()->eta(), dipho->subLeadingPhoton()->phi()) : -100;
+
+
+
+            _Anom_MVA_dR_Pho1Jet1_wh       = tagJets.size() > 0 ? deltaR(tagJets[0]->eta(), tagJets[0]->phi(), dipho->leadingPhoton()->eta(), dipho->leadingPhoton()->phi()) : -100;
+            _Anom_MVA_dR_Pho1Jet2_wh       = tagJets.size() > 1 ? deltaR(tagJets[1]->eta(), tagJets[1]->phi(), dipho->leadingPhoton()->eta(), dipho->leadingPhoton()->phi()) : -100;
+            _Anom_MVA_dR_Pho2Jet1_wh       = tagJets.size() > 0 ? deltaR(tagJets[0]->eta(), tagJets[0]->phi(), dipho->subLeadingPhoton()->eta(), dipho->subLeadingPhoton()->phi()) : -100;
+            _Anom_MVA_dR_Pho2Jet2_wh       = tagJets.size() > 1 ? deltaR(tagJets[1]->eta(), tagJets[1]->phi(), dipho->subLeadingPhoton()->eta(), dipho->subLeadingPhoton()->phi()) : -100;
+
+            _Anom_MVA_dR_Mu1Jet1_wh        = ((goodMuons.size() > 0)&&(tagJets.size() > 0))      ? deltaR(tagJets[0]->eta(), tagJets[0]->phi(), goodMuons[0]->eta(), goodMuons[0]->phi())         : -100;
+            _Anom_MVA_dR_Mu1Jet2_wh        = ((goodMuons.size() > 0)&&(tagJets.size() > 1))      ? deltaR(tagJets[1]->eta(), tagJets[1]->phi(), goodMuons[0]->eta(), goodMuons[0]->phi())         : -100;
+            
+            _Anom_MVA_dR_Ele1Jet1_wh       = ((goodElectrons.size() > 0)&&(tagJets.size() > 0)) ? deltaR(tagJets[0]->eta(), tagJets[0]->phi(), goodElectrons[0]->eta(), goodElectrons[0]->phi()) : -100;
+            _Anom_MVA_dR_Ele1Jet2_wh       = ((goodElectrons.size() > 0)&&(tagJets.size() > 1)) ? deltaR(tagJets[1]->eta(), tagJets[1]->phi(), goodElectrons[0]->eta(), goodElectrons[0]->phi()) : -100;
+
+
+
+            // Evaluating Anomalous MVA
+            float WHiggs0MToGG_MVA                = WHiggs0MToGG_MVA_->EvaluateMVA( "BDT" );   
+            float WHiggs0PHToGG_MVA               = WHiggs0PHToGG_MVA_->EvaluateMVA( "BDT" );    
+            float WHiggs0L1ToGG_MVA               = WHiggs0L1ToGG_MVA_->EvaluateMVA( "BDT" );    
+
+
+            //AC MVA we are currently look at fa3=1
+            float anom_mva = WHiggs0MToGG_MVA;
+
 
             // Categorization by WHMVA & ptV (0~75, 75~150, 150~)
-            int catnum = chooseCategory( whmva, ptV );
+            int catnum = chooseCategoryAC( whmva, anom_mva );
 
             if( catnum != -1 ) {
                 whleptonictags_obj.setCategoryNumber( catnum );
@@ -483,6 +872,11 @@ namespace flashgg {
                 whleptonictags_obj.setDiPhotonIndex( diphoIndex );
                 whleptonictags_obj.setSystLabel( systLabel_ );
                 whleptonictags_obj.setMET( theMET );
+                //STXS MVA & AC MVA
+                whleptonictags_obj.set_VHmva(whmva);
+                whleptonictags_obj.set_WHiggs0MToGG_MVA(WHiggs0MToGG_MVA);
+                whleptonictags_obj.set_WHiggs0PHToGG_MVA(WHiggs0PHToGG_MVA);
+                whleptonictags_obj.set_WHiggs0L1ToGG_MVA(WHiggs0L1ToGG_MVA);
 
                 if( ! evt.isRealData() ) {
                     whleptonictags_obj.setAssociatedZ( associatedZ );
@@ -520,19 +914,16 @@ namespace flashgg {
         int catNum = tag_obj.categoryNumber();
 
         if ( catNum == 0 ) {
-            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_WH_LEP_PTV_GT150_Tag0;
+            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_WH_LEP_Tag0;
         }
-        if ( catNum == 1 ) {
-            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_WH_LEP_PTV_75_150_Tag0;
+        else if ( catNum == 1 ) {
+            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_WH_LEP_Tag1;
         }
         else if ( catNum == 2 ) {
-            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_WH_LEP_PTV_75_150_Tag1;
+            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_WH_LEP_Tag2;
         }
-        if ( catNum == 3 ) {
-            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_WH_LEP_PTV_0_75_Tag0;
-        }
-        else if ( catNum == 4 ) {
-            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_WH_LEP_PTV_0_75_Tag1;
+        else if ( catNum == 3 ) {
+            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_WH_LEP_Tag3;
         }
 
         return chosenTag_;

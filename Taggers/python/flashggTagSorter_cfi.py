@@ -22,7 +22,8 @@ flashggTagSorter = cms.EDProducer('FlashggTagSorter',
 #        cms.PSet(TagName = cms.InputTag('flashggDoubleHTag')), # hint priority for double H tag w/ ttH veto
         cms.PSet(TagName = cms.InputTag('flashggVBFTag')),     
         cms.PSet(TagName = cms.InputTag('flashggVHMetTag')),
-        cms.PSet(TagName = cms.InputTag('flashggVHHadronicTag')),
+        # cms.PSet(TagName = cms.InputTag('flashggVHHadronicTag')),
+        cms.PSet(TagName = cms.InputTag('flashggVHHadronicACTag')),
         cms.PSet(TagName = cms.InputTag('flashggUntagged'))
         ###                                                                 cms.PSet(TagName = cms.InputTag('flashggSigmaMoMpToMTag'))
         ),
@@ -41,6 +42,9 @@ flashggTagSorter = cms.EDProducer('FlashggTagSorter',
                                   isGluonFusion = cms.bool(False),
                                   NNLOPSWeightFile = cms.FileInPath("flashgg/Taggers/data/NNLOPS_reweight.root"),
                                   applyNNLOPSweight = cms.bool(False),
+                                  melaWeightsLabels = cms.InputTag("melaGenMatrixElementWeightsJHU:labels"),
+                                  melaWeightsValues = cms.InputTag("melaGenMatrixElementWeightsJHU:values"),
+                                  storeMELAweights = cms.bool(False),
                                   SetHTXSinfo = cms.bool(True),
                                   AddTruthInfo= cms.bool(True)
                                   )

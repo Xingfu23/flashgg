@@ -46,6 +46,20 @@ namespace flashgg {
 
         DiPhotonTagBase::tag_t tagEnum() const override {return DiPhotonTagBase::kZHLeptonic; }
 
+        //Custom variable for Anomalous Studies
+        const float VHmva() const { return VH_mva;};
+        const float ZHiggs0MToGG_mva()          const {return ZHiggs0MToGG_MVA;};
+        const float ZHiggs0PHToGG_mva()         const {return ZHiggs0PHToGG_MVA;};
+        const float ZHiggs0L1ToGG_mva()         const {return ZHiggs0L1ToGG_MVA;};
+        const float ZHiggs0L1ZgToGG_mva()       const {return ZHiggs0L1ZgToGG_MVA;};
+
+        //Functions to set the variables
+        void set_VHmva(const float &val) {VH_mva=val;};
+        void set_ZHiggs0MToGG_MVA(const float &val)           { ZHiggs0MToGG_MVA = val;};
+        void set_ZHiggs0PHToGG_MVA(const float &val)          { ZHiggs0PHToGG_MVA = val;};
+        void set_ZHiggs0L1ToGG_MVA(const float &val)          { ZHiggs0L1ToGG_MVA = val;};
+        void set_ZHiggs0L1ZgToGG_MVA(const float &val)        { ZHiggs0L1ZgToGG_MVA = val;};
+
     private:
         std::vector<edm::Ptr<Muon> > Muons_;
         std::vector<edm::Ptr<Electron> > Electrons_;
@@ -58,6 +72,12 @@ namespace flashgg {
         bool VhasLeptons_;
         bool VhasHadrons_;
         float Vpt_;
+
+        float VH_mva = -999;
+        float ZHiggs0MToGG_MVA =-999;
+        float ZHiggs0PHToGG_MVA =-999;
+        float ZHiggs0L1ToGG_MVA =-999;
+        float ZHiggs0L1ZgToGG_MVA =-999;
 
     };
 }

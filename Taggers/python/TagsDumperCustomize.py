@@ -1,7 +1,7 @@
 import FWCore.ParameterSet.Config as cms
 
 def customizeTagsDumper(process, customize):
-    if customize.doStageOne:
+    if customize.doStageOne or customize.anomalousCouplings:
         process.load("flashgg.Taggers.stageOneDiphotonTagDumper_cfi")
         process.tagsDumper.className = "StageOneDiPhotonTagDumper" 
     else:
@@ -16,7 +16,7 @@ def customizeTagsDumper(process, customize):
     process.tagsDumper.quietRooFit = True
     process.tagsDumper.nameTemplate = cms.untracked.string("$PROCESS_$SQRTS_$CLASSNAME_$SUBCAT_$LABEL")
     process.tagsDumper.splitPdfByStage0Bin = cms.untracked.bool(customize.doHTXS)
-    process.tagsDumper.splitPdfByStage1Bin = cms.untracked.bool(customize.doStageOne)
+    process.tagsDumper.splitPdfByStage1Bin = cms.untracked.bool(customize.doStageOne or customize.anomalousCouplings)
     
     if customize.options.WeightName:
         lheProduct = customize.dataset[1]["LHESourceName"].split("_")

@@ -3,16 +3,23 @@ from flashgg.MicroAOD.flashggJets_cfi import flashggUnpackedJets
 from flashgg.Taggers.flashggDiPhotonMVA_cfi import flashggDiPhotonMVA
 from flashgg.Taggers.flashggVBFMVA_cff import flashggVBFMVA,flashggVBFDiPhoDiJetMVA
 from flashgg.Taggers.flashggVHhadMVA_cff import flashggVHhadMVA
+from flashgg.Taggers.flashggVHhadAC_cff import flashggVHhadACDNN
 from flashgg.Taggers.flashggGluGluHMVA_cff import flashggGluGluHMVA
 from flashgg.Taggers.flashggPrefireDiPhotons_cff import flashggPrefireDiPhotons
 from flashgg.Taggers.flashggTags_cff import *
 from flashgg.Taggers.flashggPreselectedDiPhotons_cfi import flashggPreselectedDiPhotons
 from flashgg.Taggers.flashggTagSorter_cfi import flashggTagSorter
 from flashgg.Taggers.flashggDifferentialPhoIdInputsCorrection_cfi import flashggDifferentialPhoIdInputsCorrection, setup_flashggDifferentialPhoIdInputsCorrection
+from flashgg.MetaData.JobConfig import customize #Loading customize to get access to the options to disable JEC/JER
+
 
 def flashggPrepareTagSequence(process, options):
     setup_flashggDifferentialPhoIdInputsCorrection(process, options)
-    flashggPreselectedDiPhotons.src = "flashggPrefireDiPhotons"
+
+    if customize.disableJEC: # (Part of fastDebug) If true, we use flashggDifferentialPhoIdInputsCorrection instead of flashggPrefireDiPhotons 
+        flashggPreselectedDiPhotons.src = "flashggDifferentialPhoIdInputsCorrection"  
+    else:
+        flashggPreselectedDiPhotons.src = "flashggPrefireDiPhotons" 
 
     if "flashggDiPhotonMVA" in options:
         flashggDiPhotonMVA.diphotonMVAweightfile = cms.FileInPath(str(options["flashggDiPhotonMVA"]["weightFile"]))
@@ -39,6 +46,7 @@ def flashggPrepareTagSequence(process, options):
                                       * flashggUnpackedJets
                                       * flashggVBFMVA
                                       * flashggVHhadMVA
+                                      * flashggVHhadACDNN
                                       * flashggGluGluHMVA
                                       * flashggVBFDiPhoDiJetMVA
                                       * ( flashggUntagged
@@ -53,7 +61,8 @@ def flashggPrepareTagSequence(process, options):
                                           + flashggVHMetTag
                                           + flashggWHLeptonicTag
                                           + flashggZHLeptonicTag
-                                          + flashggVHHadronicTag
+                                          # + flashggVHHadronicTag
+                                          + flashggVHHadronicACTag
                                       )
                                       * flashggTagSorter
                                   )

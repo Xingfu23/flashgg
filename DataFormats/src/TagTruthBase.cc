@@ -16,6 +16,8 @@ TagTruthBase::TagTruthBase()
     njets_ = -999;
     pTH_ = -999.;
     pTV_ = -999.;
+    _melaLabels.clear();
+    _melaWeights.clear();
 }
 
 TagTruthBase::TagTruthBase( const TagTruthBase &b )
@@ -220,6 +222,10 @@ void TagTruthBase::copyBaseInfo( const TagTruthBase &b ) {
     setGenPV( b.genPV() );
     setHTXSInfo( b.HTXSstage0bin(), b.HTXSstage1bin(), b.HTXSstage1p1bin(), b.HTXSstage1p1binFine(), b.HTXSstage1p2bin(), b.HTXSstage1p2binFine(), b.HTXSnjets(), b.HTXSpTH(), b.HTXSpTV() );
     this->setWeight("NNLOPSweight", b.weight("NNLOPSweight"));
+    for (unsigned int iw=0; iw<b.getMelaLabels().size(); ++iw) {
+        string key = b.getMelaLabels()[iw];
+        setMelaWeight(key,b.melaWeight(key));
+    }
 }
 
 int TagTruthBase::HTXSstage0orderedBin() const {
@@ -307,6 +313,33 @@ void TagTruthBase::setGluonFusionWeights( int njets, float pTH, int stage1bin )
     this->setWeight("THU_ggH_PT60Down01sigma", theWeightsDown[6]);
     this->setWeight("THU_ggH_PT120Down01sigma", theWeightsDown[7]);
     this->setWeight("THU_ggH_qmtopDown01sigma", theWeightsDown[8]);
+}
+
+void TagTruthBase::setMelaWeight( string key, float val )
+{
+    auto found_label = std::lower_bound( _melaLabels.begin(), _melaLabels.end(), key );
+    if( found_label == _melaLabels.end() || *found_label != key ) {
+        _melaWeights.insert( _melaWeights.begin() + std::distance( _melaLabels.begin(), found_label ), val );
+        _melaLabels.insert( found_label, key );
+    } else {
+        _melaWeights[std::distance( _melaLabels.begin(), found_label )] = val;
+    }
+}
+
+bool TagTruthBase::hasMelaWeight( string key ) const
+{
+    auto found_label = std::lower_bound( _melaLabels.begin(), _melaLabels.end(), key );
+    return ( !( found_label == _melaLabels.end() || *found_label != key ) );
+}
+
+float TagTruthBase::melaWeight( string key ) const
+{
+    auto found_label = std::lower_bound( _melaLabels.begin(), _melaLabels.end(), std::string(key) );
+
+    if( found_label == _melaLabels.end() ) {
+        return 1.;
+    }
+    return _melaWeights[std::distance( _melaLabels.begin(), found_label )];
 }
 
 // Local Variables:
