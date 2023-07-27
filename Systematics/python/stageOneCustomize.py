@@ -56,7 +56,7 @@ class StageOneCustomize():
             cms.PSet(TagName = cms.InputTag('flashggWHLeptonicTag')),
             cms.PSet(TagName = cms.InputTag('flashggTTHHadronicTag')),   
             cms.PSet(TagName = cms.InputTag('flashggVHMetTag')),
-            # cms.PSet(TagName = cms.InputTag('flashggStageOneCombinedTag'))
+            cms.PSet(TagName = cms.InputTag('flashggStageOneCombinedTag'))
         )
         self.customizeTagSequence()
 
@@ -129,10 +129,10 @@ class StageOneCustomize():
         
 
         ## customize from meta conditions - category thresholds set here
-        # self.process.flashggStageOneCombinedTag.rawDiphoBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawDiphoBounds"] )
-        # self.process.flashggStageOneCombinedTag.rawDijetBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawDijetBounds"] )
-        # self.process.flashggStageOneCombinedTag.rawGghBounds   = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawGghBounds"] )
-        # self.process.flashggStageOneCombinedTag.rawVhHadBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawVhHadBounds"] )
+        self.process.flashggStageOneCombinedTag.rawDiphoBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawDiphoBounds"] )
+        self.process.flashggStageOneCombinedTag.rawDijetBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawDijetBounds"] )
+        self.process.flashggStageOneCombinedTag.rawGghBounds   = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawGghBounds"] )
+        self.process.flashggStageOneCombinedTag.rawVhHadBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawVhHadBounds"] )
 
         ## set the pre-firing to be applied
         self.metaConditions["L1Prefiring"]["applyToCentral"] = True
