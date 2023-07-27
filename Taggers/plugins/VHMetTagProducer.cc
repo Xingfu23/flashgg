@@ -92,11 +92,12 @@ namespace flashgg {
         
         // VHMet AC MVA
         FileInPath VHMetAnomMVA_fa3_weightfile;
-        // FileInPath VHMetAnomMVA_fa2_weightfile;
-        // FileInPath VHMetAnomMVA_faL1_weightfile;
+        FileInPath VHMetAnomMVA_fa2_weightfile;
+        FileInPath VHMetAnomMVA_faL1_weightfile;
+        
         VHMET_BDT_Helper *vhmetacTagger_fa3;
-        // VHMET_BDT_Helper *vhmetacTagger_fa2;
-        // VHMET_BDT_Helper *vhmetacTagger_faL1;
+        VHMET_BDT_Helper *vhmetacTagger_fa2;
+        VHMET_BDT_Helper *vhmetacTagger_faL1;
 
         InputVariables MVAvarList;
 
@@ -178,12 +179,12 @@ namespace flashgg {
         vhmetacTagger_fa3 = new VHMET_BDT_Helper("BDT", VHMetAnomMVA_fa3_weightfile.fullPath());
 
         // VHMetACMVA:fa2
-        // VHMetAnomMVA_fa2_weightfile = iConfig.getParameter<edm::FileInPath> ( "vhmetanom_fa2_bdt_xmlfile" );
-        // vhmetacTagger_fa2 = new VHMET_BDT_Helper("BDT", VHMetAnomMVA_fa2_weightfile.fullPath());
+        VHMetAnomMVA_fa2_weightfile = iConfig.getParameter<edm::FileInPath> ( "vhmetanom_fa2_bdt_xmlfile" );
+        vhmetacTagger_fa2 = new VHMET_BDT_Helper("BDT", VHMetAnomMVA_fa2_weightfile.fullPath());
 
         // VHMetACMVA:faL1
-        // VHMetAnomMVA_faL1_weightfile = iConfig.getParameter<edm::FileInPath> ( "vhmetanom_faL1_bdt_xmlfile" );
-        // vhmetacTagger_faL1 = new VHMET_BDT_Helper("BDT", VHMetAnomMVA_faL1_weightfile.fullPath());
+        VHMetAnomMVA_faL1_weightfile = iConfig.getParameter<edm::FileInPath> ( "vhmetanom_faL1_bdt_xmlfile" );
+        vhmetacTagger_faL1 = new VHMET_BDT_Helper("BDT", VHMetAnomMVA_faL1_weightfile.fullPath());
 
         ac_boundaries_fa3_bin0 = iConfig.getParameter<vector<double > >("AC_boundaries_fa3_bin0");
         ac_boundaries_fa3_bin1 = iConfig.getParameter<vector<double > >("AC_boundaries_fa3_bin1");
@@ -398,16 +399,11 @@ namespace flashgg {
             MVAvarList.pho2_phi         = dipho->subLeadingPhoton()->phi();
             MVAvarList.pho1_ptoM        = _pho1_ptoM; 
             MVAvarList.pho2_ptoM        = _pho2_ptoM;
-            MVAvarList.pho1_R9          = dipho->leadingPhoton()->full5x5_r9();
-            MVAvarList.pho2_R9          = dipho->subLeadingPhoton()->full5x5_r9();
-            MVAvarList.pho1_sieie       = dipho->leadingPhoton()->sigmaIetaIeta();
-            MVAvarList.pho2_sieie       = dipho->subLeadingPhoton()->sigmaIetaIeta();
             MVAvarList.dipho_cosphi     = _dipho_cosphi;
             MVAvarList.dipho_deltaeta   = fabs(_pho1_eta - _pho2_eta);
             MVAvarList.met              = _met;
             MVAvarList.met_phi          = theMET->getCorPhi();
             MVAvarList.met_sumEt        = _met_sumEt;
-            // MVAvarList.dphi_dipho_met   = _dphi_dipho_met;
             MVAvarList.dphi_pho1_met    = fabs( deltaPhi(theMET->getCorPhi(), dipho->leadingPhoton()->phi()) );
             MVAvarList.dphi_pho2_met    = fabs( deltaPhi(theMET->getCorPhi(), dipho->subLeadingPhoton()->phi()) );
             MVAvarList.pt_balance       = _pt_balance; 
@@ -418,10 +414,10 @@ namespace flashgg {
             // init mva scores correspond to bkg
             double raw_score_anom_fa3zh = -1.;
             raw_score_anom_fa3zh = vhmetacTagger_fa3->evaluate("BDT", MVAvarList);
-            // double raw_score_anom_fa2zh = -1.;
-            // raw_score_anom_fa2zh = vhmetacTagger_fa2->evaluate("BDT", MVAvarList);
-            // double raw_score_anom_faL1zh = -1.;
-            // raw_score_anom_faL1zh = vhmetacTagger_faL1->evaluate("BDT", MVAvarList);
+            double raw_score_anom_fa2zh = -1.;
+            raw_score_anom_fa2zh = vhmetacTagger_fa2->evaluate("BDT", MVAvarList);
+            double raw_score_anom_faL1zh = -1.;
+            raw_score_anom_faL1zh = vhmetacTagger_faL1->evaluate("BDT", MVAvarList);
 
             // Categorization by ZHMVA
             //int catnum = chooseCategory( vhmetmva );
@@ -446,11 +442,15 @@ namespace flashgg {
                 tag_obj.setMinDeltaPhiJetMet(minDeltaPhiJetMet);
                 tag_obj.setMaxJetDeepCSV(max_jet_dCSV);
                 tag_obj.setACMVAfa3d0ZH(raw_score_anom_fa3zh);
+                tag_obj.setACMVAfa2d0ZH(raw_score_anom_fa2zh);
+                tag_obj.setACMVAfaL1d0ZH(raw_score_anom_faL1zh);
                 tag_obj.setVHMetMVA(vhmetmva);
 
                 // Check anom variable 
-                //std::cout << "anom_mva_score = " << raw_score_anom_fa3zh << std::endl;
-                //vhmetacTagger->print_details_cout(MVAvarList);
+                // std::cout << "anom_mva_score_fa3 = " << raw_score_anom_fa3zh << std::endl;
+                // std::cout << "anom_mva_score_fa2 = " << raw_score_anom_fa2zh << std::endl;
+                // std::cout << "anom_mva_score_faL1 = " << raw_score_anom_faL1zh << std::endl;
+                // vhmetacTagger_fa3->print_details_cout(MVAvarList);
 
                 if( ! evt.isRealData() ) {
                     tag_obj.setAssociatedZ( associatedZ );

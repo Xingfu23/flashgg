@@ -495,9 +495,9 @@ flashggVHMetTag = cms.EDProducer("FlashggVHMetTagProducer",
                                     jetPtThreshold              = cms.double(20.),
                                     jetEtaThreshold             = cms.double(2.4),
                                     deltaRJetPhoThreshold       = cms.double(0.4),
-                                    vhmetanom_fa3_bdt_xmlfile = cms.FileInPath('flashgg/Taggers/data/VH_Anomalous/VHMet/v2/VHMET_ZHiggs0MToGG_M125_model_v2.xml'), #TODO This model need to be updated to VH version
-                                    # vhmetanom_fa2_bdt_xmlfile  = cms.FileInPath('flashgg/Taggers/data/VH_Anomalous/VHMet/v2/'), #TODO Need to add model for fa2
-                                    # vhmetanom_faL1_bdt_xmlfile = cms.FileInPath('flashgg/Taggers/data/VH_Anomalous/VHMet/v2/'), #TODO Need to add model for faL1
+                                    vhmetanom_fa3_bdt_xmlfile = cms.FileInPath('flashgg/Taggers/data/VH_Anomalous/VHMet/v2/VHMET_VHiggs0MToGG_EraALL_model.xml'),  
+                                    vhmetanom_fa2_bdt_xmlfile  = cms.FileInPath('flashgg/Taggers/data/VH_Anomalous/VHMet/v2/VHMET_VHiggs0PHToGG_EraALL_model.xml'),
+                                    vhmetanom_faL1_bdt_xmlfile = cms.FileInPath('flashgg/Taggers/data/VH_Anomalous/VHMet/v2/VHMET_VHiggs0L1ToGG_EraALL_model.xml')
 )
 
 flashggZHLeptonicTag = cms.EDProducer("FlashggZHLeptonicTagProducer",
