@@ -89,7 +89,9 @@ met_variables=[
     "met_sumEt   := met.sumEt()",
     "met_Sig     := met.mEtSig()",
     "met_RealSig := met.significance()",
-    "acmvafa3d0zh := ACMVAfa3d0ZH()"
+    "acmvafa3d0zh := ACMVAfa3d0ZH()",
+    "acmvafa2d0zh := ACMVAfa2d0ZH()",
+    "acmvafaL1d0zh := ACMVAfaL1d0ZH()",
 ]
 
 extra_variables=[
