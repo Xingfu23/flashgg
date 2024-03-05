@@ -31,6 +31,8 @@ namespace flashgg {
         const bool VhasHadrons() const { return VhasHadrons_; }
         const float Vpt() const { return Vpt_; }
         const float ACMVAfa3d0ZH() const { return acmvafa3d0zh_;}
+        const float ACMVAfa2d0ZH() const { return acmvafa2d0zh_;}
+        const float ACMVAfL1d0ZH() const { return acmvafL1d0zh_;}
         const float VHMetMVA() const { return VHMetMVA_;}
 
         
@@ -47,6 +49,8 @@ namespace flashgg {
         void setVhasHadrons( const bool &val ) { VhasHadrons_ = val; }
         void setVpt( const float &val ) { Vpt_ = val; }
         void setACMVAfa3d0ZH(float val) { acmvafa3d0zh_ = val; }
+        void setACMVAfa2d0ZH(float val) { acmvafa2d0zh_ = val; }
+        void setACMVAfL1d0ZH(float val) { acmvafL1d0zh_ = val; }
         void setVHMetMVA(float val) { VHMetMVA_ = val; }
 
 
@@ -66,6 +70,8 @@ namespace flashgg {
         bool VhasHadrons_;
         float Vpt_;
         float acmvafa3d0zh_;
+        float acmvafa2d0zh_;
+        float acmvafL1d0zh_;
         float VHMetMVA_;
 
 
