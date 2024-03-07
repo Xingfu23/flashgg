@@ -125,7 +125,6 @@ VHMET_vars = [
     'vhmet_mva    :=VHMetMVA()',
     'ACMVAfa3d0ZH :=ACMVAfa3d0ZH()',
     'ACMVAfa2d0ZH :=ACMVAfa2d0ZH()',
-    # 'ACMVAfaL1d0ZH :=ACMVAfaL1d0ZH()'
     'ACMVAfL1d0ZH :=ACMVAfL1d0ZH()'
 ]
 
