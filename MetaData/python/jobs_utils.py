@@ -168,7 +168,7 @@ class JobsManager(object):
         else:
             self.firstRun()
             
-        self.monitor()
+        #self.monitor()
         self.parallel.stop()
 
     # -------------------------------------------------------------------------------------------------------------------
@@ -253,6 +253,8 @@ class JobsManager(object):
         if not os.path.exists(options.outputDir):
             os.mkdir(options.outputDir)
         outputPfx = "%s/%s" % ( options.outputDir, outputPfx )
+        # os.system( 'mkdir -p %s' % options.stageTo)
+        # outputPfx = "%s/%s" % ( options.stageTo, outputPfx )
         
 
         args.append("processIdMap=%s/config.json" % os.path.abspath(options.outputDir))
@@ -383,7 +385,8 @@ class JobsManager(object):
                         dnjobs = maxJobs
                         batchId = -1
                         if not options.dry_run:
-                            ret,out = parallel.run(job,iargs)[-1]
+                            #ret,out = parallel.run(job,iargs)[-1]
+                            parallel.run(job,iargs)[-1]
                             if self.options.queue and self.options.asyncLsf:
                                 batchId = out[1]
                         output = []

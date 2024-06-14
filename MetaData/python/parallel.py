@@ -431,6 +431,7 @@ class HTCondorJob(object):
         with open(self.cfgName, "w+") as fout:
             fout.write('+JobFlavour   = "'+self.htcondorQueue+'"\n\n')
             fout.write('+OnExitHold   = ExitStatus != 0 \n\n')
+            fout.write('+SingularityImage = "/cvmfs/unpacked.cern.ch/registry.hub.docker.com/cmssw/el7:x86_64"\n\n')
             fout.write('periodic_release =  (NumJobStarts < 4) && ((CurrentTime - EnteredCurrentStatus) > 60) \n\n')
             fout.write('getenv        = True \n')
             fout.write('input         = %s/.dasmaps/das_maps_dbs_prod.js \n' % os.environ['HOME'])
@@ -443,39 +444,40 @@ class HTCondorJob(object):
             fout.write('error         = '+self.jobName+'_$(ClusterId).$(ProcId).err\n')
             fout.write('log           = '+self.jobName+'_$(ClusterId).$(ProcId)_htc.log\n\n')
             fout.write('RequestCpus   = {}\n'.format(self.ncondorcpu))
-            fout.write('max_retries   = 2\n')
+            fout.write('max_retries   = 10\n')
             fout.write('queue '+str(njobs)+' \n')
             fout.close()        
 
-        import subprocess
-        htc = subprocess.Popen("condor_submit "+self.cfgName,
-                               shell=True, # bufsize=bufsize,
-                               stdin=subprocess.PIPE,
-                               stdout=subprocess.PIPE,
-                               stderr=subprocess.PIPE,
-                               close_fds=True)
+        # import subprocess
+        # htc = subprocess.Popen("condor_submit "+self.cfgName,
+        #                        shell=True, # bufsize=bufsize,
+        #                        stdin=subprocess.PIPE,
+        #                        stdout=subprocess.PIPE,
+        #                        stderr=subprocess.PIPE,
+        #                        close_fds=True)
             
-        out,err = htc.communicate()
+        # out,err = htc.communicate()
 
-        self.exitStatus = htc.returncode
+        # self.exitStatus = htc.returncode
         
-        if self.exitStatus != 0:
-            print "error running job", self.jobName, self.exitStatus
-            print out
-            print err
-        else:
-            self.jobid = []
-            for line in out.split("\n"):
-                if "cluster" in line:
-                    clusterid = line.split()[-1]
-                    break
-            for ijob in range(int(njobs)):
-                self.jobid.append(clusterid+str(ijob))
+        # if self.exitStatus != 0:
+        #     print "error running job", self.jobName, self.exitStatus
+        #     print out
+        #     print err
+        # else:
+        #     self.jobid = []
+        #     for line in out.split("\n"):
+        #         if "cluster" in line:
+        #             clusterid = line.split()[-1]
+        #             break
+        #     for ijob in range(int(njobs)):
+        #         self.jobid.append(clusterid+str(ijob))
 
-        if self.async:
-            return self.exitStatus, (out,(self.jobName,self.jobid))
+        # if self.async:
+        #     return self.exitStatus, (out,(self.jobName,self.jobid))
 
-        return self.handleOutput()
+        # return self.handleOutput()
+        pass
 
     #----------------------------------------
     def __call__(self,cmd):
@@ -1273,7 +1275,7 @@ class Parallel:
             ret = wrap(interactive=True)
             
         self.sem.acquire()
-	self.njobs += len(ret[-1][-1][-1][-1]) if isinstance(ret[-1][-1][-1][-1], list) else 1
+#	self.njobs += len(ret[-1][-1][-1][-1]) if isinstance(ret[-1][-1][-1][-1], list) else 1
         self.sem.release()
         
         return ret
