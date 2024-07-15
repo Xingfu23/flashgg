@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 from flashgg.MetaData.jobs_utils import JobsManager
 
