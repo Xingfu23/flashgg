@@ -10,6 +10,11 @@ class StageOneAcCustomize():
         self.customize = customize
         self.metaConditions = metaConditions
         self.modifyForttH = True
+        # self.tagList = [
+        #     ["RECO_WH_LEP_Tag0",0], ["RECO_WH_LEP_Tag1",0], ["RECO_WH_LEP_Tag2",0], ["RECO_WH_LEP_Tag3",0],
+        #     ["RECO_ZH_LEP_Tag0",0], ["RECO_ZH_LEP_Tag1",0],
+        #     ["RECO_VH_MET_Tag0",0], ["RECO_VH_MET_Tag1",0], ["RECO_VH_MET_Tag2",0],["RECO_VH_MET_Tag3",0]
+        # ]
         self.tagList = [
             ["LOGICERROR",0], ["NOTAG",0], 
             ["RECO_0J_PTH_0_10_Tag0",0], ["RECO_0J_PTH_0_10_Tag1",0], ["RECO_0J_PTH_0_10_Tag2",0],
@@ -142,7 +147,19 @@ class StageOneAcCustomize():
 
 
     def customizeTagSequence(self):
+
         self.process.load("flashgg.Taggers.flashggStageOneCombinedTag_cfi")
+        
+        ## Debugging
+        # print("metaConditions:", self.metaConditions)
+        # if "stageOneCombinedTag" in self.metaConditions:
+        #     if "rawVbfpBSMBounds" in self.metaConditions["stageOneCombinedTag"]:
+        #         self.process.flashggStageOneCombinedTag.rawVbfpBSMBounds = cms.vdouble(self.metaConditions["stageOneCombinedTag"]["rawVbfpBSMBounds"])
+        #     else:
+        #         print("KeyError: 'rawVbfpBSMBounds' not found in 'stageOneCombinedTag'")
+        # else:
+        #     print("KeyError: 'stageOneCombinedTag' not found in metaConditions")
+        ## Debugging
 
         ## remove unneeded tags
         self.process.flashggTagSequence.remove(self.process.flashggVBFDiPhoDiJetMVA)
@@ -164,11 +181,21 @@ class StageOneAcCustomize():
         self.process.flashggStageOneCombinedTag.rawDijetBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawDijetBounds"] )
         self.process.flashggStageOneCombinedTag.rawGghBounds   = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawGghBounds"] )
         self.process.flashggStageOneCombinedTag.rawVhHadBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawVhHadBounds"] )
-        self.process.flashggStageOneCombinedTag.rawVbfpBSMBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawVbfpBSMBounds"] )
-        self.process.flashggStageOneCombinedTag.rawVbfpBKGBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawVbfpBKGBounds"] )
-        self.process.flashggStageOneCombinedTag.rawVbfpD0MBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawVbfpD0MBounds"] )
-        self.process.flashggStageOneCombinedTag.rawVhhaddnnBKGBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawVhhaddnnBKGBounds"] )
-        self.process.flashggStageOneCombinedTag.rawVhhaddnnBSMBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawVhhaddnnBSMBounds"] )
+        
+        # For normal analysis, please uncomment the following lines
+        # self.process.flashggStageOneCombinedTag.rawVbfpBSMBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawVbfpBSMBounds"] )
+        # self.process.flashggStageOneCombinedTag.rawVbfpBKGBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawVbfpBKGBounds"] )
+        # self.process.flashggStageOneCombinedTag.rawVbfpD0MBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawVbfpD0MBounds"] )
+        # self.process.flashggStageOneCombinedTag.rawVhhaddnnBKGBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawVhhaddnnBKGBounds"] )
+        # self.process.flashggStageOneCombinedTag.rawVhhaddnnBSMBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawVhhaddnnBSMBounds"] )
+        
+        # Only for electorn HLT, Z->ee validation - please uncomment the following lines
+        self.process.flashggStageOneCombinedTag.rawVbfpBSMBounds = cms.vdouble(0.97)
+        self.process.flashggStageOneCombinedTag.rawVbfpBKGBounds = cms.vdouble(0.05)
+        self.process.flashggStageOneCombinedTag.rawVbfpD0MBounds = cms.vdouble(0.6)
+        self.process.flashggStageOneCombinedTag.rawVhhaddnnBKGBounds = cms.vdouble([0.082085, 0.25284, 0.535261, 0.065729, 1.0])
+        self.process.flashggStageOneCombinedTag.rawVhhaddnnBSMBounds = cms.vdouble([0.5625, 0.45, 0.2875, 0.889, 0.747])
+        
 
         ## set the pre-firing to be applied
         self.metaConditions["L1Prefiring"]["applyToCentral"] = True
