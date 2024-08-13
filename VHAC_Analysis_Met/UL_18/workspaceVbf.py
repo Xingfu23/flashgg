@@ -233,7 +233,17 @@ customize.options.register('dumpFullVars',
                            )
 
 ############################## VH Lep AC Analysis #####################################
-from flashgg.Taggers.VHLeptonicTagsVariables_cfi import wh_anom_dumper_vars,zh_anom_dumper_vars,VHMET_vars, dipho_variables, jet_variables, met_variables, gen_variables
+from flashgg.Taggers.VHLeptonicTagsVariables_cfi import (
+    wh_anom_dumper_vars,
+    zh_anom_dumper_vars,
+    VHMET_vars,
+    dipho_variables,
+    ele_variables,
+    mu_variables,
+    jet_variables,
+    met_variables,
+    gen_variables
+)
 # Ability to disable JEC/JER to speed up debugging when running interactively
 # Usage: disableJEC=True
 # Works by removing the load of JEC/JERs (takes 30mins)
@@ -679,8 +689,18 @@ for tag in tagList:
       
       if "WH_LEP" in tagName:
         currentVariables += wh_anom_dumper_vars
+        currentVariables += dipho_variables
+        currentVariables += ele_variables
+        currentVariables += mu_variables
+        currentVariables += jet_variables
+
       if "ZH_LEP" in tagName:
-        currentVariables += zh_anom_dumper_vars 
+        currentVariables += zh_anom_dumper_vars
+        currentVariables += dipho_variables
+        currentVariables += ele_variables
+        currentVariables += mu_variables
+        currentVariables += jet_variables
+
       if "VH_MET" in tagName:
         currentVariables += VHMET_vars 
         currentVariables += dipho_variables
