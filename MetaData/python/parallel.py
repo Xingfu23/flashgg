@@ -439,14 +439,14 @@ class HTCondorJob(object):
             fout.write('arguments     = $(ProcId)\n')
             #fout.write('arguments   = $(ProcId)\n')
             if self.copy_proxy:
-            fout.write('input       = '+BatchRegistry.getProxy().split(":")[1]+'\n')
-            fout.write('output        = '+self.jobName+'_$(ClusterId).$(ProcId).out\n')
-            fout.write('error         = '+self.jobName+'_$(ClusterId).$(ProcId).err\n')
-            fout.write('log           = '+self.jobName+'_$(ClusterId).$(ProcId)_htc.log\n\n')
-            fout.write('RequestCpus   = {}\n'.format(self.ncondorcpu))
-            fout.write('max_retries   = 2\n')
-            fout.write('queue '+str(njobs)+' \n')
-            fout.close()        
+                fout.write('input       = '+BatchRegistry.getProxy().split(":")[1]+'\n')
+                fout.write('output        = '+self.jobName+'_$(ClusterId).$(ProcId).out\n')
+                fout.write('error         = '+self.jobName+'_$(ClusterId).$(ProcId).err\n')
+                fout.write('log           = '+self.jobName+'_$(ClusterId).$(ProcId)_htc.log\n\n')
+                fout.write('RequestCpus   = {}\n'.format(self.ncondorcpu))
+                fout.write('max_retries   = 2\n')
+                fout.write('queue '+str(njobs)+' \n')
+                fout.close()        
 
         # import subprocess
         # htc = subprocess.Popen("condor_submit "+self.cfgName,
