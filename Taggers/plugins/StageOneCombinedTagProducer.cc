@@ -454,6 +454,8 @@ namespace flashgg {
         } else { // 2 jets
             bool reProcess = false;
             if ( mjj > 350. && j0->p4().pt() > 40. && j1->p4().pt() > 30. && leadMvaScore > -0.2 && subleadMvaScore > -0.2 ) { //cuts optimised using data-driven dijet BDT plus new diphoton BDT
+                // vbfcat = 1; // set to 1 for now, its for Z->ee only
+                
                 if ( vbfcat == 1 ) {
                     chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_VBFTOPO_ACGGH_Tag0;
                 }
@@ -474,6 +476,8 @@ namespace flashgg {
                 }
             }
             else if ( mjj > 0. && mjj < 250. && j0->p4().pt() > 30. && j1->p4().pt() > 30. && abs(j0->p4().eta()) < 2.4 && abs(j1->p4().eta()) < 2.4 && leadMvaScore > 0.0 && subleadMvaScore > 0.0 ) { //cuts for VH hadronic
+                // vhhadcat = 1; // set to 1 for now, its for Z->ee only
+                
                 if ( vhhadcat == 1 ) {
                     chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_VBFTOPO_ACVHHADSM_Tag0;
                 }
