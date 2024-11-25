@@ -151,57 +151,46 @@ bool Jet::passesJetID( JetIDLevel level) const
     
     //    std::cout  << "DEBUG:: eta= " << eta << " NHF=" << NHF << " NEMF=" << NEMF << " CHF=" << CHF << " CEMF=" << CEMF 
     //               << " NumConst=" << NumConst << " CHM=" << CHM << " NumNeutralParticles=" << NumNeutralParticles << std::endl;
-    
-    bool jetID_barrel_loose  =  (NHF<0.99 && NEMF<0.99 && NumConst>1) && ((fabs(eta)<=2.4 && CHF>0 && CHM>0 && CEMF<0.99) || fabs(eta)>2.4) && fabs(eta)<=2.7;
-    bool jetID_barrel_tight  =  (NHF<0.90 && NEMF<0.90 && NumConst>1) && ((fabs(eta)<=2.4 && CHF>0 && CHM>0 && CEMF<0.99) || fabs(eta)>2.4) && fabs(eta)<=2.7;
-    bool jetID_transition      =  (NEMF>0.01 && NHF<0.98 && NumNeutralParticles>2 && fabs(eta)>2.7 && fabs(eta)<3.0);
-    bool jetID_forward      =  (NEMF<0.90 && NumNeutralParticles >10 && fabs(eta)>3.0 );
-    
-    bool jetID_2017_27 = (NHF < 0.9 && NEMF < 0.9 && NumConst > 1);
-    bool jetID_2017_24 = jetID_2017_27 && (CHF > 0. && CHM > 0 );
-    bool jetID_2017_30 = (NEMF > 0.02 && NEMF < 0.99 && NumNeutralParticles > 2);
-    bool jetID_2017_forward = (NEMF < 0.9 && NHF > 0.02 && NumNeutralParticles > 10);
 
-    bool jetID_2018_26 = (NHF < 0.9 && NEMF < 0.9 && NumConst > 1 && CHM > 0 && CHF > 0.);
-    bool jetID_2018_27 = (NHF < 0.9 && NEMF < 0.99 && CHM > 0);
-    bool jetID_2018_30 = (NEMF > 0.02 && NEMF < 0.99 && NumNeutralParticles > 2);
-    bool jetID_2018_forward = (NEMF < 0.9 && NHF > 0.02 && NumNeutralParticles > 10);
+    bool jetID_2016_24 = (abs(eta)<=2.4 && CEMF<0.8 && CHM>0 && CHF>0 && NumConst>1 && NEMF<0.9 && NHF < 0.9);
+    bool jetID_2016_27 = (abs(eta)>2.4 && abs(eta)<=2.7 && NEMF<0.99 && NHF < 0.9);
+    bool jetID_2016_30 = (NEMF>0.0 && NEMF<0.99 && NHF<0.9 && NumNeutralParticles>1 && abs(eta)>2.7 && abs(eta)<=3.0);
+    bool jetID_2016_forward = (NEMF<0.90 && NHF>0.2 && NumNeutralParticles>10 && abs(eta)>3.0);
 
+    bool jetID_2017_26 = (abs(eta)<=2.6 && CEMF<0.8 && CHM>0 && CHF>0 && NumConst>1 && NEMF<0.9 && NHF < 0.9);
+    bool jetID_2017_27 = (abs(eta)>2.6 && abs(eta)<=2.7 && CEMF<0.8 && CHM>0 && NEMF<0.99 && NHF < 0.9);
+    bool jetID_2017_30 = (NEMF>0.01 && NEMF<0.99 && NumNeutralParticles>1 && abs(eta)>2.7 && abs(eta)<=3.0);
+    bool jetID_2017_forward = (NEMF<0.90 && NHF>0.2 && NumNeutralParticles>10 && abs(eta)>3.0);
 
-    
     switch(level){
-    case Loose:
+        case Loose:
         {
-            if(fabs(eta)<=2.7 ) return jetID_barrel_loose;
-            if(fabs(eta)<=3.0 ) return jetID_transition;
-            if(fabs(eta)> 3.0 ) return jetID_forward;
-            
-        }break;
-    case Tight:
-        {
-            if(fabs(eta)<=2.7 ) return jetID_barrel_tight;
-            if(fabs(eta)<=3.0 ) return jetID_transition;
-            if(fabs(eta)> 3.0 ) return jetID_forward;
-        }break;
-    case Tight2017:
-        {
-            if(fabs(eta)<=2.4 ) return jetID_2017_24;
-            if(fabs(eta)<=2.7 ) return jetID_2017_27;
-            if(fabs(eta)<=3.0 ) return jetID_2017_30;
-            return jetID_2017_forward;
+            if(fabs(eta)<=2.4) return jetID_2016_24;
+            if(fabs(eta)>2.4 && fabs(eta)<=2.7) return jetID_2016_27;
+            if(fabs(eta)>2.7 && fabs(eta)<=3.0) return jetID_2016_30;
+            if(fabs(eta)>3.0) return jetID_2016_forward;
         } break;
-    case Tight2018:
+        case Tight:
         {
-            if(fabs(eta)<=2.6 ) return jetID_2018_26;
-            if(fabs(eta)<=2.7 ) return jetID_2018_27;
-            if(fabs(eta)<=3.0 ) return jetID_2018_30;
-            return jetID_2018_forward;
+            if(fabs(eta)<=2.4) return jetID_2016_24;
+            if(fabs(eta)>2.4 && fabs(eta)<=2.7) return jetID_2016_27;
+            if(fabs(eta)>2.7 && fabs(eta)<=3.0) return jetID_2016_30;
+            if(fabs(eta)>3.0) return jetID_2016_forward;
         } break;
-    default:
+        case Tight2017:
         {
-            std::cout << "error:: wrong level !!" << std::endl;
-        }
-        break;
+            if(fabs(eta)<=2.6) return jetID_2017_26;
+            if(fabs(eta)>2.6 && fabs(eta)<=2.7) return jetID_2017_27;
+            if(fabs(eta)>2.7 && fabs(eta)<=3.0) return jetID_2017_30;
+            if(fabs(eta)>3.0) return jetID_2017_forward;
+        } break;
+        case Tight2018: // same as Tight2017
+        {
+            if(fabs(eta)<=2.6) return jetID_2017_26;
+            if(fabs(eta)>2.6 && fabs(eta)<=2.7) return jetID_2017_27;
+            if(fabs(eta)>2.7 && fabs(eta)<=3.0) return jetID_2017_30;
+            if(fabs(eta)>3.0) return jetID_2017_forward;
+        } break;
     }
     return 0;
     
