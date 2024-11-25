@@ -191,6 +191,12 @@ bool Jet::passesJetID( JetIDLevel level) const
             if(fabs(eta)>2.7 && fabs(eta)<=3.0) return jetID_2017_30;
             if(fabs(eta)>3.0) return jetID_2017_forward;
         } break;
+        
+        default:
+        {
+            std::cout << "error:: wrong level !!" << std::endl;
+        }
+        break;
     }
     return 0;
     
