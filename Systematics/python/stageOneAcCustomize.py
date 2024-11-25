@@ -10,48 +10,43 @@ class StageOneAcCustomize():
         self.customize = customize
         self.metaConditions = metaConditions
         self.modifyForttH = True
+        self.tagList = [
+            ["RECO_WH_LEP_Tag0",0], ["RECO_WH_LEP_Tag1",0], ["RECO_WH_LEP_Tag2",0], ["RECO_WH_LEP_Tag3",0],
+            ["RECO_ZH_LEP_Tag0",0], ["RECO_ZH_LEP_Tag1",0],
+            ["RECO_VH_MET_Tag0",0], ["RECO_VH_MET_Tag1",0], ["RECO_VH_MET_Tag2",0],["RECO_VH_MET_Tag3",0],
+        ]
         # self.tagList = [
-
+        #     ["LOGICERROR",0], ["NOTAG",0], 
+        #     ["RECO_0J_PTH_0_10_Tag0",0], ["RECO_0J_PTH_0_10_Tag1",0], ["RECO_0J_PTH_0_10_Tag2",0],
+        #     ["RECO_0J_PTH_GT10_Tag0",0], ["RECO_0J_PTH_GT10_Tag1",0],["RECO_0J_PTH_GT10_Tag2",0],
+        #     ["RECO_1J_PTH_0_60_Tag0",0], ["RECO_1J_PTH_0_60_Tag1",0], ["RECO_1J_PTH_0_60_Tag2",0],
+        #     ["RECO_1J_PTH_60_120_Tag0",0], ["RECO_1J_PTH_60_120_Tag1",0], ["RECO_1J_PTH_60_120_Tag2",0],
+        #     ["RECO_1J_PTH_120_200_Tag0",0], ["RECO_1J_PTH_120_200_Tag1",0],["RECO_1J_PTH_120_200_Tag2",0],
+        #     ["RECO_GE2J_PTH_0_60_Tag0",0], ["RECO_GE2J_PTH_0_60_Tag1",0], ["RECO_GE2J_PTH_0_60_Tag2",0],
+        #     ["RECO_GE2J_PTH_60_120_Tag0",0], ["RECO_GE2J_PTH_60_120_Tag1",0], ["RECO_GE2J_PTH_60_120_Tag2",0],
+        #     ["RECO_GE2J_PTH_120_200_Tag0",0], ["RECO_GE2J_PTH_120_200_Tag1",0], ["RECO_GE2J_PTH_120_200_Tag2",0],
+        #     ["RECO_PTH_200_300_Tag0",0], ["RECO_PTH_200_300_Tag1",0],  ["RECO_PTH_300_450_Tag0",0], ["RECO_PTH_300_450_Tag1",0],
+        #     ["RECO_PTH_450_650_Tag0",0], ["RECO_PTH_GT650_Tag0",0],
         #     ["RECO_VBFTOPO_ACVHHADSM_Tag0",0], ["RECO_VBFTOPO_ACVHHADSM_Tag1",0], ["RECO_VBFTOPO_ACVHHADSM_Tag2",0], 
         #     ["RECO_VBFTOPO_ACVHHADBSM_Tag0",0], ["RECO_VBFTOPO_ACVHHADBSM_Tag1",0],
         #     ["RECO_VBFTOPO_ACGGH_Tag0",0], ["RECO_VBFTOPO_ACGGH_Tag1",0],
         #     ["RECO_VBFTOPO_ACVBFSM_Tag0",0], ["RECO_VBFTOPO_ACVBFBSM_Tag0",0], ["RECO_VBFTOPO_ACVBFBSM_Tag1",0],
+        #     ["RECO_VBFLIKEGGH_Tag0",0], ["RECO_VBFLIKEGGH_Tag1",0], 
+        #     ["RECO_TTH_HAD_PTH_0_60_Tag0",0], ["RECO_TTH_HAD_PTH_0_60_Tag1",0], ["RECO_TTH_HAD_PTH_0_60_Tag2",0],
+        #     ["RECO_TTH_HAD_PTH_60_120_Tag0",0], ["RECO_TTH_HAD_PTH_60_120_Tag1",0], ["RECO_TTH_HAD_PTH_60_120_Tag2",0],
+        #     ["RECO_TTH_HAD_PTH_120_200_Tag0",0], ["RECO_TTH_HAD_PTH_120_200_Tag1",0], ["RECO_TTH_HAD_PTH_120_200_Tag2",0], ["RECO_TTH_HAD_PTH_120_200_Tag3",0],
+        #     ["RECO_TTH_HAD_PTH_200_300_Tag0",0], ["RECO_TTH_HAD_PTH_200_300_Tag1",0], ["RECO_TTH_HAD_PTH_200_300_Tag2",0],
+        #     ["RECO_TTH_HAD_PTH_GT300_Tag0",0], ["RECO_TTH_HAD_PTH_GT300_Tag1",0],
         #     ["RECO_WH_LEP_Tag0",0], ["RECO_WH_LEP_Tag1",0], ["RECO_WH_LEP_Tag2",0], ["RECO_WH_LEP_Tag3",0],
         #     ["RECO_ZH_LEP_Tag0",0], ["RECO_ZH_LEP_Tag1",0],
         #     ["RECO_VH_MET_Tag0",0], ["RECO_VH_MET_Tag1",0], ["RECO_VH_MET_Tag2",0],["RECO_VH_MET_Tag3",0],
+        #     ["RECO_TTH_LEP_PTH_0_60_Tag0",0], ["RECO_TTH_LEP_PTH_0_60_Tag1",0], ["RECO_TTH_LEP_PTH_0_60_Tag2",0],
+        #     ["RECO_TTH_LEP_PTH_60_120_Tag0",0], ["RECO_TTH_LEP_PTH_60_120_Tag1",0], ["RECO_TTH_LEP_PTH_60_120_Tag2",0],
+        #     ["RECO_TTH_LEP_PTH_120_200_Tag0",0], ["RECO_TTH_LEP_PTH_120_200_Tag1",0],
+        #     ["RECO_TTH_LEP_PTH_200_300_Tag0",0],
+        #     ["RECO_TTH_LEP_PTH_GT300_Tag0",0],
+        #     ["RECO_THQ_LEP",0]
         # ]
-        self.tagList = [
-            ["LOGICERROR",0], ["NOTAG",0], 
-            ["RECO_0J_PTH_0_10_Tag0",0], ["RECO_0J_PTH_0_10_Tag1",0], ["RECO_0J_PTH_0_10_Tag2",0],
-            ["RECO_0J_PTH_GT10_Tag0",0], ["RECO_0J_PTH_GT10_Tag1",0],["RECO_0J_PTH_GT10_Tag2",0],
-            ["RECO_1J_PTH_0_60_Tag0",0], ["RECO_1J_PTH_0_60_Tag1",0], ["RECO_1J_PTH_0_60_Tag2",0],
-            ["RECO_1J_PTH_60_120_Tag0",0], ["RECO_1J_PTH_60_120_Tag1",0], ["RECO_1J_PTH_60_120_Tag2",0],
-            ["RECO_1J_PTH_120_200_Tag0",0], ["RECO_1J_PTH_120_200_Tag1",0],["RECO_1J_PTH_120_200_Tag2",0],
-            ["RECO_GE2J_PTH_0_60_Tag0",0], ["RECO_GE2J_PTH_0_60_Tag1",0], ["RECO_GE2J_PTH_0_60_Tag2",0],
-            ["RECO_GE2J_PTH_60_120_Tag0",0], ["RECO_GE2J_PTH_60_120_Tag1",0], ["RECO_GE2J_PTH_60_120_Tag2",0],
-            ["RECO_GE2J_PTH_120_200_Tag0",0], ["RECO_GE2J_PTH_120_200_Tag1",0], ["RECO_GE2J_PTH_120_200_Tag2",0],
-            ["RECO_PTH_200_300_Tag0",0], ["RECO_PTH_200_300_Tag1",0],  ["RECO_PTH_300_450_Tag0",0], ["RECO_PTH_300_450_Tag1",0],
-            ["RECO_PTH_450_650_Tag0",0], ["RECO_PTH_GT650_Tag0",0],
-            ["RECO_VBFTOPO_ACVHHADSM_Tag0",0], ["RECO_VBFTOPO_ACVHHADSM_Tag1",0], ["RECO_VBFTOPO_ACVHHADSM_Tag2",0], 
-            ["RECO_VBFTOPO_ACVHHADBSM_Tag0",0], ["RECO_VBFTOPO_ACVHHADBSM_Tag1",0],
-            ["RECO_VBFTOPO_ACGGH_Tag0",0], ["RECO_VBFTOPO_ACGGH_Tag1",0],
-            ["RECO_VBFTOPO_ACVBFSM_Tag0",0], ["RECO_VBFTOPO_ACVBFBSM_Tag0",0], ["RECO_VBFTOPO_ACVBFBSM_Tag1",0],
-            ["RECO_VBFLIKEGGH_Tag0",0], ["RECO_VBFLIKEGGH_Tag1",0], 
-            ["RECO_TTH_HAD_PTH_0_60_Tag0",0], ["RECO_TTH_HAD_PTH_0_60_Tag1",0], ["RECO_TTH_HAD_PTH_0_60_Tag2",0],
-            ["RECO_TTH_HAD_PTH_60_120_Tag0",0], ["RECO_TTH_HAD_PTH_60_120_Tag1",0], ["RECO_TTH_HAD_PTH_60_120_Tag2",0],
-            ["RECO_TTH_HAD_PTH_120_200_Tag0",0], ["RECO_TTH_HAD_PTH_120_200_Tag1",0], ["RECO_TTH_HAD_PTH_120_200_Tag2",0], ["RECO_TTH_HAD_PTH_120_200_Tag3",0],
-            ["RECO_TTH_HAD_PTH_200_300_Tag0",0], ["RECO_TTH_HAD_PTH_200_300_Tag1",0], ["RECO_TTH_HAD_PTH_200_300_Tag2",0],
-            ["RECO_TTH_HAD_PTH_GT300_Tag0",0], ["RECO_TTH_HAD_PTH_GT300_Tag1",0],
-            ["RECO_WH_LEP_Tag0",0], ["RECO_WH_LEP_Tag1",0], ["RECO_WH_LEP_Tag2",0], ["RECO_WH_LEP_Tag3",0],
-            ["RECO_ZH_LEP_Tag0",0], ["RECO_ZH_LEP_Tag1",0],
-            ["RECO_VH_MET_Tag0",0], ["RECO_VH_MET_Tag1",0], ["RECO_VH_MET_Tag2",0],["RECO_VH_MET_Tag3",0],
-            ["RECO_TTH_LEP_PTH_0_60_Tag0",0], ["RECO_TTH_LEP_PTH_0_60_Tag1",0], ["RECO_TTH_LEP_PTH_0_60_Tag2",0],
-            ["RECO_TTH_LEP_PTH_60_120_Tag0",0], ["RECO_TTH_LEP_PTH_60_120_Tag1",0], ["RECO_TTH_LEP_PTH_60_120_Tag2",0],
-            ["RECO_TTH_LEP_PTH_120_200_Tag0",0], ["RECO_TTH_LEP_PTH_120_200_Tag1",0],
-            ["RECO_TTH_LEP_PTH_200_300_Tag0",0],
-            ["RECO_TTH_LEP_PTH_GT300_Tag0",0],
-            ["RECO_THQ_LEP",0]
-        ]
         if self.customize.processId == "Data": 
             # self.tagList.pop(1) ## remove NoTag for data
             self.stageOneVariable = []
@@ -83,6 +78,8 @@ class StageOneAcCustomize():
                 #"btagReshapeNorm_TTH_HAD[1,-999999.,999999.] := weight(\"btagReshapeNorm_TTH_HAD\")",
                 #"btagReshapeNorm_THQ_LEP[1,-999999.,999999.] := weight(\"btagReshapeNorm_THQ_LEP\")",
                 "centralObjectWeight[1,-999999.,999999.] := centralWeight",
+                "vbfNLOweight[1,-999999.,999999.] := weight(\"vbfNLOweight\")",
+                "vhhadNLOweight[1,-999999.,999999.] := weight(\"vhhadNLOweight\")",
             ]
 
         import flashgg.Taggers.VBFTagVariables as var
@@ -119,9 +116,10 @@ class StageOneAcCustomize():
         ]
 
         allNonSigVariables = var.dipho_variables + var.dijet_variables + VBF_mva_probs + VHhad_dnn_probs + matching_photon #+more_jet_vars 
-        #ntup_variables = ws_variables + allNonSigVariables
-        ntup_variables = ws_variables + allNonWSVariables if (is_signal and fullvars) else ws_variables
-
+        # ntup_variables = ws_variables + allNonSigVariables
+        ntup_variables = ws_variables + allNonSigVariables if (is_signal and fullvars) else ws_variables
+        # ntup_variables = ws_variables + allNonWSVariables if (is_signal and fullvars) else ws_variables
+        
         if self.customize.dumpWorkspace:
             return ws_variables
         else:
@@ -175,7 +173,6 @@ class StageOneAcCustomize():
         self.process.flashggStageOneCombinedTag.rawDijetBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawDijetBounds"] )
         self.process.flashggStageOneCombinedTag.rawGghBounds   = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawGghBounds"] )
         self.process.flashggStageOneCombinedTag.rawVhHadBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawVhHadBounds"] )
-        
         self.process.flashggStageOneCombinedTag.rawVbfpBSMBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawVbfpBSMBounds"] )
         self.process.flashggStageOneCombinedTag.rawVbfpBKGBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawVbfpBKGBounds"] )
         self.process.flashggStageOneCombinedTag.rawVbfpD0MBounds = cms.vdouble( self.metaConditions["stageOneCombinedTag"]["rawVbfpD0MBounds"] )
