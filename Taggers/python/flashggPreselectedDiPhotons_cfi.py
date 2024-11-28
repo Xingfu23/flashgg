@@ -7,8 +7,8 @@ rediscoveryHLTvariables = cms.vstring(
     "trkSumPtHollowConeDR03",
     "full5x5_sigmaIetaIeta",
     "full5x5_r9",
-    # "passElectronVeto"
-    "-(passElectronVeto-1)" # for Z->ee study, let electrons pass instead of photons
+    "passElectronVeto"
+    # "-(passElectronVeto-1)" # for Z->ee study, let electrons pass instead of photons
     )
 
 #cuts to mimic category trigger cuts
